@@ -38,6 +38,7 @@ namespace KEDI_v_0._5._0._1
         public virtual DbSet<Urunler> Urunlers { get; set; }
         public virtual DbSet<Yetkiler> Yetkilers { get; set; }
         public virtual DbSet<GirisLog> GirisLogs { get; set; }
+        public virtual DbSet<deneme_Tablosu> deneme_Tablosu { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

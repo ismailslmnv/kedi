@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ModelKediDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="deneme_Tablosu">
+          <Key>
+            <PropertyRef Name="deneme" />
+          </Key>
+          <Property Name="deneme" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="denemeTablosu">
+          <Property Name="Deneme" Type="nchar" MaxLength="10" />
+          <Property Name="deneme1" Type="nchar" MaxLength="10" />
+        </EntityType>-->
         <EntityType Name="GirisLogs">
           <Key>
             <PropertyRef Name="LogID" />
@@ -235,6 +247,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ModelKediDBStoreContainer">
+          <EntitySet Name="deneme_Tablosu" EntityType="Self.deneme_Tablosu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GirisLogs" EntityType="Self.GirisLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Indirimlers" EntityType="Self.Indirimlers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Loglars" EntityType="Self.Loglars" Schema="dbo" store:Type="Tables" />
@@ -591,6 +604,7 @@
             <End Role="Personel" EntitySet="Personels" />
             <End Role="GirisLog" EntitySet="GirisLogs" />
           </AssociationSet>
+          <EntitySet Name="deneme_Tablosu" EntityType="ModelKediDB.deneme_Tablosu" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -624,6 +638,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="deneme_Tablosu">
+          <Key>
+            <PropertyRef Name="deneme" />
+          </Key>
+          <Property Name="deneme" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -762,6 +782,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+          <EntitySetMapping Name="deneme_Tablosu">
+            <EntityTypeMapping TypeName="ModelKediDB.deneme_Tablosu">
+              <MappingFragment StoreEntitySet="deneme_Tablosu">
+                <ScalarProperty Name="deneme" ColumnName="deneme" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
