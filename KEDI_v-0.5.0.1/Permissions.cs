@@ -111,5 +111,10 @@ namespace KEDI_v_0._5._0._1
                 }
             }
         }
+
+        private void metroPanel5_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

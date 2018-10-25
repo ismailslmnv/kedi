@@ -79,6 +79,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="deneme_Tablosu.cs">
+      <DependentUpon>ModelKedi.tt</DependentUpon>
+    </Compile>
     <Compile Include="EditPermissions.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -156,7 +156,7 @@ namespace KEDI_v_0._5._0._1
                 using (KEDIDBEntities context = new KEDIDBEntities())
                 {
                     var inserter = context.Set<GirisLog>();
-                    inserter.Add(new GirisLog { KullaniciID = userID, Tarih = DateTime.Now });
+                    inserter.Add(new GirisLog { KullaniciID = userID, Tarih=DateTime.Now});
                     context.SaveChanges();
                 }
             }
@@ -165,6 +165,11 @@ namespace KEDI_v_0._5._0._1
 
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void metroPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
