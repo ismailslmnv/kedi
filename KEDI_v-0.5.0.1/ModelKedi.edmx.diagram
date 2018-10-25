@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="de793bad2ba54e6885c8d71efd9c6a19" Name="Diagram1">
+        <EntityTypeShape EntityType="ModelKediDB.Indirimler" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelKediDB.Loglar" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelKediDB.Masalar" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelKediDB.Odeme" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelKediDB.Personel" Width="1.5" PointX="0.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelKediDB.Salonlar" Width="1.5" PointX="1.5" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelKediDB.Siparisler" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelKediDB.sysdiagram" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelKediDB.Urunler" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelKediDB.Yetkiler" Width="1.5" PointX="1.5" PointY="19" IsExpanded="true" />
+        <AssociationConnector Association="ModelKediDB.FK_Indirimler_Urunler" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelKediDB.FK_Odeme_Indirimler" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelKediDB.FK_Masalar_Salonlar" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelKediDB.FK_Siparisler_Masalar" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelKediDB.FK_Odeme_Siparisler" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelKediDB.FK_Personel_Yetkiler" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelKediDB.FK_Siparisler_Personel" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelKediDB.FK_Siparisler_Urunler" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ModelKediDB.GirisLog" Width="1.5" PointX="3" PointY="15.875" />
+        <AssociationConnector Association="ModelKediDB.FK_GirisLog_Personel" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
