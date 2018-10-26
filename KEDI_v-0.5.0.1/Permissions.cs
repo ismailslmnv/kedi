@@ -38,12 +38,12 @@ namespace KEDI_v_0._5._0._1
             permission.Style = MetroFramework.MetroColorStyle.Green;
             permission.Text = tileText;
             permission.TextAlign = ContentAlignment.MiddleLeft;
-            permission.TileImage = Image.FromFile(@"D:\projects\KEDI\Icons\Icons-20180611T000513Z-001\Icons\edit11.png");               
-            permission.TileImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            //permission.TileImage = Image.FromFile(@"D:\projects\KEDI\Icons\Icons-20180611T000513Z-001\Icons\edit11.png");               
+     //       permission.TileImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             permission.TileTextFontSize = MetroTileTextSize.Tall;
             permission.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
             permission.UseSelectable = true;
-            permission.UseTileImage = true;
+       //     permission.UseTileImage = true;
             permission.Click += Permission_Click;
             tilePanel.Controls.Add(permission);
             tilePanel.Controls.Add(breaker(tileID + 1));                      
@@ -106,8 +106,8 @@ namespace KEDI_v_0._5._0._1
                 if (item.YetkiID.ToString().Equals(ID))
                 {
                     MessageBox.Show(item.YetkiAdi);
-                    EditPermissions edit = new EditPermissions();
-                    edit.Show();
+                    AddPermission add = new AddPermission();
+                    add.Show();
                 }
             }
         }
@@ -115,6 +115,32 @@ namespace KEDI_v_0._5._0._1
         private void metroPanel5_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void metroTile1_Click(object sender, EventArgs e)
+        {
+            AddPermission add = new AddPermission();
+            add.Show();
+        }
+
+        private void exit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Back_Click(object sender, EventArgs e)
+        {
+            _thisClose();
+        }
+        private void _thisClose()
+        {
+            Enterance.enterance.Show();
+            this.Dispose();
+        }
+
+        private void Permissions_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _thisClose();
         }
     }
 }

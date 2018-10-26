@@ -28,7 +28,10 @@ namespace KEDI_v_0._5._0._1
         }
         private void metroTile2_Click(object sender, EventArgs e)
         {
-
+            Tables tables = new Tables();
+            tables.Show();
+            this.Hide();
+            
         }
         private void metroPanel1_Paint(object sender, PaintEventArgs e)
         {
@@ -108,13 +111,14 @@ namespace KEDI_v_0._5._0._1
         }
         private void exit_Click(object sender, EventArgs e)
         {
-            var formToShow = Application.OpenForms.Cast<Form>()
-            .FirstOrDefault(c => c is Login);
-            if (formToShow != null)
-            {
-                formToShow.Show();
-            }
-            this.Hide();
+            //var formToShow = Application.OpenForms.Cast<Form>()
+            //.FirstOrDefault(c => c is Login);
+            //if (formToShow != null)
+            //{
+            //    formToShow.Show();
+            //}
+            Login.login.Show();
+            this.Dispose();
         }
         private void Enterance_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -140,5 +144,17 @@ namespace KEDI_v_0._5._0._1
                 permissionController();
             }
         }
+        public static Enterance enterance
+        {
+            get
+            {
+                if (_enterance == null)
+                {
+                    _enterance = new Enterance();
+                }
+                return _enterance;
+            }
+        }
+        private static Enterance _enterance;
     }
 }

@@ -171,5 +171,17 @@ namespace KEDI_v_0._5._0._1
         {
 
         }
+        public static Login login
+        {
+            get
+            {
+                if (_login== null)
+                {
+                    _login= new Login();
+                }
+                return _login;
+            }
+        }
+        private static Login _login;
     }
 }
