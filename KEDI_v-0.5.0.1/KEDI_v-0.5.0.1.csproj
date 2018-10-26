@@ -79,6 +79,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditPermission.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditPermission.Designer.cs">
+      <DependentUpon>EditPermission.cs</DependentUpon>
+    </Compile>
     <Compile Include="deneme_Tablosu.cs">
       <DependentUpon>ModelKedi.tt</DependentUpon>
     </Compile>
@@ -174,6 +180,9 @@
     <Compile Include="Yetkiler.cs">
       <DependentUpon>ModelKedi.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="EditPermission.resx">
+      <DependentUpon>EditPermission.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AddPermission.resx">
       <DependentUpon>AddPermission.cs</DependentUpon>
     </EmbeddedResource>

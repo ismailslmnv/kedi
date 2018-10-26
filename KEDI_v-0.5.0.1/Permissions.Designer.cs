@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Permissions));
             this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
+            this.Back = new MetroFramework.Controls.MetroTile();
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
             this.metroPanel4 = new MetroFramework.Controls.MetroPanel();
             this.exit = new MetroFramework.Controls.MetroTile();
@@ -41,7 +42,6 @@
             this.metroPanel6 = new MetroFramework.Controls.MetroPanel();
             this.kullaniciMenu = new MetroFramework.Controls.MetroTile();
             this.yetkiMenu = new MetroFramework.Controls.MetroTile();
-            this.Back = new MetroFramework.Controls.MetroTile();
             this.metroPanel3.SuspendLayout();
             this.metroPanel2.SuspendLayout();
             this.metroPanel4.SuspendLayout();
@@ -67,6 +67,24 @@
             this.metroPanel3.VerticalScrollbarBarColor = true;
             this.metroPanel3.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel3.VerticalScrollbarSize = 10;
+            // 
+            // Back
+            // 
+            this.Back.ActiveControl = null;
+            this.Back.AutoSize = true;
+            this.Back.Dock = System.Windows.Forms.DockStyle.Left;
+            this.Back.Location = new System.Drawing.Point(0, 1);
+            this.Back.Margin = new System.Windows.Forms.Padding(0);
+            this.Back.Name = "Back";
+            this.Back.Size = new System.Drawing.Size(75, 48);
+            this.Back.Style = MetroFramework.MetroColorStyle.Purple;
+            this.Back.TabIndex = 3;
+            this.Back.Text = "Geri";
+            this.Back.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Back.TileImage = ((System.Drawing.Image)(resources.GetObject("Back.TileImage")));
+            this.Back.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Back.UseSelectable = true;
+            this.Back.Click += new System.EventHandler(this.Back_Click);
             // 
             // metroPanel2
             // 
@@ -258,24 +276,6 @@
             this.yetkiMenu.UseSelectable = true;
             this.yetkiMenu.Click += new System.EventHandler(this.yetkiMenu_Click);
             // 
-            // Back
-            // 
-            this.Back.ActiveControl = null;
-            this.Back.AutoSize = true;
-            this.Back.Dock = System.Windows.Forms.DockStyle.Left;
-            this.Back.Location = new System.Drawing.Point(0, 1);
-            this.Back.Margin = new System.Windows.Forms.Padding(0);
-            this.Back.Name = "Back";
-            this.Back.Size = new System.Drawing.Size(75, 48);
-            this.Back.Style = MetroFramework.MetroColorStyle.Purple;
-            this.Back.TabIndex = 3;
-            this.Back.Text = "Geri";
-            this.Back.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Back.TileImage = ((System.Drawing.Image)(resources.GetObject("Back.TileImage")));
-            this.Back.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Back.UseSelectable = true;
-            this.Back.Click += new System.EventHandler(this.Back_Click);
-            // 
             // Permissions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -290,6 +290,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Permissions_FormClosing);
             this.Load += new System.EventHandler(this.Permissions_Load);
+            this.VisibleChanged += new System.EventHandler(this.Permissions_VisibleChanged);
             this.metroPanel3.ResumeLayout(false);
             this.metroPanel3.PerformLayout();
             this.metroPanel2.ResumeLayout(false);

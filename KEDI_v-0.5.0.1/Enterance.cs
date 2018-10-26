@@ -132,10 +132,16 @@ namespace KEDI_v_0._5._0._1
         }
         private void Enterance_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show(this, "Uygulamayı Kapatmak İstediğinizden Emin Misiniz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-            if (result == DialogResult.Yes)
-                Application.Exit();
-            else e.Cancel=true;
+            if (!e.Cancel)
+            {
+                DialogResult result = MessageBox.Show(this, "Uygulamayı Kapatmak İstediğinizden Emin Misiniz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                if (result == DialogResult.Yes)
+                {
+                    e.Cancel = false;
+                    Application.Exit();
+                }                    
+                else e.Cancel = true;
+            }            
         }
         private void Enterance_VisibleChanged(object sender, EventArgs e)
         {

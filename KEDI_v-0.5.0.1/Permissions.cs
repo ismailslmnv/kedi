@@ -20,8 +20,7 @@ namespace KEDI_v_0._5._0._1
         public Permissions()
         {
             InitializeComponent();
-            username.Text = Enterance.usernameText;
-            getPermissionsFromDb();
+                    
         }
         private void Permissions_Load(object sender, EventArgs e)
         {
@@ -29,6 +28,7 @@ namespace KEDI_v_0._5._0._1
         }
         private void tileCreator(string tileText, string tileID)
         {
+            
             ComponentResourceManager resources = new ComponentResourceManager(typeof(Permissions));
             MetroTile permission = new MetroTile();
             permission.Dock = System.Windows.Forms.DockStyle.Top;
@@ -73,6 +73,8 @@ namespace KEDI_v_0._5._0._1
         }
         private void getPermissionsFromDb()
         {
+            tilePanel.Controls.Clear();
+            username.Text = Enterance.usernameText;
             try
             {
                 using (KEDIDBEntities context = new KEDIDBEntities())
@@ -97,7 +99,8 @@ namespace KEDI_v_0._5._0._1
 
         private void yetkiMenu_Click(object sender, EventArgs e)
         {
-
+            //this.Update();
+            //Application.DoEvents();
         }
         private void edit (string ID)
         {
@@ -105,9 +108,10 @@ namespace KEDI_v_0._5._0._1
             {
                 if (item.YetkiID.ToString().Equals(ID))
                 {
-                    MessageBox.Show(item.YetkiAdi);
-                    AddPermission add = new AddPermission();
-                    add.Show();
+                    //MessageBox.Show(item.YetkiID.ToString());
+                    EditPermission.YetkiID=item.YetkiID;
+                    EditPermission edit = new EditPermission();                    
+                    edit.Show();
                 }
             }
         }
@@ -141,6 +145,13 @@ namespace KEDI_v_0._5._0._1
         private void Permissions_FormClosing(object sender, FormClosingEventArgs e)
         {
             _thisClose();
+        }
+        private void Permissions_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+                getPermissionsFromDb();           
+            }
         }
     }
 }

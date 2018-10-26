@@ -41,7 +41,7 @@ namespace KEDI_v_0._5._0._1
 
         private void Cancel_Click(object sender, EventArgs e)
         {
-            this.Dispose();
+            _formClosing();
         }
 
         private void Delete_Click(object sender, EventArgs e)
@@ -71,18 +71,35 @@ namespace KEDI_v_0._5._0._1
                     };
                     KEDIDB.Yetkilers.Add(yetkiler);
                     KEDIDB.SaveChanges();
+                    MessageBox.Show("Yetki Başarıyla Eklendi.");                    
                 }
             } catch(Exception ex)
             {
 
                 MessageBox.Show(ex.ToString());
             }
+            _formClosing();
             Cursor.Current = Cursors.Default;
         }
         private  void reset()
         {
             AddPermission add = new AddPermission();
             add.Show();
+            this.Dispose();
+         //   _formClosing();            
+        }
+        private void _formClosing()
+        {
+            var PermissionsReloader = Application.OpenForms.Cast<Form>()
+              .FirstOrDefault(c => c is Permissions);
+            if (PermissionsReloader != null)
+            {
+                PermissionsReloader.Visible = false;
+                PermissionsReloader.Visible = true;
+                //MessageBox.Show("Test");
+                //  PermissionsReloader.Invalidate();
+                //Application.DoEvents();
+            }
             this.Dispose();
         }
     }
