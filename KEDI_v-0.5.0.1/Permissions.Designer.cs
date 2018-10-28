@@ -32,19 +32,16 @@
             this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
             this.Back = new MetroFramework.Controls.MetroTile();
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
-            this.metroPanel4 = new MetroFramework.Controls.MetroPanel();
-            this.exit = new MetroFramework.Controls.MetroTile();
             this.username = new MetroFramework.Controls.MetroTile();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.tilePanel = new MetroFramework.Controls.MetroPanel();
             this.metroPanel5 = new MetroFramework.Controls.MetroPanel();
-            this.metroTile1 = new MetroFramework.Controls.MetroTile();
+            this.add = new MetroFramework.Controls.MetroTile();
             this.metroPanel6 = new MetroFramework.Controls.MetroPanel();
             this.kullaniciMenu = new MetroFramework.Controls.MetroTile();
             this.yetkiMenu = new MetroFramework.Controls.MetroTile();
             this.metroPanel3.SuspendLayout();
             this.metroPanel2.SuspendLayout();
-            this.metroPanel4.SuspendLayout();
             this.metroPanel1.SuspendLayout();
             this.metroPanel5.SuspendLayout();
             this.metroPanel6.SuspendLayout();
@@ -88,15 +85,14 @@
             // 
             // metroPanel2
             // 
-            this.metroPanel2.Controls.Add(this.metroPanel4);
             this.metroPanel2.Controls.Add(this.username);
             this.metroPanel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.metroPanel2.HorizontalScrollbarBarColor = true;
             this.metroPanel2.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel2.HorizontalScrollbarSize = 10;
-            this.metroPanel2.Location = new System.Drawing.Point(979, 1);
+            this.metroPanel2.Location = new System.Drawing.Point(1022, 1);
             this.metroPanel2.Name = "metroPanel2";
-            this.metroPanel2.Size = new System.Drawing.Size(300, 48);
+            this.metroPanel2.Size = new System.Drawing.Size(257, 48);
             this.metroPanel2.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroPanel2.TabIndex = 2;
             this.metroPanel2.UseStyleColors = true;
@@ -104,42 +100,11 @@
             this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel2.VerticalScrollbarSize = 10;
             // 
-            // metroPanel4
-            // 
-            this.metroPanel4.Controls.Add(this.exit);
-            this.metroPanel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.metroPanel4.HorizontalScrollbarBarColor = true;
-            this.metroPanel4.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel4.HorizontalScrollbarSize = 10;
-            this.metroPanel4.Location = new System.Drawing.Point(255, 0);
-            this.metroPanel4.Name = "metroPanel4";
-            this.metroPanel4.Size = new System.Drawing.Size(45, 48);
-            this.metroPanel4.TabIndex = 3;
-            this.metroPanel4.VerticalScrollbarBarColor = true;
-            this.metroPanel4.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel4.VerticalScrollbarSize = 10;
-            // 
-            // exit
-            // 
-            this.exit.ActiveControl = null;
-            this.exit.Dock = System.Windows.Forms.DockStyle.Right;
-            this.exit.Location = new System.Drawing.Point(0, 0);
-            this.exit.Name = "exit";
-            this.exit.Size = new System.Drawing.Size(45, 48);
-            this.exit.Style = MetroFramework.MetroColorStyle.Blue;
-            this.exit.TabIndex = 2;
-            this.exit.TextAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.exit.TileImage = ((System.Drawing.Image)(resources.GetObject("exit.TileImage")));
-            this.exit.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.exit.UseSelectable = true;
-            this.exit.UseTileImage = true;
-            this.exit.Click += new System.EventHandler(this.exit_Click);
-            // 
             // username
             // 
             this.username.ActiveControl = null;
-            this.username.Dock = System.Windows.Forms.DockStyle.Left;
-            this.username.Location = new System.Drawing.Point(0, 0);
+            this.username.Dock = System.Windows.Forms.DockStyle.Right;
+            this.username.Location = new System.Drawing.Point(2, 0);
             this.username.Name = "username";
             this.username.Size = new System.Drawing.Size(255, 48);
             this.username.TabIndex = 2;
@@ -192,7 +157,7 @@
             // metroPanel5
             // 
             this.metroPanel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.metroPanel5.Controls.Add(this.metroTile1);
+            this.metroPanel5.Controls.Add(this.add);
             this.metroPanel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.metroPanel5.HorizontalScrollbarBarColor = true;
             this.metroPanel5.HorizontalScrollbarHighlightOnWheel = false;
@@ -208,23 +173,23 @@
             this.metroPanel5.VerticalScrollbarSize = 10;
             this.metroPanel5.Paint += new System.Windows.Forms.PaintEventHandler(this.metroPanel5_Paint);
             // 
-            // metroTile1
+            // add
             // 
-            this.metroTile1.ActiveControl = null;
-            this.metroTile1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.metroTile1.Location = new System.Drawing.Point(818, 82);
-            this.metroTile1.Name = "metroTile1";
-            this.metroTile1.Size = new System.Drawing.Size(184, 43);
-            this.metroTile1.TabIndex = 2;
-            this.metroTile1.Text = "Yetki Ekle";
-            this.metroTile1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.metroTile1.TileImage = ((System.Drawing.Image)(resources.GetObject("metroTile1.TileImage")));
-            this.metroTile1.TileImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.metroTile1.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
-            this.metroTile1.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.metroTile1.UseSelectable = true;
-            this.metroTile1.UseTileImage = true;
-            this.metroTile1.Click += new System.EventHandler(this.metroTile1_Click);
+            this.add.ActiveControl = null;
+            this.add.Dock = System.Windows.Forms.DockStyle.Right;
+            this.add.Location = new System.Drawing.Point(818, 82);
+            this.add.Name = "add";
+            this.add.Size = new System.Drawing.Size(184, 43);
+            this.add.TabIndex = 2;
+            this.add.Text = "Yetki Ekle";
+            this.add.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.add.TileImage = ((System.Drawing.Image)(resources.GetObject("add.TileImage")));
+            this.add.TileImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.add.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
+            this.add.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.add.UseSelectable = true;
+            this.add.UseTileImage = true;
+            this.add.Click += new System.EventHandler(this.metroTile1_Click);
             // 
             // metroPanel6
             // 
@@ -259,6 +224,7 @@
             this.kullaniciMenu.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
             this.kullaniciMenu.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
             this.kullaniciMenu.UseSelectable = true;
+            this.kullaniciMenu.Click += new System.EventHandler(this.kullaniciMenu_Click);
             // 
             // yetkiMenu
             // 
@@ -294,7 +260,6 @@
             this.metroPanel3.ResumeLayout(false);
             this.metroPanel3.PerformLayout();
             this.metroPanel2.ResumeLayout(false);
-            this.metroPanel4.ResumeLayout(false);
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel1.PerformLayout();
             this.metroPanel5.ResumeLayout(false);
@@ -307,15 +272,13 @@
 
         private MetroFramework.Controls.MetroPanel metroPanel3;
         private MetroFramework.Controls.MetroPanel metroPanel2;
-        private MetroFramework.Controls.MetroPanel metroPanel4;
-        private MetroFramework.Controls.MetroTile exit;
         private MetroFramework.Controls.MetroTile username;
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private MetroFramework.Controls.MetroPanel metroPanel5;
         private MetroFramework.Controls.MetroPanel metroPanel6;
         private MetroFramework.Controls.MetroTile kullaniciMenu;
         private MetroFramework.Controls.MetroTile yetkiMenu;
-        private MetroFramework.Controls.MetroTile metroTile1;
+        private MetroFramework.Controls.MetroTile add;
         private MetroFramework.Controls.MetroPanel tilePanel;
         private MetroFramework.Controls.MetroTile Back;
     }

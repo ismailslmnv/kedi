@@ -50,6 +50,7 @@
           <Property Name="KonumX" Type="decimal" Precision="10" Scale="5" Nullable="false" />
           <Property Name="KonumY" Type="decimal" Precision="10" Scale="5" Nullable="false" />
           <Property Name="Tarih" Type="datetime" Nullable="false" />
+          <Property Name="Aktif" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Odemes">
           <Key>
@@ -72,6 +73,7 @@
           <Property Name="Sifre" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Tarih" Type="datetime" Nullable="false" />
           <Property Name="TelefonNum" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="Aktif" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Salonlars">
           <Key>
@@ -329,6 +331,7 @@
           <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Salonlar" Relationship="Self.FK_Masalar_Salonlar" FromRole="Masalar" ToRole="Salonlar" />
           <NavigationProperty Name="Siparislers" Relationship="Self.FK_Siparisler_Masalar" FromRole="Masalar" ToRole="Siparisler" />
+          <Property Name="Aktif" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Odeme">
           <Key>
@@ -356,6 +359,7 @@
           <NavigationProperty Name="Yetkiler" Relationship="Self.FK_Personel_Yetkiler" FromRole="Personel" ToRole="Yetkiler" />
           <NavigationProperty Name="Siparislers" Relationship="Self.FK_Siparisler_Personel" FromRole="Personel" ToRole="Siparisler" />
           <NavigationProperty Name="GirisLogs" Relationship="ModelKediDB.FK_GirisLog_Personel" FromRole="Personel" ToRole="GirisLog" />
+          <Property Name="Aktif" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Salonlar">
           <Key>
@@ -670,7 +674,8 @@
     <EntitySetMapping Name="Masalars">
       <EntityTypeMapping TypeName="IsTypeOf(ModelKediDB.Masalar)">
         <MappingFragment StoreEntitySet="Masalars">
-          <ScalarProperty Name="MasaID" ColumnName="MasaID" />
+          <ScalarProperty Name="Aktif" ColumnName="Aktif" />
+                <ScalarProperty Name="MasaID" ColumnName="MasaID" />
           <ScalarProperty Name="MasaAdi" ColumnName="MasaAdi" />
           <ScalarProperty Name="SalonID" ColumnName="SalonID" />
           <ScalarProperty Name="KonumX" ColumnName="KonumX" />
@@ -694,7 +699,8 @@
     <EntitySetMapping Name="Personels">
       <EntityTypeMapping TypeName="IsTypeOf(ModelKediDB.Personel)">
         <MappingFragment StoreEntitySet="Personels">
-          <ScalarProperty Name="KullaniciID" ColumnName="KullaniciID" />
+          <ScalarProperty Name="Aktif" ColumnName="Aktif" />
+                <ScalarProperty Name="KullaniciID" ColumnName="KullaniciID" />
           <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
           <ScalarProperty Name="YetkiID" ColumnName="YetkiID" />
           <ScalarProperty Name="Sifre" ColumnName="Sifre" />

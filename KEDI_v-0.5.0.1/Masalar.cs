@@ -26,6 +26,7 @@ namespace KEDI_v_0._5._0._1
         public decimal KonumX { get; set; }
         public decimal KonumY { get; set; }
         public System.DateTime Tarih { get; set; }
+        public bool Aktif { get; set; }
     
         public virtual Salonlar Salonlar { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

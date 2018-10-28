@@ -17,10 +17,14 @@ namespace KEDI_v_0._5._0._1
     public partial class Permissions : MetroForm
     {        
         private List<Yetkiler> Yetkiler = new List<Yetkiler>();
+        private List<Personel> _Personels = new List<Personel>();
+        private short pressedControlButton = 0; // 0 - none // 1 - permissions // 2 - users
         public Permissions()
         {
             InitializeComponent();
-                    
+            username.Text = Enterance.usernameText;
+            add.Text = "";
+            add.Visible = false;
         }
         private void Permissions_Load(object sender, EventArgs e)
         {
@@ -46,7 +50,7 @@ namespace KEDI_v_0._5._0._1
        //     permission.UseTileImage = true;
             permission.Click += Permission_Click;
             tilePanel.Controls.Add(permission);
-            tilePanel.Controls.Add(breaker(tileID + 1));                      
+            tilePanel.Controls.Add(breaker(tileID + 1));                
         }
 
         private void Permission_Click(object sender, EventArgs e)
@@ -73,8 +77,9 @@ namespace KEDI_v_0._5._0._1
         }
         private void getPermissionsFromDb()
         {
-            tilePanel.Controls.Clear();
-            username.Text = Enterance.usernameText;
+            add.Text = "Yetki Ekle";
+            add.Visible = true;
+            tilePanel.Controls.Clear();            
             try
             {
                 using (KEDIDBEntities context = new KEDIDBEntities())
@@ -99,21 +104,33 @@ namespace KEDI_v_0._5._0._1
 
         private void yetkiMenu_Click(object sender, EventArgs e)
         {
-            //this.Update();
-            //Application.DoEvents();
+            pressedControlButton = 1;
+            getPermissionsFromDb();
         }
         private void edit (string ID)
         {
-            foreach (var item in Yetkiler)
-            {
-                if (item.YetkiID.ToString().Equals(ID))
+            if(pressedControlButton==1)
+                foreach (var item in Yetkiler)
                 {
-                    //MessageBox.Show(item.YetkiID.ToString());
-                    EditPermission.YetkiID=item.YetkiID;
-                    EditPermission edit = new EditPermission();                    
-                    edit.Show();
+                    if (item.YetkiID.ToString().Equals(ID))
+                    {
+                        //MessageBox.Show(item.YetkiID.ToString());
+                        EditPermission.YetkiID=item.YetkiID;
+                        EditPermission edit = new EditPermission();                    
+                        edit.Show();
+                    }
                 }
-            }
+            else if(pressedControlButton==2)
+                foreach (var item in _Personels)
+                {
+                    if (item.KullaniciID.ToString().Equals(ID))
+                    {
+                        //MessageBox.Show(item.YetkiID.ToString());
+                        EditPermission.YetkiID = item.YetkiID;
+                        EditPermission edit = new EditPermission();
+                        edit.Show();
+                    }
+                }
         }
 
         private void metroPanel5_Paint(object sender, PaintEventArgs e)
@@ -123,8 +140,17 @@ namespace KEDI_v_0._5._0._1
 
         private void metroTile1_Click(object sender, EventArgs e)
         {
-            AddPermission add = new AddPermission();
-            add.Show();
+            if(pressedControlButton==1)
+            {
+                AddPermission add = new AddPermission();
+                add.Show();
+            }
+            else if (pressedControlButton == 2)
+            {
+                AddPersonel add = new AddPersonel();
+                add.Show();
+            }
+            
         }
 
         private void exit_Click(object sender, EventArgs e)
@@ -150,8 +176,43 @@ namespace KEDI_v_0._5._0._1
         {
             if (this.Visible)
             {
-                getPermissionsFromDb();           
+                if (pressedControlButton == 1)
+                    getPermissionsFromDb();
+                else if (pressedControlButton == 2)
+                    getUsersFromDb();
             }
+        }
+        private void getUsersFromDb()
+        {
+            add.Text = "Personel Ekle";
+            add.Visible = true;
+            tilePanel.Controls.Clear();           
+            try
+            {
+                using (KEDIDBEntities context = new KEDIDBEntities())
+                {
+                    var result = (from kullanicilar in context.Personels select kullanicilar).DefaultIfEmpty().ToList();
+                    if (result != null)
+                    {
+                        foreach (var item in result)
+                        {
+                            tileCreator(item.KullaniciAdi, item.KullaniciID.ToString());
+                        }
+                        _Personels = result;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void kullaniciMenu_Click(object sender, EventArgs e)
+        {
+            pressedControlButton = 2;
+            getUsersFromDb();
         }
     }
 }
