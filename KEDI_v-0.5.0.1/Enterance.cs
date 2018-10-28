@@ -167,5 +167,11 @@ namespace KEDI_v_0._5._0._1
         {
             permissionController();
         }
+
+        private void urun_Click(object sender, EventArgs e)
+        {
+            Products products = new Products();
+            products.Show();
+        }
     }
 }

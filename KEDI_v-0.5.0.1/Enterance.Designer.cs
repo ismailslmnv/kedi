@@ -33,6 +33,7 @@
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.urun = new MetroFramework.Controls.MetroTile();
             this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
+            this.refresh = new MetroFramework.Controls.MetroTile();
             this.genelAyar = new MetroFramework.Controls.MetroTile();
             this.siparis = new MetroFramework.Controls.MetroTile();
             this.rapor = new MetroFramework.Controls.MetroTile();
@@ -41,7 +42,6 @@
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
             this.metroPanel4 = new MetroFramework.Controls.MetroPanel();
             this.exit = new MetroFramework.Controls.MetroTile();
-            this.refresh = new MetroFramework.Controls.MetroTile();
             this.metroPanel1.SuspendLayout();
             this.metroPanel3.SuspendLayout();
             this.metroPanel2.SuspendLayout();
@@ -107,6 +107,7 @@
             this.urun.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
             this.urun.UseSelectable = true;
             this.urun.UseTileImage = true;
+            this.urun.Click += new System.EventHandler(this.urun_Click);
             // 
             // metroPanel3
             // 
@@ -124,6 +125,22 @@
             this.metroPanel3.VerticalScrollbarBarColor = true;
             this.metroPanel3.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel3.VerticalScrollbarSize = 10;
+            // 
+            // refresh
+            // 
+            this.refresh.ActiveControl = null;
+            this.refresh.AutoSize = true;
+            this.refresh.Dock = System.Windows.Forms.DockStyle.Left;
+            this.refresh.Location = new System.Drawing.Point(3, 3);
+            this.refresh.Margin = new System.Windows.Forms.Padding(5);
+            this.refresh.Name = "refresh";
+            this.refresh.Size = new System.Drawing.Size(75, 43);
+            this.refresh.TabIndex = 2;
+            this.refresh.Text = "Yenile";
+            this.refresh.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.refresh.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
+            this.refresh.UseSelectable = true;
+            this.refresh.Click += new System.EventHandler(this.refresh_Click);
             // 
             // genelAyar
             // 
@@ -256,22 +273,6 @@
             this.exit.UseSelectable = true;
             this.exit.UseTileImage = true;
             this.exit.Click += new System.EventHandler(this.exit_Click);
-            // 
-            // refresh
-            // 
-            this.refresh.ActiveControl = null;
-            this.refresh.AutoSize = true;
-            this.refresh.Dock = System.Windows.Forms.DockStyle.Left;
-            this.refresh.Location = new System.Drawing.Point(3, 3);
-            this.refresh.Margin = new System.Windows.Forms.Padding(5);
-            this.refresh.Name = "refresh";
-            this.refresh.Size = new System.Drawing.Size(75, 43);
-            this.refresh.TabIndex = 2;
-            this.refresh.Text = "Yenile";
-            this.refresh.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.refresh.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
-            this.refresh.UseSelectable = true;
-            this.refresh.Click += new System.EventHandler(this.refresh_Click);
             // 
             // Enterance
             // 
