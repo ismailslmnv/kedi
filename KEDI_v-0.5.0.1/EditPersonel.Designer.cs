@@ -30,34 +30,20 @@
         {
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
-            this.metroPanel4 = new MetroFramework.Controls.MetroPanel();
-            this.metroPanel13 = new MetroFramework.Controls.MetroPanel();
-            this.Rapor = new MetroFramework.Controls.MetroCheckBox();
-            this.metroPanel12 = new MetroFramework.Controls.MetroPanel();
-            this.PersAyari = new MetroFramework.Controls.MetroCheckBox();
-            this.metroPanel11 = new MetroFramework.Controls.MetroPanel();
-            this.MasaAyari = new MetroFramework.Controls.MetroCheckBox();
-            this.metroPanel10 = new MetroFramework.Controls.MetroPanel();
-            this.UrunAyari = new MetroFramework.Controls.MetroCheckBox();
-            this.metroPanel8 = new MetroFramework.Controls.MetroPanel();
-            this.SipIptal = new MetroFramework.Controls.MetroCheckBox();
-            this.metroPanel7 = new MetroFramework.Controls.MetroPanel();
-            this.HesapAlma = new MetroFramework.Controls.MetroCheckBox();
-            this.metroPanel6 = new MetroFramework.Controls.MetroPanel();
-            this.masaTasima = new MetroFramework.Controls.MetroCheckBox();
-            this.metroPanel9 = new MetroFramework.Controls.MetroPanel();
-            this.masaAcma = new MetroFramework.Controls.MetroCheckBox();
-            this.metroPanel5 = new MetroFramework.Controls.MetroPanel();
-            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.yetkiAdi = new MetroFramework.Controls.MetroTextBox();
+            this.personelAdi = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
             this.OK = new MetroFramework.Controls.MetroTile();
             this.Delete = new MetroFramework.Controls.MetroTile();
             this.Cancel = new MetroFramework.Controls.MetroTile();
+            this.permSelect = new MetroFramework.Controls.MetroComboBox();
+            this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
+            this.telNum = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+            this.passw = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel1.SuspendLayout();
             this.metroPanel3.SuspendLayout();
-            this.metroPanel4.SuspendLayout();
             this.metroPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -81,9 +67,13 @@
             // 
             // metroPanel3
             // 
-            this.metroPanel3.Controls.Add(this.metroPanel4);
+            this.metroPanel3.Controls.Add(this.permSelect);
+            this.metroPanel3.Controls.Add(this.metroLabel4);
+            this.metroPanel3.Controls.Add(this.telNum);
             this.metroPanel3.Controls.Add(this.metroLabel2);
-            this.metroPanel3.Controls.Add(this.yetkiAdi);
+            this.metroPanel3.Controls.Add(this.passw);
+            this.metroPanel3.Controls.Add(this.metroLabel3);
+            this.metroPanel3.Controls.Add(this.personelAdi);
             this.metroPanel3.Controls.Add(this.metroLabel1);
             this.metroPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroPanel3.HorizontalScrollbarBarColor = true;
@@ -97,331 +87,48 @@
             this.metroPanel3.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel3.VerticalScrollbarSize = 10;
             // 
-            // metroPanel4
-            // 
-            this.metroPanel4.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.metroPanel4.Controls.Add(this.metroPanel13);
-            this.metroPanel4.Controls.Add(this.Rapor);
-            this.metroPanel4.Controls.Add(this.metroPanel12);
-            this.metroPanel4.Controls.Add(this.PersAyari);
-            this.metroPanel4.Controls.Add(this.metroPanel11);
-            this.metroPanel4.Controls.Add(this.MasaAyari);
-            this.metroPanel4.Controls.Add(this.metroPanel10);
-            this.metroPanel4.Controls.Add(this.UrunAyari);
-            this.metroPanel4.Controls.Add(this.metroPanel8);
-            this.metroPanel4.Controls.Add(this.SipIptal);
-            this.metroPanel4.Controls.Add(this.metroPanel7);
-            this.metroPanel4.Controls.Add(this.HesapAlma);
-            this.metroPanel4.Controls.Add(this.metroPanel6);
-            this.metroPanel4.Controls.Add(this.masaTasima);
-            this.metroPanel4.Controls.Add(this.metroPanel9);
-            this.metroPanel4.Controls.Add(this.masaAcma);
-            this.metroPanel4.Controls.Add(this.metroPanel5);
-            this.metroPanel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.metroPanel4.HorizontalScrollbarBarColor = true;
-            this.metroPanel4.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel4.HorizontalScrollbarSize = 10;
-            this.metroPanel4.Location = new System.Drawing.Point(0, 100);
-            this.metroPanel4.Name = "metroPanel4";
-            this.metroPanel4.Padding = new System.Windows.Forms.Padding(3, 3, 0, 0);
-            this.metroPanel4.Size = new System.Drawing.Size(419, 287);
-            this.metroPanel4.TabIndex = 5;
-            this.metroPanel4.UseCustomBackColor = true;
-            this.metroPanel4.VerticalScrollbarBarColor = true;
-            this.metroPanel4.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel4.VerticalScrollbarSize = 10;
-            this.metroPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.metroPanel4_Paint);
-            // 
-            // metroPanel13
-            // 
-            this.metroPanel13.Dock = System.Windows.Forms.DockStyle.Top;
-            this.metroPanel13.HorizontalScrollbarBarColor = true;
-            this.metroPanel13.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel13.HorizontalScrollbarSize = 10;
-            this.metroPanel13.Location = new System.Drawing.Point(3, 248);
-            this.metroPanel13.Name = "metroPanel13";
-            this.metroPanel13.Size = new System.Drawing.Size(406, 3);
-            this.metroPanel13.TabIndex = 25;
-            this.metroPanel13.UseCustomBackColor = true;
-            this.metroPanel13.VerticalScrollbarBarColor = true;
-            this.metroPanel13.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel13.VerticalScrollbarSize = 10;
-            // 
-            // Rapor
-            // 
-            this.Rapor.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Rapor.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Rapor.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-            this.Rapor.Location = new System.Drawing.Point(3, 220);
-            this.Rapor.Name = "Rapor";
-            this.Rapor.Size = new System.Drawing.Size(406, 28);
-            this.Rapor.Style = MetroFramework.MetroColorStyle.Yellow;
-            this.Rapor.TabIndex = 24;
-            this.Rapor.Text = "Rapor Alma";
-            this.Rapor.UseSelectable = true;
-            // 
-            // metroPanel12
-            // 
-            this.metroPanel12.Dock = System.Windows.Forms.DockStyle.Top;
-            this.metroPanel12.HorizontalScrollbarBarColor = true;
-            this.metroPanel12.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel12.HorizontalScrollbarSize = 10;
-            this.metroPanel12.Location = new System.Drawing.Point(3, 217);
-            this.metroPanel12.Name = "metroPanel12";
-            this.metroPanel12.Size = new System.Drawing.Size(406, 3);
-            this.metroPanel12.TabIndex = 23;
-            this.metroPanel12.UseCustomBackColor = true;
-            this.metroPanel12.VerticalScrollbarBarColor = true;
-            this.metroPanel12.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel12.VerticalScrollbarSize = 10;
-            // 
-            // PersAyari
-            // 
-            this.PersAyari.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.PersAyari.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PersAyari.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-            this.PersAyari.Location = new System.Drawing.Point(3, 189);
-            this.PersAyari.Name = "PersAyari";
-            this.PersAyari.Size = new System.Drawing.Size(406, 28);
-            this.PersAyari.Style = MetroFramework.MetroColorStyle.Yellow;
-            this.PersAyari.TabIndex = 22;
-            this.PersAyari.Text = "Yetki/Personel Ayarları";
-            this.PersAyari.UseSelectable = true;
-            // 
-            // metroPanel11
-            // 
-            this.metroPanel11.Dock = System.Windows.Forms.DockStyle.Top;
-            this.metroPanel11.HorizontalScrollbarBarColor = true;
-            this.metroPanel11.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel11.HorizontalScrollbarSize = 10;
-            this.metroPanel11.Location = new System.Drawing.Point(3, 186);
-            this.metroPanel11.Name = "metroPanel11";
-            this.metroPanel11.Size = new System.Drawing.Size(406, 3);
-            this.metroPanel11.TabIndex = 21;
-            this.metroPanel11.UseCustomBackColor = true;
-            this.metroPanel11.VerticalScrollbarBarColor = true;
-            this.metroPanel11.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel11.VerticalScrollbarSize = 10;
-            // 
-            // MasaAyari
-            // 
-            this.MasaAyari.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.MasaAyari.Dock = System.Windows.Forms.DockStyle.Top;
-            this.MasaAyari.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-            this.MasaAyari.Location = new System.Drawing.Point(3, 158);
-            this.MasaAyari.Name = "MasaAyari";
-            this.MasaAyari.Size = new System.Drawing.Size(406, 28);
-            this.MasaAyari.Style = MetroFramework.MetroColorStyle.Yellow;
-            this.MasaAyari.TabIndex = 20;
-            this.MasaAyari.Text = "Salon/Masa Ayarları";
-            this.MasaAyari.UseSelectable = true;
-            // 
-            // metroPanel10
-            // 
-            this.metroPanel10.Dock = System.Windows.Forms.DockStyle.Top;
-            this.metroPanel10.HorizontalScrollbarBarColor = true;
-            this.metroPanel10.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel10.HorizontalScrollbarSize = 10;
-            this.metroPanel10.Location = new System.Drawing.Point(3, 155);
-            this.metroPanel10.Name = "metroPanel10";
-            this.metroPanel10.Size = new System.Drawing.Size(406, 3);
-            this.metroPanel10.TabIndex = 19;
-            this.metroPanel10.UseCustomBackColor = true;
-            this.metroPanel10.VerticalScrollbarBarColor = true;
-            this.metroPanel10.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel10.VerticalScrollbarSize = 10;
-            // 
-            // UrunAyari
-            // 
-            this.UrunAyari.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.UrunAyari.Dock = System.Windows.Forms.DockStyle.Top;
-            this.UrunAyari.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-            this.UrunAyari.Location = new System.Drawing.Point(3, 127);
-            this.UrunAyari.Name = "UrunAyari";
-            this.UrunAyari.Size = new System.Drawing.Size(406, 28);
-            this.UrunAyari.Style = MetroFramework.MetroColorStyle.Yellow;
-            this.UrunAyari.TabIndex = 18;
-            this.UrunAyari.Text = "Menü/Ürün Ayarları";
-            this.UrunAyari.UseSelectable = true;
-            // 
-            // metroPanel8
-            // 
-            this.metroPanel8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.metroPanel8.HorizontalScrollbarBarColor = true;
-            this.metroPanel8.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel8.HorizontalScrollbarSize = 10;
-            this.metroPanel8.Location = new System.Drawing.Point(3, 124);
-            this.metroPanel8.Name = "metroPanel8";
-            this.metroPanel8.Size = new System.Drawing.Size(406, 3);
-            this.metroPanel8.TabIndex = 17;
-            this.metroPanel8.UseCustomBackColor = true;
-            this.metroPanel8.VerticalScrollbarBarColor = true;
-            this.metroPanel8.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel8.VerticalScrollbarSize = 10;
-            // 
-            // SipIptal
-            // 
-            this.SipIptal.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.SipIptal.Dock = System.Windows.Forms.DockStyle.Top;
-            this.SipIptal.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-            this.SipIptal.Location = new System.Drawing.Point(3, 96);
-            this.SipIptal.Name = "SipIptal";
-            this.SipIptal.Size = new System.Drawing.Size(406, 28);
-            this.SipIptal.Style = MetroFramework.MetroColorStyle.Yellow;
-            this.SipIptal.TabIndex = 16;
-            this.SipIptal.Text = "Hesap/Sipariş İptali";
-            this.SipIptal.UseSelectable = true;
-            // 
-            // metroPanel7
-            // 
-            this.metroPanel7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.metroPanel7.HorizontalScrollbarBarColor = true;
-            this.metroPanel7.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel7.HorizontalScrollbarSize = 10;
-            this.metroPanel7.Location = new System.Drawing.Point(3, 93);
-            this.metroPanel7.Name = "metroPanel7";
-            this.metroPanel7.Size = new System.Drawing.Size(406, 3);
-            this.metroPanel7.TabIndex = 15;
-            this.metroPanel7.UseCustomBackColor = true;
-            this.metroPanel7.VerticalScrollbarBarColor = true;
-            this.metroPanel7.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel7.VerticalScrollbarSize = 10;
-            // 
-            // HesapAlma
-            // 
-            this.HesapAlma.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.HesapAlma.Dock = System.Windows.Forms.DockStyle.Top;
-            this.HesapAlma.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-            this.HesapAlma.Location = new System.Drawing.Point(3, 65);
-            this.HesapAlma.Name = "HesapAlma";
-            this.HesapAlma.Size = new System.Drawing.Size(406, 28);
-            this.HesapAlma.Style = MetroFramework.MetroColorStyle.Yellow;
-            this.HesapAlma.TabIndex = 14;
-            this.HesapAlma.Text = "Hesap Alma";
-            this.HesapAlma.UseSelectable = true;
-            // 
-            // metroPanel6
-            // 
-            this.metroPanel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.metroPanel6.HorizontalScrollbarBarColor = true;
-            this.metroPanel6.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel6.HorizontalScrollbarSize = 10;
-            this.metroPanel6.Location = new System.Drawing.Point(3, 62);
-            this.metroPanel6.Name = "metroPanel6";
-            this.metroPanel6.Size = new System.Drawing.Size(406, 3);
-            this.metroPanel6.TabIndex = 13;
-            this.metroPanel6.UseCustomBackColor = true;
-            this.metroPanel6.VerticalScrollbarBarColor = true;
-            this.metroPanel6.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel6.VerticalScrollbarSize = 10;
-            // 
-            // masaTasima
-            // 
-            this.masaTasima.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.masaTasima.Dock = System.Windows.Forms.DockStyle.Top;
-            this.masaTasima.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-            this.masaTasima.Location = new System.Drawing.Point(3, 34);
-            this.masaTasima.Name = "masaTasima";
-            this.masaTasima.Size = new System.Drawing.Size(406, 28);
-            this.masaTasima.Style = MetroFramework.MetroColorStyle.Yellow;
-            this.masaTasima.TabIndex = 12;
-            this.masaTasima.Text = "Masa Taşıma/Birleştirme";
-            this.masaTasima.UseSelectable = true;
-            // 
-            // metroPanel9
-            // 
-            this.metroPanel9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.metroPanel9.HorizontalScrollbarBarColor = true;
-            this.metroPanel9.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel9.HorizontalScrollbarSize = 10;
-            this.metroPanel9.Location = new System.Drawing.Point(3, 31);
-            this.metroPanel9.Name = "metroPanel9";
-            this.metroPanel9.Size = new System.Drawing.Size(406, 3);
-            this.metroPanel9.TabIndex = 11;
-            this.metroPanel9.UseCustomBackColor = true;
-            this.metroPanel9.VerticalScrollbarBarColor = true;
-            this.metroPanel9.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel9.VerticalScrollbarSize = 10;
-            // 
-            // masaAcma
-            // 
-            this.masaAcma.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.masaAcma.Dock = System.Windows.Forms.DockStyle.Top;
-            this.masaAcma.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-            this.masaAcma.Location = new System.Drawing.Point(3, 3);
-            this.masaAcma.Name = "masaAcma";
-            this.masaAcma.Size = new System.Drawing.Size(406, 28);
-            this.masaAcma.Style = MetroFramework.MetroColorStyle.Yellow;
-            this.masaAcma.TabIndex = 10;
-            this.masaAcma.Text = "Masa Açma";
-            this.masaAcma.UseSelectable = true;
-            // 
-            // metroPanel5
-            // 
-            this.metroPanel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.metroPanel5.HorizontalScrollbarBarColor = true;
-            this.metroPanel5.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel5.HorizontalScrollbarSize = 10;
-            this.metroPanel5.Location = new System.Drawing.Point(409, 3);
-            this.metroPanel5.Margin = new System.Windows.Forms.Padding(0);
-            this.metroPanel5.Name = "metroPanel5";
-            this.metroPanel5.Size = new System.Drawing.Size(10, 284);
-            this.metroPanel5.TabIndex = 2;
-            this.metroPanel5.VerticalScrollbarBarColor = true;
-            this.metroPanel5.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel5.VerticalScrollbarSize = 10;
-            // 
-            // metroLabel2
-            // 
-            this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(3, 78);
-            this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(80, 19);
-            this.metroLabel2.TabIndex = 4;
-            this.metroLabel2.Text = "Etki Alanları:";
-            // 
-            // yetkiAdi
+            // personelAdi
             // 
             // 
             // 
             // 
-            this.yetkiAdi.CustomButton.Image = null;
-            this.yetkiAdi.CustomButton.Location = new System.Drawing.Point(383, 2);
-            this.yetkiAdi.CustomButton.Name = "";
-            this.yetkiAdi.CustomButton.Size = new System.Drawing.Size(25, 25);
-            this.yetkiAdi.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.yetkiAdi.CustomButton.TabIndex = 1;
-            this.yetkiAdi.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.yetkiAdi.CustomButton.UseSelectable = true;
-            this.yetkiAdi.CustomButton.Visible = false;
-            this.yetkiAdi.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.yetkiAdi.Lines = new string[0];
-            this.yetkiAdi.Location = new System.Drawing.Point(4, 32);
-            this.yetkiAdi.MaxLength = 32767;
-            this.yetkiAdi.Name = "yetkiAdi";
-            this.yetkiAdi.PasswordChar = '\0';
-            this.yetkiAdi.PromptText = "Yetki Adı Giriniz";
-            this.yetkiAdi.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.yetkiAdi.SelectedText = "";
-            this.yetkiAdi.SelectionLength = 0;
-            this.yetkiAdi.SelectionStart = 0;
-            this.yetkiAdi.ShortcutsEnabled = true;
-            this.yetkiAdi.Size = new System.Drawing.Size(411, 30);
-            this.yetkiAdi.TabIndex = 3;
-            this.yetkiAdi.UseSelectable = true;
-            this.yetkiAdi.WaterMark = "Yetki Adı Giriniz";
-            this.yetkiAdi.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.yetkiAdi.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.yetkiAdi.Click += new System.EventHandler(this.metroTextBox1_Click);
+            this.personelAdi.CustomButton.Image = null;
+            this.personelAdi.CustomButton.Location = new System.Drawing.Point(383, 2);
+            this.personelAdi.CustomButton.Name = "";
+            this.personelAdi.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.personelAdi.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.personelAdi.CustomButton.TabIndex = 1;
+            this.personelAdi.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.personelAdi.CustomButton.UseSelectable = true;
+            this.personelAdi.CustomButton.Visible = false;
+            this.personelAdi.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.personelAdi.Lines = new string[0];
+            this.personelAdi.Location = new System.Drawing.Point(4, 32);
+            this.personelAdi.MaxLength = 32767;
+            this.personelAdi.Name = "personelAdi";
+            this.personelAdi.PasswordChar = '\0';
+            this.personelAdi.PromptText = "Personel İsmini Giriniz";
+            this.personelAdi.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.personelAdi.SelectedText = "";
+            this.personelAdi.SelectionLength = 0;
+            this.personelAdi.SelectionStart = 0;
+            this.personelAdi.ShortcutsEnabled = true;
+            this.personelAdi.Size = new System.Drawing.Size(411, 30);
+            this.personelAdi.TabIndex = 3;
+            this.personelAdi.UseSelectable = true;
+            this.personelAdi.WaterMark = "Personel İsmini Giriniz";
+            this.personelAdi.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.personelAdi.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.personelAdi.Click += new System.EventHandler(this.personelAdi_Click);
             // 
             // metroLabel1
             // 
             this.metroLabel1.AutoSize = true;
             this.metroLabel1.Location = new System.Drawing.Point(3, 9);
             this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(62, 19);
+            this.metroLabel1.Size = new System.Drawing.Size(145, 19);
             this.metroLabel1.TabIndex = 2;
-            this.metroLabel1.Text = "Yetki Adı:";
+            this.metroLabel1.Text = "Personel Adı ve Soyadı:";
             // 
             // metroPanel2
             // 
@@ -488,6 +195,111 @@
             this.Cancel.UseStyleColors = true;
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
+            // permSelect
+            // 
+            this.permSelect.FormattingEnabled = true;
+            this.permSelect.ItemHeight = 23;
+            this.permSelect.Location = new System.Drawing.Point(3, 198);
+            this.permSelect.Name = "permSelect";
+            this.permSelect.PromptText = "Yetkiler";
+            this.permSelect.Size = new System.Drawing.Size(410, 29);
+            this.permSelect.TabIndex = 18;
+            this.permSelect.UseSelectable = true;
+            // 
+            // metroLabel4
+            // 
+            this.metroLabel4.AutoSize = true;
+            this.metroLabel4.Location = new System.Drawing.Point(3, 176);
+            this.metroLabel4.Name = "metroLabel4";
+            this.metroLabel4.Size = new System.Drawing.Size(81, 19);
+            this.metroLabel4.TabIndex = 17;
+            this.metroLabel4.Text = "Yetki Seçiniz:";
+            // 
+            // telNum
+            // 
+            // 
+            // 
+            // 
+            this.telNum.CustomButton.Image = null;
+            this.telNum.CustomButton.Location = new System.Drawing.Point(383, 2);
+            this.telNum.CustomButton.Name = "";
+            this.telNum.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.telNum.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.telNum.CustomButton.TabIndex = 1;
+            this.telNum.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.telNum.CustomButton.UseSelectable = true;
+            this.telNum.CustomButton.Visible = false;
+            this.telNum.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.telNum.Lines = new string[0];
+            this.telNum.Location = new System.Drawing.Point(3, 143);
+            this.telNum.MaxLength = 11;
+            this.telNum.Name = "telNum";
+            this.telNum.PasswordChar = '\0';
+            this.telNum.PromptText = "Telefon Numarası Giriniz";
+            this.telNum.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.telNum.SelectedText = "";
+            this.telNum.SelectionLength = 0;
+            this.telNum.SelectionStart = 0;
+            this.telNum.ShortcutsEnabled = true;
+            this.telNum.Size = new System.Drawing.Size(411, 30);
+            this.telNum.TabIndex = 16;
+            this.telNum.UseSelectable = true;
+            this.telNum.WaterMark = "Telefon Numarası Giriniz";
+            this.telNum.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.telNum.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // metroLabel2
+            // 
+            this.metroLabel2.AutoSize = true;
+            this.metroLabel2.Location = new System.Drawing.Point(2, 120);
+            this.metroLabel2.Name = "metroLabel2";
+            this.metroLabel2.Size = new System.Drawing.Size(113, 19);
+            this.metroLabel2.TabIndex = 15;
+            this.metroLabel2.Text = "Telefon Numarası:";
+            // 
+            // passw
+            // 
+            // 
+            // 
+            // 
+            this.passw.CustomButton.Image = null;
+            this.passw.CustomButton.Location = new System.Drawing.Point(383, 2);
+            this.passw.CustomButton.Name = "";
+            this.passw.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.passw.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.passw.CustomButton.TabIndex = 1;
+            this.passw.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.passw.CustomButton.UseSelectable = true;
+            this.passw.CustomButton.Visible = false;
+            this.passw.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.passw.Lines = new string[0];
+            this.passw.Location = new System.Drawing.Point(2, 87);
+            this.passw.MaxLength = 32767;
+            this.passw.Name = "passw";
+            this.passw.PasswordChar = '\0';
+            this.passw.PromptText = "Şifre Giriniz";
+            this.passw.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.passw.SelectedText = "";
+            this.passw.SelectionLength = 0;
+            this.passw.SelectionStart = 0;
+            this.passw.ShortcutsEnabled = true;
+            this.passw.Size = new System.Drawing.Size(411, 30);
+            this.passw.TabIndex = 14;
+            this.passw.UseSelectable = true;
+            this.passw.WaterMark = "Şifre Giriniz";
+            this.passw.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.passw.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.passw.Click += new System.EventHandler(this.passw_Click);
+            // 
+            // metroLabel3
+            // 
+            this.metroLabel3.AutoSize = true;
+            this.metroLabel3.Location = new System.Drawing.Point(3, 65);
+            this.metroLabel3.Name = "metroLabel3";
+            this.metroLabel3.Size = new System.Drawing.Size(46, 19);
+            this.metroLabel3.TabIndex = 13;
+            this.metroLabel3.Text = "Şifresi:";
+            // 
             // EditPersonel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -502,7 +314,7 @@
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
             this.ShowIcon = false;
             this.Style = MetroFramework.MetroColorStyle.Yellow;
-            this.Text = "Yetki Düzenleme";
+            this.Text = "Personel Bilgileri Düzenleme";
             this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditPermission_FormClosing);
@@ -510,7 +322,6 @@
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel3.ResumeLayout(false);
             this.metroPanel3.PerformLayout();
-            this.metroPanel4.ResumeLayout(false);
             this.metroPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -520,30 +331,17 @@
 
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private MetroFramework.Controls.MetroPanel metroPanel3;
-        private MetroFramework.Controls.MetroPanel metroPanel4;
-        private MetroFramework.Controls.MetroLabel metroLabel2;
-        private MetroFramework.Controls.MetroTextBox yetkiAdi;
+        private MetroFramework.Controls.MetroTextBox personelAdi;
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroPanel metroPanel2;
         private MetroFramework.Controls.MetroTile OK;
         private MetroFramework.Controls.MetroTile Delete;
         private MetroFramework.Controls.MetroTile Cancel;
-        private MetroFramework.Controls.MetroCheckBox UrunAyari;
-        private MetroFramework.Controls.MetroPanel metroPanel8;
-        private MetroFramework.Controls.MetroCheckBox SipIptal;
-        private MetroFramework.Controls.MetroPanel metroPanel7;
-        private MetroFramework.Controls.MetroCheckBox HesapAlma;
-        private MetroFramework.Controls.MetroPanel metroPanel6;
-        private MetroFramework.Controls.MetroCheckBox masaTasima;
-        private MetroFramework.Controls.MetroPanel metroPanel9;
-        private MetroFramework.Controls.MetroCheckBox masaAcma;
-        private MetroFramework.Controls.MetroPanel metroPanel5;
-        private MetroFramework.Controls.MetroCheckBox MasaAyari;
-        private MetroFramework.Controls.MetroPanel metroPanel10;
-        private MetroFramework.Controls.MetroCheckBox PersAyari;
-        private MetroFramework.Controls.MetroPanel metroPanel11;
-        private MetroFramework.Controls.MetroPanel metroPanel13;
-        private MetroFramework.Controls.MetroCheckBox Rapor;
-        private MetroFramework.Controls.MetroPanel metroPanel12;
+        private MetroFramework.Controls.MetroComboBox permSelect;
+        private MetroFramework.Controls.MetroLabel metroLabel4;
+        private MetroFramework.Controls.MetroTextBox telNum;
+        private MetroFramework.Controls.MetroLabel metroLabel2;
+        private MetroFramework.Controls.MetroTextBox passw;
+        private MetroFramework.Controls.MetroLabel metroLabel3;
     }
 }

@@ -27,16 +27,12 @@ namespace KEDI_v_0._5._0._1
                 using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
                 {
                     var result = (from yetkiler in kEDIDB.Yetkilers
-                                  select new
-                                        {
-                                            yetkiler.YetkiAdi,
-                                            yetkiler.YetkiID
-                                        }).DefaultIfEmpty().ToList();
+                                  select yetkiler.YetkiAdi).DefaultIfEmpty().ToList();
                     if (result != null)
                     {
                         foreach(var item in result)
                         {
-                            permSelect.Items.Add(item.YetkiAdi);
+                            permSelect.Items.Add(item);
                         }
                     }
                 }
@@ -86,7 +82,7 @@ namespace KEDI_v_0._5._0._1
         }
         private void OK_Clicked()
         {            
-            if (intChecker(telNum.Text)&&permSelect.SelectedItem!=null)
+            if (intChecker(telNum.Text))
             {
                 int permID = _comboboxSolver();
                 if (permID >= 0)
@@ -102,11 +98,13 @@ namespace KEDI_v_0._5._0._1
                                 Sifre = passw.Text,
                                 TelefonNum = telNum.Text,
                                 YetkiID = permID,
-                                Tarih = DateTime.Now
+                                Tarih = DateTime.Now,
+                                Enabled=true
+                                
                             };
                             KEDIDB.Personels.Add(personel);
                             KEDIDB.SaveChanges();
-                            MessageBox.Show("Yetki Başarıyla Eklendi.");
+                            MessageBox.Show("Kullanıcı Başarıyla Eklendi.");
                         }
                     }
                     catch (Exception ex)
@@ -117,15 +115,11 @@ namespace KEDI_v_0._5._0._1
                 }
                 else
                 {
-                    MessageBox.Show("Birşeyler Yanlış Gitti İşlem Tamamlanamadı..");
+                    MessageBox.Show("Birşeyler Yanlış Gitti. İşlem Tamamlanamadı..");
                 }
                 _formClosing();
                 Cursor.Current = Cursors.Default;
-            }
-            else
-            {
-                MessageBox.Show("Lütfen Telefon Numarası Alanına Sadece Sayı Giriniz..");
-            }
+            }            
         }
         private  void reset()
         {
@@ -147,8 +141,9 @@ namespace KEDI_v_0._5._0._1
         private bool intChecker(string text)
         {
             try
-            {                
-                if (text != null)
+            {
+                if (text != null && personelAdi.Text != null && passw.Text != null && permSelect.SelectedItem != null)
+                {
                     foreach (char item in text)
                     {
                         if (item != ' ' || item != '\t' || item != '\n')
@@ -167,15 +162,19 @@ namespace KEDI_v_0._5._0._1
                                 case '9': break;
                                 default: return false;
                             }
-                        }                        
+                        }
                     }
-                return true;
+                    return true;
+                }
+                else
+                    MessageBox.Show("Bütün Alanların Doldurulması Zorunludur.s");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-                return false;
+               
             }
+            return false;
         }
     }
 }

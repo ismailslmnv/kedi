@@ -94,6 +94,7 @@ namespace KEDI_v_0._5._0._1
                     var result = (from user in context.Personels
                                   where user.TelefonNum.Equals(number)
                                   where user.Sifre.Equals(pass)
+                                  where user.Enabled==true
                                   select user).FirstOrDefault();
                     if(result != null)
                     {

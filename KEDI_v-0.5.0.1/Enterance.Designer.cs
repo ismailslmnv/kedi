@@ -41,7 +41,9 @@
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
             this.metroPanel4 = new MetroFramework.Controls.MetroPanel();
             this.exit = new MetroFramework.Controls.MetroTile();
+            this.refresh = new MetroFramework.Controls.MetroTile();
             this.metroPanel1.SuspendLayout();
+            this.metroPanel3.SuspendLayout();
             this.metroPanel2.SuspendLayout();
             this.metroPanel4.SuspendLayout();
             this.SuspendLayout();
@@ -108,12 +110,15 @@
             // 
             // metroPanel3
             // 
+            this.metroPanel3.Controls.Add(this.refresh);
             this.metroPanel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.metroPanel3.HorizontalScrollbarBarColor = true;
             this.metroPanel3.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel3.HorizontalScrollbarSize = 10;
             this.metroPanel3.Location = new System.Drawing.Point(0, 0);
+            this.metroPanel3.Margin = new System.Windows.Forms.Padding(5);
             this.metroPanel3.Name = "metroPanel3";
+            this.metroPanel3.Padding = new System.Windows.Forms.Padding(3);
             this.metroPanel3.Size = new System.Drawing.Size(800, 49);
             this.metroPanel3.TabIndex = 8;
             this.metroPanel3.VerticalScrollbarBarColor = true;
@@ -252,6 +257,22 @@
             this.exit.UseTileImage = true;
             this.exit.Click += new System.EventHandler(this.exit_Click);
             // 
+            // refresh
+            // 
+            this.refresh.ActiveControl = null;
+            this.refresh.AutoSize = true;
+            this.refresh.Dock = System.Windows.Forms.DockStyle.Left;
+            this.refresh.Location = new System.Drawing.Point(3, 3);
+            this.refresh.Margin = new System.Windows.Forms.Padding(5);
+            this.refresh.Name = "refresh";
+            this.refresh.Size = new System.Drawing.Size(75, 43);
+            this.refresh.TabIndex = 2;
+            this.refresh.Text = "Yenile";
+            this.refresh.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.refresh.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
+            this.refresh.UseSelectable = true;
+            this.refresh.Click += new System.EventHandler(this.refresh_Click);
+            // 
             // Enterance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -272,6 +293,8 @@
             this.Load += new System.EventHandler(this.Enterance_Load);
             this.VisibleChanged += new System.EventHandler(this.Enterance_VisibleChanged);
             this.metroPanel1.ResumeLayout(false);
+            this.metroPanel3.ResumeLayout(false);
+            this.metroPanel3.PerformLayout();
             this.metroPanel2.ResumeLayout(false);
             this.metroPanel4.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -293,5 +316,6 @@
         private MetroFramework.Controls.MetroTile urun;
         private MetroFramework.Controls.MetroTile siparis;
         private MetroFramework.Controls.MetroTile username;
+        private MetroFramework.Controls.MetroTile refresh;
     }
 }

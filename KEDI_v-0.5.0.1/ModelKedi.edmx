@@ -74,6 +74,8 @@
           <Property Name="Tarih" Type="datetime" Nullable="false" />
           <Property Name="TelefonNum" Type="nvarchar" MaxLength="11" Nullable="false" />
           <Property Name="Aktif" Type="bit" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="DisableTarih" Type="datetime" />
         </EntityType>
         <EntityType Name="Salonlars">
           <Key>
@@ -135,7 +137,9 @@
           <Property Name="Raporlama" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_GirisLog_Personel">
-          <End Role="Personels" Type="Self.Personels" Multiplicity="1" />
+          <End Role="Personels" Type="Self.Personels" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="GirisLogs" Type="Self.GirisLogs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Personels">
@@ -360,6 +364,8 @@
           <NavigationProperty Name="Siparislers" Relationship="Self.FK_Siparisler_Personel" FromRole="Personel" ToRole="Siparisler" />
           <NavigationProperty Name="GirisLogs" Relationship="ModelKediDB.FK_GirisLog_Personel" FromRole="Personel" ToRole="GirisLog" />
           <Property Name="Aktif" Type="Boolean" Nullable="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="DisableTarih" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Salonlar">
           <Key>
@@ -699,7 +705,9 @@
     <EntitySetMapping Name="Personels">
       <EntityTypeMapping TypeName="IsTypeOf(ModelKediDB.Personel)">
         <MappingFragment StoreEntitySet="Personels">
-          <ScalarProperty Name="Aktif" ColumnName="Aktif" />
+          <ScalarProperty Name="DisableTarih" ColumnName="DisableTarih" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="Aktif" ColumnName="Aktif" />
                 <ScalarProperty Name="KullaniciID" ColumnName="KullaniciID" />
           <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
           <ScalarProperty Name="YetkiID" ColumnName="YetkiID" />

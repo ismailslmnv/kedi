@@ -128,7 +128,7 @@ namespace KEDI_v_0._5._0._1
         {
             Permissions permissions = new Permissions();
             permissions.Show();
-            this.Hide();
+            ///this.Hide();
         }
         private void Enterance_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -162,5 +162,10 @@ namespace KEDI_v_0._5._0._1
             }
         }
         private static Enterance _enterance;
+
+        private void refresh_Click(object sender, EventArgs e)
+        {
+            permissionController();
+        }
     }
 }

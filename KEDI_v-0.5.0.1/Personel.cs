@@ -28,6 +28,8 @@ namespace KEDI_v_0._5._0._1
         public System.DateTime Tarih { get; set; }
         public string TelefonNum { get; set; }
         public bool Aktif { get; set; }
+        public bool Enabled { get; set; }
+        public Nullable<System.DateTime> DisableTarih { get; set; }
     
         public virtual Yetkiler Yetkiler { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

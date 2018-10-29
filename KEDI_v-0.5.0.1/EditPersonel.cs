@@ -24,22 +24,18 @@ namespace KEDI_v_0._5._0._1
         {
             try
             {
+                
                 int _PersonelID =PersonelID;
                 using (KEDIDBEntities KEDIDB = new KEDIDBEntities())
                 {
-                    var result = (from y in KEDIDB.Yetkilers where y.YetkiID == _PersonelID
-                                  select y).FirstOrDefault();
+                    var result = (from pers in KEDIDB.Personels where pers.KullaniciID == _PersonelID
+                                  select pers).FirstOrDefault();
                     if (result != null)
                     {
-                        this.yetkiAdi.Text = result.YetkiAdi;
-                        this.masaAcma.Checked = result.MasaAcma;
-                        this.masaTasima.Checked = result.MasaTasima;
-                        this.HesapAlma.Checked = result.HesapAlma;
-                        this.SipIptal.Checked = result.HesapIptal;
-                        this.UrunAyari.Checked = result.UrunAyarlari;
-                        this.MasaAyari.Checked = result.MasaAyarlari;
-                        this.PersAyari.Checked = result.PersonelAyarlari;
-                        this.Rapor.Checked = result.Raporlama;
+                        this.personelAdi.Text = result.KullaniciAdi;
+                        this.passw.Text = result.Sifre;
+                        this.telNum.Text = result.TelefonNum;
+                        _comboboxCreator(result.YetkiID);                        
                     }
                     else
                     {
@@ -54,16 +50,6 @@ namespace KEDI_v_0._5._0._1
                 this.Dispose();
             }
         }
-        private void metroPanel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void metroTextBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void OK_Click(object sender, EventArgs e)
         {
             OK_Clicked();
@@ -83,26 +69,24 @@ namespace KEDI_v_0._5._0._1
         {
             try
             {
-                int _PersonelID =PersonelID;
-                Cursor.Current = Cursors.WaitCursor;
-                using (KEDIDBEntities KEDIDB = new KEDIDBEntities())
+                if (intChecker(telNum.Text))
                 {
-                    var result = (from y in KEDIDB.Yetkilers where y.YetkiID == _PersonelID select y).FirstOrDefault();
-                    if (result != null)
+                    int permID = _comboboxSolver();
+                    int _PersonelID = PersonelID;
+                    Cursor.Current = Cursors.WaitCursor;
+                    using (KEDIDBEntities KEDIDB = new KEDIDBEntities())
                     {
-                        result.YetkiAdi = yetkiAdi.Text;
-                        result.MasaAcma = masaAcma.Checked;
-                        result.MasaBirlestirme = masaTasima.Checked;
-                        result.MasaTasima = masaTasima.Checked;
-                        result.HesapAlma = this.HesapAlma.Checked;
-                        result.HesapIptal = this.SipIptal.Checked;
-                        result.UrunAyarlari = this.UrunAyari.Checked;
-                        result.MasaAyarlari = this.MasaAyari.Checked;
-                        result.PersonelAyarlari = this.PersAyari.Checked;
-                        result.Raporlama = this.Rapor.Checked;
+                        var result = (from pers in KEDIDB.Personels where pers.KullaniciID == _PersonelID select pers).FirstOrDefault();
+                        if (result != null)
+                        {
+                            result.KullaniciAdi = personelAdi.Text;
+                            result.Sifre = passw.Text;
+                            result.TelefonNum = telNum.Text;
+                            result.YetkiID = permID;
+                        }
+                        KEDIDB.SaveChanges();
+                        MessageBox.Show("Güncelleme Başarılı..");
                     }
-                    KEDIDB.SaveChanges();
-                    MessageBox.Show("Güncelleme Başarılı..");
                 }
             } catch (Exception ex)
             {
@@ -120,15 +104,16 @@ namespace KEDI_v_0._5._0._1
                 int _PersonelID =PersonelID;
                 using (KEDIDBEntities KEDIDB = new KEDIDBEntities())
                 {
-                    var result = (from y in KEDIDB.Yetkilers where y.YetkiID == _PersonelID
-                                  select y).FirstOrDefault();
+                    var result = (from pers in KEDIDB.Personels where pers.KullaniciID == _PersonelID
+                                  select pers).FirstOrDefault();
                     if (result != null)
                     {
-                        KEDIDB.Yetkilers.Remove(result);
-                        MessageBox.Show("Yetki Başarıyla Silindi.");
+                        result.Enabled = false;
+                        result.DisableTarih = DateTime.Now;
+                        KEDIDB.SaveChanges();
+                        MessageBox.Show("Kullanıcı Başarıyla Silindi.");
                     }
-                    else MessageBox.Show("Beklenmedik Bir Hata Oluştu.");
-                    KEDIDB.SaveChanges();
+                    else MessageBox.Show("Beklenmedik Bir Hata Oluştu.");                    
                     this.Dispose();
                 }
 
@@ -152,9 +137,6 @@ namespace KEDI_v_0._5._0._1
             {
                 PermissionsReloader.Visible = false;
                 PermissionsReloader.Visible = true;
-                //MessageBox.Show("Test");
-                //  PermissionsReloader.Invalidate();
-                //Application.DoEvents();
             }
 
         }
@@ -162,6 +144,97 @@ namespace KEDI_v_0._5._0._1
         private void EditPersonel_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void personelAdi_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void passw_Click(object sender, EventArgs e)
+        {
+
+        }
+        private bool intChecker(string text)
+        {
+            try
+            {
+                if (text != null && personelAdi.Text != null && passw.Text != null && permSelect.SelectedItem != null)
+                {
+                    foreach (char item in text)
+                    {
+                        if (item != ' ' || item != '\t' || item != '\n')
+                        {
+                            switch (item)
+                            {
+                                case '0': break;
+                                case '1': break;
+                                case '2': break;
+                                case '3': break;
+                                case '4': break;
+                                case '5': break;
+                                case '6': break;
+                                case '7': break;
+                                case '8': break;
+                                case '9': break;
+                                default: return false;
+                            }
+                        }
+                    }
+                    return true;
+                }
+                else
+                    MessageBox.Show("Bütün Alanların Doldurulması Zorunludur.s");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+
+            }
+            return false;
+        }
+        private int _comboboxSolver()
+        {
+            try
+            {
+                string selectedItem = permSelect.SelectedItem.ToString();
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from yetki in kEDIDB.Yetkilers where yetki.YetkiAdi.Equals(selectedItem) select yetki.YetkiID).FirstOrDefault();
+                    if (result > 0)
+                        return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            return -1;
+        }
+        private void  _comboboxCreator(int permID)
+        {
+            try
+            {
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from yetki in kEDIDB.Yetkilers where yetki.YetkiID == permID
+                                  select yetki.YetkiAdi).FirstOrDefault();
+                    var _result = (from yetki in kEDIDB.Yetkilers
+                                   select yetki.YetkiAdi).DefaultIfEmpty().ToList();
+                    if(_result != null)
+                    {
+                        foreach(var item in _result)
+                        {
+                            this.permSelect.Items.Add(item);
+                            this.permSelect.SelectedItem = result;
+                        }
+                    }                                       
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }            
         }
     }
 }

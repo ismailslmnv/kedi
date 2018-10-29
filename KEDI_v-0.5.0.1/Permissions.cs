@@ -113,8 +113,7 @@ namespace KEDI_v_0._5._0._1
                 foreach (var item in Yetkiler)
                 {
                     if (item.YetkiID.ToString().Equals(ID))
-                    {
-                        //MessageBox.Show(item.YetkiID.ToString());
+                    {                     
                         EditPermission.YetkiID=item.YetkiID;
                         EditPermission edit = new EditPermission();                    
                         edit.Show();
@@ -124,10 +123,9 @@ namespace KEDI_v_0._5._0._1
                 foreach (var item in _Personels)
                 {
                     if (item.KullaniciID.ToString().Equals(ID))
-                    {
-                        //MessageBox.Show(item.YetkiID.ToString());
-                        EditPermission.YetkiID = item.YetkiID;
-                        EditPermission edit = new EditPermission();
+                    {                        
+                        EditPersonel.PersonelID = item.KullaniciID;
+                        EditPersonel edit = new EditPersonel();
                         edit.Show();
                     }
                 }
@@ -164,7 +162,7 @@ namespace KEDI_v_0._5._0._1
         }
         private void _thisClose()
         {
-            Enterance.enterance.Show();
+          //  Enterance.enterance.Show();
             this.Dispose();
         }
 
@@ -191,7 +189,9 @@ namespace KEDI_v_0._5._0._1
             {
                 using (KEDIDBEntities context = new KEDIDBEntities())
                 {
-                    var result = (from kullanicilar in context.Personels select kullanicilar).DefaultIfEmpty().ToList();
+                    var result = (from kullanicilar in context.Personels
+                                  where kullanicilar.Enabled==true
+                                  select kullanicilar).DefaultIfEmpty().ToList();
                     if (result != null)
                     {
                         foreach (var item in result)
