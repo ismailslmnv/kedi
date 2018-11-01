@@ -40,7 +40,7 @@ namespace KEDI_v_0._5._0._1
                 {//sistem basariyla guncellendi bilgisini alamiyoruz
                     Salonlar salonlar = new Salonlar()
                     {
-                        SalonAdi = salonAdi.Text,
+                        SalonAdi = this.salonAdi.Text,
                         Tarih = DateTime.Now
                     };
                     context.Salonlars.Add(salonlar);

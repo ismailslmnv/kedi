@@ -103,6 +103,12 @@
     <Compile Include="AddSalon.Designer.cs">
       <DependentUpon>AddSalon.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddTable.Designer.cs">
+      <DependentUpon>AddTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditProduct.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -240,6 +246,9 @@
     <EmbeddedResource Include="AddSalon.resx">
       <DependentUpon>AddSalon.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AddTable.resx">
+      <DependentUpon>AddTable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditProduct.resx">
       <DependentUpon>EditProduct.cs</DependentUpon>
     </EmbeddedResource>
@@ -275,6 +284,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="select.resx">
       <DependentUpon>select.cs</DependentUpon>
@@ -327,6 +337,7 @@
       <DependentUpon>ModelKedi.edmx</DependentUpon>
       <LastGenOutput>ModelKedi.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\edit-badge.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

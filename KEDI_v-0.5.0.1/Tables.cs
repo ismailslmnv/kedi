@@ -8,21 +8,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework;
+using MetroFramework.Controls;
 using MetroFramework.Forms;
 namespace KEDI_v_0._5._0._1
 {
     public partial class Tables : MetroForm
     {
-        List<Salonlar> salonlar = new List<Salonlar>();
+        private List<Salonlar> salon = new List<Salonlar>();
+
         public Tables()
         {
             InitializeComponent();
-            username.Text = Enterance.usernameText;
-            //Default Olarak Salon Kismi Acilir ilk olarak
-            add.Text = "Salon Ekle";
-        }
 
-        //Kullanicidan istendigi zaman salonun tum masalarini ekrana oldugu yerde yazdirilacak.
+            //Default Olarak Salon Kismi Acilir ilk olarak ekran Boş Kalmasın
+            username.Text = Enterance.usernameText;
+            add.Text = "Salon Ekle";
+            getSalonFromDB();
+            salonPanel.Visible = true;
+            tableDraggingPanel.Visible = false;
+        }
+        
         private void TableQuery(short salonId)
         {
             using (KEDIDBEntities context = new KEDIDBEntities())
@@ -35,7 +40,7 @@ namespace KEDI_v_0._5._0._1
                     foreach (var masa in resultMasa)
                     {
                         if (masa.SalonID.Equals(resultSalon.SalonID))
-                            TableQuery(5);// burada ekrana yazdirma fonksiyonu cagirilmasi gerekir
+                            TableQuery(5);//+++++++++ Ekrana Yazdirma Cagirilacak
                     }
                 }
             }
@@ -60,8 +65,8 @@ namespace KEDI_v_0._5._0._1
             }
             if (add.Text.Equals("Masa Ekle"))
             {
-                //AddMasa addmasa = new AddMasa();
-                //addmasa.ShowDialog();
+                AddTable addtable = new AddTable();
+                addtable.ShowDialog();
             }
         }
         private void Back_Click(object sender, EventArgs e)
@@ -104,11 +109,21 @@ namespace KEDI_v_0._5._0._1
         private void salonlarMenu_Click(object sender, EventArgs e)
         {
             add.Text = "Salon Ekle";
-            add.Visible = true;
+            salonPanel.Visible = true;
+            tableDraggingPanel.Visible = false;
+            MasaAltMenu.Visible = false;
             getSalonFromDB();
+
+            foreach(var s in salon)
+            {
+                listBox1.Items.Add(s.SalonAdi);
+            }
         }
+
         private void getSalonFromDB()
         {
+            listBox1.Items.Clear();//Tekrar Çağırılması Sonucu Veri Tekrarını Engellemek İçin
+            salon.Clear();
             try
             {
                 using (KEDIDBEntities context = new KEDIDBEntities())
@@ -119,10 +134,7 @@ namespace KEDI_v_0._5._0._1
                     if (result != null)
                     {
                         foreach (var item in result)
-                        {
-                            listBox1.Items.Clear();//Tekrar Çağırılması Sonucu Verı Tekrarı
-                            listBox1.Items.Add(item.SalonAdi);
-                        }
+                            salon.Add(item);
                     }
                     else
                     {
@@ -139,13 +151,51 @@ namespace KEDI_v_0._5._0._1
         private void masalarMenu_Click(object sender, EventArgs e)
         {
             add.Text = "Masa Ekle";
-            add.Visible = true;
-            //Db Okuma
+            tableDraggingPanel.Visible = true;
+            salonPanel.Visible = false;
+            MasaAltMenu.Visible = true;
+            MasaAltMenuOlustur();
+            //++++++++ Db Okuma ve Eklenmemiş Masa Kotrolü
+        }
+
+        private void MasaAltMenuOlustur()
+        {
+
+            MasaAltMenu.Controls.Clear();//Kalan Controllerin Tekrarini Engellemek
+            foreach (Salonlar s in salon)
+                MasaAltMenu_TileCreator(s.SalonAdi, s.SalonID);
+
+        }
+
+        private void MasaAltMenu_TileCreator(string salonAdi,int salonId)
+        {
+            //++++++++++ Belli bir yerden sonra ekrandan tasiyor eklenecek
+            MetroTile metroTile = new MetroTile();
+            this.MasaAltMenu.Controls.Add(metroTile);
+            metroTile.ActiveControl = null;
+            metroTile.Name = salonAdi.Trim(' ');
+            metroTile.Dock = System.Windows.Forms.DockStyle.Top;
+            metroTile.Location = new System.Drawing.Point(17, 0);
+            metroTile.Margin = new System.Windows.Forms.Padding(10);
+            metroTile.Size = new System.Drawing.Size(211, 64);
+            metroTile.TabIndex = salonId;
+            metroTile.Text = salonAdi;
+            metroTile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            metroTile.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
+            metroTile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            metroTile.UseSelectable = true;
+            metroTile.MouseClick += new System.Windows.Forms.MouseEventHandler(MasaAltMenu_MouseClick);
+        }
+
+        private void MasaAltMenu_MouseClick(object sender, MouseEventArgs e)
+        {
+            MetroTile tile = sender as MetroTile;
+            //+++++++ Secilen Salona Gore ekrana salonda bulunan masalari yazdiracak 
         }
 
         private void exit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Close();// ????????????? Gerek Varmidir Bu Form Elemanina 
         }
     }
 }
