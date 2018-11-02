@@ -30,18 +30,18 @@
         {
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
-            this.personelAdi = new MetroFramework.Controls.MetroTextBox();
+            this.prodSelect = new MetroFramework.Controls.MetroComboBox();
+            this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
+            this.fiyat = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
+            this.ozellikAdi = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
             this.OK = new MetroFramework.Controls.MetroTile();
             this.Delete = new MetroFramework.Controls.MetroTile();
             this.Cancel = new MetroFramework.Controls.MetroTile();
-            this.passw = new MetroFramework.Controls.MetroTextBox();
-            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
-            this.telNum = new MetroFramework.Controls.MetroTextBox();
+            this.not = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
-            this.permSelect = new MetroFramework.Controls.MetroComboBox();
             this.metroPanel1.SuspendLayout();
             this.metroPanel3.SuspendLayout();
             this.metroPanel2.SuspendLayout();
@@ -67,13 +67,13 @@
             // 
             // metroPanel3
             // 
-            this.metroPanel3.Controls.Add(this.permSelect);
-            this.metroPanel3.Controls.Add(this.metroLabel4);
-            this.metroPanel3.Controls.Add(this.telNum);
+            this.metroPanel3.Controls.Add(this.not);
             this.metroPanel3.Controls.Add(this.metroLabel2);
-            this.metroPanel3.Controls.Add(this.passw);
+            this.metroPanel3.Controls.Add(this.prodSelect);
+            this.metroPanel3.Controls.Add(this.metroLabel4);
+            this.metroPanel3.Controls.Add(this.fiyat);
             this.metroPanel3.Controls.Add(this.metroLabel3);
-            this.metroPanel3.Controls.Add(this.personelAdi);
+            this.metroPanel3.Controls.Add(this.ozellikAdi);
             this.metroPanel3.Controls.Add(this.metroLabel1);
             this.metroPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroPanel3.HorizontalScrollbarBarColor = true;
@@ -87,48 +87,110 @@
             this.metroPanel3.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel3.VerticalScrollbarSize = 10;
             // 
-            // personelAdi
+            // prodSelect
+            // 
+            this.prodSelect.FormattingEnabled = true;
+            this.prodSelect.ItemHeight = 23;
+            this.prodSelect.Location = new System.Drawing.Point(4, 142);
+            this.prodSelect.Name = "prodSelect";
+            this.prodSelect.PromptText = "Ürünler";
+            this.prodSelect.Size = new System.Drawing.Size(410, 29);
+            this.prodSelect.TabIndex = 12;
+            this.prodSelect.UseSelectable = true;
+            // 
+            // metroLabel4
+            // 
+            this.metroLabel4.AutoSize = true;
+            this.metroLabel4.Location = new System.Drawing.Point(4, 120);
+            this.metroLabel4.Name = "metroLabel4";
+            this.metroLabel4.Size = new System.Drawing.Size(62, 19);
+            this.metroLabel4.TabIndex = 10;
+            this.metroLabel4.Text = "Üst Ürün:";
+            // 
+            // fiyat
             // 
             // 
             // 
             // 
-            this.personelAdi.CustomButton.Image = null;
-            this.personelAdi.CustomButton.Location = new System.Drawing.Point(383, 2);
-            this.personelAdi.CustomButton.Name = "";
-            this.personelAdi.CustomButton.Size = new System.Drawing.Size(25, 25);
-            this.personelAdi.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.personelAdi.CustomButton.TabIndex = 1;
-            this.personelAdi.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.personelAdi.CustomButton.UseSelectable = true;
-            this.personelAdi.CustomButton.Visible = false;
-            this.personelAdi.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.personelAdi.Lines = new string[0];
-            this.personelAdi.Location = new System.Drawing.Point(4, 32);
-            this.personelAdi.MaxLength = 32767;
-            this.personelAdi.Name = "personelAdi";
-            this.personelAdi.PasswordChar = '\0';
-            this.personelAdi.PromptText = "Personelin İsmini Giriniz";
-            this.personelAdi.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.personelAdi.SelectedText = "";
-            this.personelAdi.SelectionLength = 0;
-            this.personelAdi.SelectionStart = 0;
-            this.personelAdi.ShortcutsEnabled = true;
-            this.personelAdi.Size = new System.Drawing.Size(411, 30);
-            this.personelAdi.TabIndex = 3;
-            this.personelAdi.UseSelectable = true;
-            this.personelAdi.WaterMark = "Personelin İsmini Giriniz";
-            this.personelAdi.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.personelAdi.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.personelAdi.Click += new System.EventHandler(this.metroTextBox1_Click);
+            this.fiyat.CustomButton.Image = null;
+            this.fiyat.CustomButton.Location = new System.Drawing.Point(383, 2);
+            this.fiyat.CustomButton.Name = "";
+            this.fiyat.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.fiyat.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.fiyat.CustomButton.TabIndex = 1;
+            this.fiyat.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.fiyat.CustomButton.UseSelectable = true;
+            this.fiyat.CustomButton.Visible = false;
+            this.fiyat.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.fiyat.Lines = new string[0];
+            this.fiyat.Location = new System.Drawing.Point(3, 87);
+            this.fiyat.MaxLength = 32767;
+            this.fiyat.Name = "fiyat";
+            this.fiyat.PasswordChar = '\0';
+            this.fiyat.PromptText = "Fiyat Farkı Varsa Giriniz:";
+            this.fiyat.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.fiyat.SelectedText = "";
+            this.fiyat.SelectionLength = 0;
+            this.fiyat.SelectionStart = 0;
+            this.fiyat.ShortcutsEnabled = true;
+            this.fiyat.Size = new System.Drawing.Size(411, 30);
+            this.fiyat.TabIndex = 7;
+            this.fiyat.UseSelectable = true;
+            this.fiyat.WaterMark = "Fiyat Farkı Varsa Giriniz:";
+            this.fiyat.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.fiyat.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // metroLabel3
+            // 
+            this.metroLabel3.AutoSize = true;
+            this.metroLabel3.Location = new System.Drawing.Point(4, 65);
+            this.metroLabel3.Name = "metroLabel3";
+            this.metroLabel3.Size = new System.Drawing.Size(70, 19);
+            this.metroLabel3.TabIndex = 6;
+            this.metroLabel3.Text = "Fiyat Farkı:";
+            // 
+            // ozellikAdi
+            // 
+            // 
+            // 
+            // 
+            this.ozellikAdi.CustomButton.Image = null;
+            this.ozellikAdi.CustomButton.Location = new System.Drawing.Point(383, 2);
+            this.ozellikAdi.CustomButton.Name = "";
+            this.ozellikAdi.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.ozellikAdi.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.ozellikAdi.CustomButton.TabIndex = 1;
+            this.ozellikAdi.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.ozellikAdi.CustomButton.UseSelectable = true;
+            this.ozellikAdi.CustomButton.Visible = false;
+            this.ozellikAdi.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.ozellikAdi.Lines = new string[0];
+            this.ozellikAdi.Location = new System.Drawing.Point(4, 32);
+            this.ozellikAdi.MaxLength = 32767;
+            this.ozellikAdi.Name = "ozellikAdi";
+            this.ozellikAdi.PasswordChar = '\0';
+            this.ozellikAdi.PromptText = "Alt Özellik Adını Giriniz";
+            this.ozellikAdi.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.ozellikAdi.SelectedText = "";
+            this.ozellikAdi.SelectionLength = 0;
+            this.ozellikAdi.SelectionStart = 0;
+            this.ozellikAdi.ShortcutsEnabled = true;
+            this.ozellikAdi.Size = new System.Drawing.Size(411, 30);
+            this.ozellikAdi.TabIndex = 3;
+            this.ozellikAdi.UseSelectable = true;
+            this.ozellikAdi.WaterMark = "Alt Özellik Adını Giriniz";
+            this.ozellikAdi.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.ozellikAdi.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.ozellikAdi.Click += new System.EventHandler(this.metroTextBox1_Click);
             // 
             // metroLabel1
             // 
             this.metroLabel1.AutoSize = true;
             this.metroLabel1.Location = new System.Drawing.Point(3, 9);
             this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(145, 19);
+            this.metroLabel1.Size = new System.Drawing.Size(95, 19);
             this.metroLabel1.TabIndex = 2;
-            this.metroLabel1.Text = "Personel Adı ve Soyadı:";
+            this.metroLabel1.Text = "Alt Özellik Adı:";
             // 
             // metroPanel2
             // 
@@ -195,111 +257,50 @@
             this.Cancel.UseStyleColors = true;
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
-            // passw
+            // not
             // 
             // 
             // 
             // 
-            this.passw.CustomButton.Image = null;
-            this.passw.CustomButton.Location = new System.Drawing.Point(383, 2);
-            this.passw.CustomButton.Name = "";
-            this.passw.CustomButton.Size = new System.Drawing.Size(25, 25);
-            this.passw.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.passw.CustomButton.TabIndex = 1;
-            this.passw.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.passw.CustomButton.UseSelectable = true;
-            this.passw.CustomButton.Visible = false;
-            this.passw.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.passw.Lines = new string[0];
-            this.passw.Location = new System.Drawing.Point(3, 87);
-            this.passw.MaxLength = 32767;
-            this.passw.Name = "passw";
-            this.passw.PasswordChar = '\0';
-            this.passw.PromptText = "Şifre Giriniz";
-            this.passw.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.passw.SelectedText = "";
-            this.passw.SelectionLength = 0;
-            this.passw.SelectionStart = 0;
-            this.passw.ShortcutsEnabled = true;
-            this.passw.Size = new System.Drawing.Size(411, 30);
-            this.passw.TabIndex = 7;
-            this.passw.UseSelectable = true;
-            this.passw.WaterMark = "Şifre Giriniz";
-            this.passw.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.passw.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // metroLabel3
-            // 
-            this.metroLabel3.AutoSize = true;
-            this.metroLabel3.Location = new System.Drawing.Point(4, 65);
-            this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Size = new System.Drawing.Size(46, 19);
-            this.metroLabel3.TabIndex = 6;
-            this.metroLabel3.Text = "Şifresi:";
-            // 
-            // telNum
-            // 
-            // 
-            // 
-            // 
-            this.telNum.CustomButton.Image = null;
-            this.telNum.CustomButton.Location = new System.Drawing.Point(383, 2);
-            this.telNum.CustomButton.Name = "";
-            this.telNum.CustomButton.Size = new System.Drawing.Size(25, 25);
-            this.telNum.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.telNum.CustomButton.TabIndex = 1;
-            this.telNum.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.telNum.CustomButton.UseSelectable = true;
-            this.telNum.CustomButton.Visible = false;
-            this.telNum.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.telNum.Lines = new string[0];
-            this.telNum.Location = new System.Drawing.Point(4, 143);
-            this.telNum.MaxLength = 11;
-            this.telNum.Name = "telNum";
-            this.telNum.PasswordChar = '\0';
-            this.telNum.PromptText = "Telefon Numarası Giriniz";
-            this.telNum.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.telNum.SelectedText = "";
-            this.telNum.SelectionLength = 0;
-            this.telNum.SelectionStart = 0;
-            this.telNum.ShortcutsEnabled = true;
-            this.telNum.Size = new System.Drawing.Size(411, 30);
-            this.telNum.TabIndex = 9;
-            this.telNum.UseSelectable = true;
-            this.telNum.WaterMark = "Telefon Numarası Giriniz";
-            this.telNum.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.telNum.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.not.CustomButton.Image = null;
+            this.not.CustomButton.Location = new System.Drawing.Point(339, 1);
+            this.not.CustomButton.Name = "";
+            this.not.CustomButton.Size = new System.Drawing.Size(71, 71);
+            this.not.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.not.CustomButton.TabIndex = 1;
+            this.not.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.not.CustomButton.UseSelectable = true;
+            this.not.CustomButton.Visible = false;
+            this.not.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.not.Lines = new string[0];
+            this.not.Location = new System.Drawing.Point(4, 197);
+            this.not.MaxLength = 100;
+            this.not.Multiline = true;
+            this.not.Name = "not";
+            this.not.PasswordChar = '\0';
+            this.not.PromptText = "Not";
+            this.not.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.not.SelectedText = "";
+            this.not.SelectionLength = 0;
+            this.not.SelectionStart = 0;
+            this.not.ShortcutsEnabled = true;
+            this.not.Size = new System.Drawing.Size(411, 73);
+            this.not.TabIndex = 14;
+            this.not.UseSelectable = true;
+            this.not.WaterMark = "Not";
+            this.not.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.not.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // metroLabel2
             // 
             this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(3, 120);
+            this.metroLabel2.Location = new System.Drawing.Point(3, 174);
             this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(113, 19);
-            this.metroLabel2.TabIndex = 8;
-            this.metroLabel2.Text = "Telefon Numarası:";
+            this.metroLabel2.Size = new System.Drawing.Size(34, 19);
+            this.metroLabel2.TabIndex = 13;
+            this.metroLabel2.Text = "Not:";
             // 
-            // metroLabel4
-            // 
-            this.metroLabel4.AutoSize = true;
-            this.metroLabel4.Location = new System.Drawing.Point(4, 176);
-            this.metroLabel4.Name = "metroLabel4";
-            this.metroLabel4.Size = new System.Drawing.Size(81, 19);
-            this.metroLabel4.TabIndex = 10;
-            this.metroLabel4.Text = "Yetki Seçiniz:";
-            // 
-            // permSelect
-            // 
-            this.permSelect.FormattingEnabled = true;
-            this.permSelect.ItemHeight = 23;
-            this.permSelect.Location = new System.Drawing.Point(4, 198);
-            this.permSelect.Name = "permSelect";
-            this.permSelect.PromptText = "Yetkiler";
-            this.permSelect.Size = new System.Drawing.Size(410, 29);
-            this.permSelect.TabIndex = 12;
-            this.permSelect.UseSelectable = true;
-            // 
-            // AddPersonel
+            // AddProperty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -308,12 +309,12 @@
             this.Controls.Add(this.metroPanel1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "AddPersonel";
+            this.Name = "AddProperty";
             this.Padding = new System.Windows.Forms.Padding(0, 60, 0, 0);
             this.ShadowType = MetroFramework.Forms.MetroFormShadowType.DropShadow;
             this.ShowIcon = false;
             this.Style = MetroFramework.MetroColorStyle.Yellow;
-            this.Text = "Personel Ekleme";
+            this.Text = "Alt Özellik Ekleme";
             this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.TopMost = true;
             this.Load += new System.EventHandler(this.EditPermissions_Load);
@@ -329,17 +330,17 @@
 
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private MetroFramework.Controls.MetroPanel metroPanel3;
-        private MetroFramework.Controls.MetroTextBox personelAdi;
+        private MetroFramework.Controls.MetroTextBox ozellikAdi;
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroPanel metroPanel2;
         private MetroFramework.Controls.MetroTile OK;
         private MetroFramework.Controls.MetroTile Delete;
         private MetroFramework.Controls.MetroTile Cancel;
-        private MetroFramework.Controls.MetroComboBox permSelect;
+        private MetroFramework.Controls.MetroComboBox prodSelect;
         private MetroFramework.Controls.MetroLabel metroLabel4;
-        private MetroFramework.Controls.MetroTextBox telNum;
-        private MetroFramework.Controls.MetroLabel metroLabel2;
-        private MetroFramework.Controls.MetroTextBox passw;
+        private MetroFramework.Controls.MetroTextBox fiyat;
         private MetroFramework.Controls.MetroLabel metroLabel3;
+        private MetroFramework.Controls.MetroTextBox not;
+        private MetroFramework.Controls.MetroLabel metroLabel2;
     }
 }
