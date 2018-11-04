@@ -37,24 +37,18 @@
             this.username = new MetroFramework.Controls.MetroTile();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.salonPanel = new MetroFramework.Controls.MetroPanel();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.tableDraggingPanel = new MetroFramework.Controls.MetroPanel();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.metroPanel5 = new MetroFramework.Controls.MetroPanel();
+            this.masaDuzenle = new MetroFramework.Controls.MetroTile();
+            this.add = new MetroFramework.Controls.MetroTile();
             this.metroPanel6 = new MetroFramework.Controls.MetroPanel();
             this.MasaAltMenu = new MetroFramework.Controls.MetroPanel();
             this.masalarMenu = new MetroFramework.Controls.MetroTile();
             this.salonlarMenu = new MetroFramework.Controls.MetroTile();
-            this.add = new MetroFramework.Controls.MetroTile();
-            this.masaDuzenle = new MetroFramework.Controls.MetroTile();
             this.metroPanel3.SuspendLayout();
             this.metroPanel2.SuspendLayout();
             this.metroPanel4.SuspendLayout();
             this.metroPanel1.SuspendLayout();
-            this.salonPanel.SuspendLayout();
-            this.tableDraggingPanel.SuspendLayout();
             this.metroPanel5.SuspendLayout();
             this.metroPanel6.SuspendLayout();
             this.SuspendLayout();
@@ -183,7 +177,6 @@
             // 
             this.salonPanel.AutoSize = true;
             this.salonPanel.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.salonPanel.Controls.Add(this.listBox1);
             this.salonPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.salonPanel.HorizontalScrollbarBarColor = true;
             this.salonPanel.HorizontalScrollbarHighlightOnWheel = false;
@@ -199,21 +192,10 @@
             this.salonPanel.VerticalScrollbarHighlightOnWheel = false;
             this.salonPanel.VerticalScrollbarSize = 10;
             // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(227, 81);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(332, 95);
-            this.listBox1.TabIndex = 2;
-            // 
             // tableDraggingPanel
             // 
             this.tableDraggingPanel.AutoSize = true;
             this.tableDraggingPanel.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tableDraggingPanel.Controls.Add(this.button3);
-            this.tableDraggingPanel.Controls.Add(this.button2);
-            this.tableDraggingPanel.Controls.Add(this.button1);
             this.tableDraggingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableDraggingPanel.HorizontalScrollbarBarColor = true;
             this.tableDraggingPanel.HorizontalScrollbarHighlightOnWheel = false;
@@ -228,36 +210,6 @@
             this.tableDraggingPanel.VerticalScrollbarBarColor = true;
             this.tableDraggingPanel.VerticalScrollbarHighlightOnWheel = false;
             this.tableDraggingPanel.VerticalScrollbarSize = 10;
-            this.tableDraggingPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.tableDraggingPanel_DragDrop);
-            this.tableDraggingPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.tableDraggingPanel_DragOver);
-            this.tableDraggingPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tableDraggingPanel_MouseDown);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(343, 102);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(253, 31);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(146, 50);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // metroPanel5
             // 
@@ -277,6 +229,43 @@
             this.metroPanel5.VerticalScrollbarBarColor = true;
             this.metroPanel5.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel5.VerticalScrollbarSize = 10;
+            // 
+            // masaDuzenle
+            // 
+            this.masaDuzenle.ActiveControl = null;
+            this.masaDuzenle.Dock = System.Windows.Forms.DockStyle.Right;
+            this.masaDuzenle.ForeColor = System.Drawing.SystemColors.Control;
+            this.masaDuzenle.Location = new System.Drawing.Point(634, 82);
+            this.masaDuzenle.Name = "masaDuzenle";
+            this.masaDuzenle.Size = new System.Drawing.Size(184, 43);
+            this.masaDuzenle.TabIndex = 3;
+            this.masaDuzenle.Text = "Yeni Masa Düzeni";
+            this.masaDuzenle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.masaDuzenle.TileImage = global::KEDI_v_0._5._0._1.Properties.Resources.edit_badge;
+            this.masaDuzenle.TileImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.masaDuzenle.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
+            this.masaDuzenle.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.masaDuzenle.UseSelectable = true;
+            this.masaDuzenle.UseTileImage = true;
+            // 
+            // add
+            // 
+            this.add.ActiveControl = null;
+            this.add.Dock = System.Windows.Forms.DockStyle.Right;
+            this.add.ForeColor = System.Drawing.SystemColors.Control;
+            this.add.Location = new System.Drawing.Point(818, 82);
+            this.add.Name = "add";
+            this.add.Size = new System.Drawing.Size(184, 43);
+            this.add.TabIndex = 2;
+            this.add.Text = "Salon Ekle";
+            this.add.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.add.TileImage = ((System.Drawing.Image)(resources.GetObject("add.TileImage")));
+            this.add.TileImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.add.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
+            this.add.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.add.UseSelectable = true;
+            this.add.UseTileImage = true;
+            this.add.Click += new System.EventHandler(this.add_Click);
             // 
             // metroPanel6
             // 
@@ -347,43 +336,6 @@
             this.salonlarMenu.UseSelectable = true;
             this.salonlarMenu.Click += new System.EventHandler(this.salonlarMenu_Click);
             // 
-            // add
-            // 
-            this.add.ActiveControl = null;
-            this.add.Dock = System.Windows.Forms.DockStyle.Right;
-            this.add.ForeColor = System.Drawing.SystemColors.Control;
-            this.add.Location = new System.Drawing.Point(818, 82);
-            this.add.Name = "add";
-            this.add.Size = new System.Drawing.Size(184, 43);
-            this.add.TabIndex = 2;
-            this.add.Text = "Salon Ekle";
-            this.add.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.add.TileImage = ((System.Drawing.Image)(resources.GetObject("add.TileImage")));
-            this.add.TileImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.add.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
-            this.add.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.add.UseSelectable = true;
-            this.add.UseTileImage = true;
-            this.add.Click += new System.EventHandler(this.add_Click);
-            // 
-            // masaDuzenle
-            // 
-            this.masaDuzenle.ActiveControl = null;
-            this.masaDuzenle.Dock = System.Windows.Forms.DockStyle.Right;
-            this.masaDuzenle.ForeColor = System.Drawing.SystemColors.Control;
-            this.masaDuzenle.Location = new System.Drawing.Point(634, 82);
-            this.masaDuzenle.Name = "masaDuzenle";
-            this.masaDuzenle.Size = new System.Drawing.Size(184, 43);
-            this.masaDuzenle.TabIndex = 3;
-            this.masaDuzenle.Text = "Yeni Masa Düzeni";
-            this.masaDuzenle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.masaDuzenle.TileImage = global::KEDI_v_0._5._0._1.Properties.Resources.edit_badge;
-            this.masaDuzenle.TileImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.masaDuzenle.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
-            this.masaDuzenle.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.masaDuzenle.UseSelectable = true;
-            this.masaDuzenle.UseTileImage = true;
-            // 
             // Tables
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -405,8 +357,6 @@
             this.metroPanel4.ResumeLayout(false);
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel1.PerformLayout();
-            this.salonPanel.ResumeLayout(false);
-            this.tableDraggingPanel.ResumeLayout(false);
             this.metroPanel5.ResumeLayout(false);
             this.metroPanel6.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -427,11 +377,7 @@
         private MetroFramework.Controls.MetroTile salonlarMenu;
         private MetroFramework.Controls.MetroPanel tableDraggingPanel;
         private MetroFramework.Controls.MetroTile Back;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
         private MetroFramework.Controls.MetroPanel salonPanel;
-        private System.Windows.Forms.ListBox listBox1;
         private MetroFramework.Controls.MetroPanel MasaAltMenu;
         private MetroFramework.Controls.MetroTile masaDuzenle;
         private MetroFramework.Controls.MetroTile add;
