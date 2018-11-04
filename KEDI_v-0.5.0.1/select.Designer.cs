@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+            this.ozellikgoster = new MetroFramework.Controls.MetroTile();
             this.urunEdit = new MetroFramework.Controls.MetroTile();
-            this.ozellikEkle = new MetroFramework.Controls.MetroTile();
             this.metroPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // metroPanel1
             // 
-            this.metroPanel1.Controls.Add(this.ozellikEkle);
+            this.metroPanel1.Controls.Add(this.ozellikgoster);
             this.metroPanel1.Controls.Add(this.urunEdit);
             this.metroPanel1.HorizontalScrollbarBarColor = true;
             this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
@@ -48,6 +48,22 @@
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
+            // 
+            // ozellikgoster
+            // 
+            this.ozellikgoster.ActiveControl = null;
+            this.ozellikgoster.AutoSize = true;
+            this.ozellikgoster.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ozellikgoster.Location = new System.Drawing.Point(166, 0);
+            this.ozellikgoster.Name = "ozellikgoster";
+            this.ozellikgoster.Size = new System.Drawing.Size(166, 99);
+            this.ozellikgoster.Style = MetroFramework.MetroColorStyle.Red;
+            this.ozellikgoster.TabIndex = 3;
+            this.ozellikgoster.Text = "Alt Özellikleri Göster";
+            this.ozellikgoster.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ozellikgoster.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.ozellikgoster.UseSelectable = true;
+            this.ozellikgoster.Click += new System.EventHandler(this.ozellikEkle_Click);
             // 
             // urunEdit
             // 
@@ -65,27 +81,11 @@
             this.urunEdit.UseSelectable = true;
             this.urunEdit.Click += new System.EventHandler(this.urunEdit_Click);
             // 
-            // ozellikEkle
-            // 
-            this.ozellikEkle.ActiveControl = null;
-            this.ozellikEkle.AutoSize = true;
-            this.ozellikEkle.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ozellikEkle.Location = new System.Drawing.Point(166, 0);
-            this.ozellikEkle.Name = "ozellikEkle";
-            this.ozellikEkle.Size = new System.Drawing.Size(166, 99);
-            this.ozellikEkle.Style = MetroFramework.MetroColorStyle.Red;
-            this.ozellikEkle.TabIndex = 3;
-            this.ozellikEkle.Text = "Alt Özellik Düzenle";
-            this.ozellikEkle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ozellikEkle.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.ozellikEkle.UseSelectable = true;
-            this.ozellikEkle.Click += new System.EventHandler(this.ozellikEkle_Click);
-            // 
             // select
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(332, 97);
+            this.ClientSize = new System.Drawing.Size(333, 97);
             this.ControlBox = false;
             this.Controls.Add(this.metroPanel1);
             this.DisplayHeader = false;
@@ -108,7 +108,7 @@
         #endregion
 
         private MetroFramework.Controls.MetroPanel metroPanel1;
-        private MetroFramework.Controls.MetroTile ozellikEkle;
+        private MetroFramework.Controls.MetroTile ozellikgoster;
         private MetroFramework.Controls.MetroTile urunEdit;
     }
 }

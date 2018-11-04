@@ -35,8 +35,20 @@ namespace KEDI_v_0._5._0._1
 
         private void ozellikEkle_Click(object sender, EventArgs e)
         {
-            AddProperty add = new AddProperty();
-            add.Show();
+
+            //AddProperty add = new AddProperty();
+            ////add.Show();
+            //var PermissionsReloader = Application.OpenForms.Cast<Form>()
+            //.FirstOrDefault(c => c is Products);
+            //if (PermissionsReloader != null)
+            //{
+            //   // Products.ProductID = UrunID;
+            //    PermissionsReloader.Visible = false;
+            //    PermissionsReloader.Visible = true;
+            //}
+            ShowSubProducts.ProductID = UrunID;
+            ShowSubProducts show = new ShowSubProducts();
+            show.Show();
             this.Close();
         }
     }

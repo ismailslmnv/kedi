@@ -19,7 +19,7 @@ namespace KEDI_v_0._5._0._1
         private List<Urunler> Menuler= new List<Urunler>();
         private List<Urunler> Urun = new List<Urunler>();
         private List<Indirimler> Indirim = new List<Indirimler>();
-        private short pressedControlButton = 0; // 0 - none // 1 - menuler // 2 - urunler // 3 - indirimler
+        private short pressedControlButton = 0; // 0 - none // 1 - menuler // 2 - urunler // 3 - indirimler     
         public Products()
         {
             InitializeComponent();
@@ -30,10 +30,9 @@ namespace KEDI_v_0._5._0._1
         private void Products_Load(object sender, EventArgs e)
         {
 
-        }
+        }           
         private void tileCreator(string tileText, string tileID)
-        {
-            
+        {            
             ComponentResourceManager resources = new ComponentResourceManager(typeof(Permissions));
             MetroTile permission = new MetroTile();
             permission.Dock = System.Windows.Forms.DockStyle.Top;
@@ -49,7 +48,7 @@ namespace KEDI_v_0._5._0._1
             permission.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
             permission.UseSelectable = true;
        //     permission.UseTileImage = true;
-            permission.Click += Permission_Click;
+            permission.Click += Permission_Click;            
             tilePanel.Controls.Add(permission);
             tilePanel.Controls.Add(breaker(tileID + 1));                
         }
@@ -57,7 +56,6 @@ namespace KEDI_v_0._5._0._1
         private void Permission_Click(object sender, EventArgs e)
         {
             MetroTile tile = (MetroTile)sender;
-
             edit(tile.Name);                                    
         }
         private MetroPanel breaker(string panelName)
@@ -69,7 +67,7 @@ namespace KEDI_v_0._5._0._1
             breaker.HorizontalScrollbarSize = 10;
             breaker.Location = new System.Drawing.Point(100, 70);
             breaker.Name = panelName+"p";
-            breaker.Size = new System.Drawing.Size(902, 3);
+            breaker.Size = new System.Drawing.Size(900, 3);
             breaker.TabIndex = 3;
             breaker.VerticalScrollbarBarColor = true;
             breaker.VerticalScrollbarHighlightOnWheel = false;
@@ -98,7 +96,6 @@ namespace KEDI_v_0._5._0._1
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.ToString());
             }
         }
@@ -121,8 +118,7 @@ namespace KEDI_v_0._5._0._1
                     }
                 }
             else if (pressedControlButton == 2)
-            {
-             
+            {             
                 foreach (var item in Urun)
                 {
                     if (item.UrunID.ToString().Equals(ID))
@@ -130,7 +126,6 @@ namespace KEDI_v_0._5._0._1
                         select.UrunID = item.UrunID;
                         select sel = new select();
                         sel.Show();
-
                     }
                 }
             }
@@ -140,7 +135,6 @@ namespace KEDI_v_0._5._0._1
         {
 
         }
-
         private void metroTile1_Click(object sender, EventArgs e)
         {
             if(pressedControlButton==1)
@@ -156,15 +150,13 @@ namespace KEDI_v_0._5._0._1
             else if (pressedControlButton == 3)
             {
 
-            }
-            
+            }            
         }
 
         private void exit_Click(object sender, EventArgs e)
         {
 
         }
-
         private void Back_Click(object sender, EventArgs e)
         {
             _thisClose();
@@ -174,7 +166,6 @@ namespace KEDI_v_0._5._0._1
           //  Enterance.enterance.Show();
             this.Dispose();
         }
-
         private void Products_FormClosing(object sender, FormClosingEventArgs e)
         {
             _thisClose();
@@ -186,7 +177,9 @@ namespace KEDI_v_0._5._0._1
                 if (pressedControlButton == 1)
                     getMenuFromDb();
                 else if (pressedControlButton == 2)
+                {                                        
                     getUrunFromDb();
+                }                    
             }
         }
         private void getUrunFromDb()
@@ -214,17 +207,14 @@ namespace KEDI_v_0._5._0._1
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.ToString());
             }
         }
-
         private void product_Click(object sender, EventArgs e)
         {
             pressedControlButton = 2;
             getUrunFromDb();
         }
-
         private void indirimler_Click(object sender, EventArgs e)
         {
 
