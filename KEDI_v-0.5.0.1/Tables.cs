@@ -30,21 +30,20 @@ namespace KEDI_v_0._5._0._1
             masaDuzenle.Visible = false;
         }
         
-        private void TableQuery(string salonAd)
+        private void TableQuery(int salonId)
         {
             this.masa.Clear();//Önceki Verilerin Temizlenmesi Gerek
             try
             {
                 using (KEDIDBEntities context = new KEDIDBEntities())
                 {
-                    var resultSalon = (from salon in context.Salonlars where salon.SalonAdi.Equals(salonAd) select salon).First();
                     var resultMasa = (from Masalar in context.Masalars select Masalar).DefaultIfEmpty().ToList();
 
-                    if (resultMasa != null && resultSalon != null)
+                    if (resultMasa != null)
                     {
                         foreach (var masa in resultMasa)
                         {
-                            if (masa.SalonID.Equals(resultSalon.SalonID))
+                            if (masa.Salonlar.SalonID.Equals(salonId))
                                 this.masa.Add(masa);
                         }
                     }
@@ -104,7 +103,8 @@ namespace KEDI_v_0._5._0._1
                 c.Location = this.tableDraggingPanel.PointToClient(new Point(e.X, e.Y));
                 this.tableDraggingPanel.Controls.Add(c);
             }
-            TableSaveLocation(c);
+            TableSaveLocation(c);//Drag Drop Ta tekrardan Yerleri Kayit Ediliyor DB te
+            //++++++++ Daha sonradan cizilecek duvar yerine masanin gelmesi yasak olacak
         }
 
         private void tableDraggingPanel_DragOver(object sender, DragEventArgs e)
@@ -117,7 +117,7 @@ namespace KEDI_v_0._5._0._1
             {
                 using (KEDIDBEntities context = new KEDIDBEntities())
                 { 
-                    var masalar = (from masa in context.Masalars where masa.MasaAdi.Equals(sender.Text) select masa).ToList();
+                    var masalar = (from masa in context.Masalars where masa.MasaID.Equals(sender.TabIndex) select masa).ToList();
                     foreach (Masalar masa in masalar)
                     {
                         if (masa.SalonID.Equals(this.masa.First().Salonlar.SalonID))
@@ -145,10 +145,9 @@ namespace KEDI_v_0._5._0._1
             masaDuzenle.Visible = false;
             getSalonFromDB();
             this.salonPanel.Controls.Clear();//Onceki olusanlari Yok Etmek Icin
+
             foreach (Salonlar salonlar in this.salon)
-            {
                 CreateSalonTile(salonlar);
-            }
         }
 
         private void getSalonFromDB()
@@ -182,8 +181,9 @@ namespace KEDI_v_0._5._0._1
             salon.Dock = System.Windows.Forms.DockStyle.Top;
             salon.Location = new System.Drawing.Point(100, 10);
             salon.Size = new System.Drawing.Size(902, 60);
-            salon.Style = MetroFramework.MetroColorStyle.Green;
+            salon.Style = MetroFramework.MetroColorStyle.Orange;
             salon.Text = salonlar.SalonAdi;
+            salon.TabIndex = salonlar.SalonID;
             salon.TextAlign = ContentAlignment.MiddleLeft;
             salon.TileTextFontSize = MetroTileTextSize.Tall;
             salon.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
@@ -192,7 +192,18 @@ namespace KEDI_v_0._5._0._1
         }
         private void Salon_Click(object sender, EventArgs e)
         {
-            //+++++++ Salon Duzenleme ve Silme islemleri Yapicalacak
+            selectSalon select = new selectSalon();
+            selectSalon.selectedSalonTile = sender as MetroTile;
+            selectSalon.salonlar = this.salon;
+            select.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SelectSalon_Closing);
+            select.Show();
+        }
+        private void SelectSalon_Closing(object sender, EventArgs e)
+        {
+            getSalonFromDB();
+            this.salonPanel.Controls.Clear();
+            foreach(Salonlar salonlar in this.salon)
+                CreateSalonTile(salonlar);
         }
 
         private void masalarMenu_Click(object sender, EventArgs e)
@@ -214,7 +225,6 @@ namespace KEDI_v_0._5._0._1
 
         private void MasaAltMenu_TileCreator(string salonAdi,int salonId)
         {
-            //++++++++++ Belli bir yerden sonra ekrandan tasiyor eklenecek
             MetroTile metroTile = new MetroTile();
             this.MasaAltMenu.Controls.Add(metroTile);
             metroTile.ActiveControl = null;
@@ -236,7 +246,7 @@ namespace KEDI_v_0._5._0._1
         {
             tableDraggingPanel.Controls.Clear();
             MetroTile tile = sender as MetroTile;
-            TableQuery(tile.Text);
+            TableQuery(tile.TabIndex);
             foreach (Masalar mas in this.masa)
                 MasaCreate(mas);
             TableDraggingEvent();//Masa Olustuktan Sonra Cagiriliyor Ki sonradan Eklenenler Dragg Yapilsin

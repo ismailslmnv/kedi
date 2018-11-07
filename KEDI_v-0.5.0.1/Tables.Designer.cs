@@ -175,9 +175,11 @@
             // 
             // salonPanel
             // 
+            this.salonPanel.AutoScroll = true;
             this.salonPanel.AutoSize = true;
             this.salonPanel.BackColor = System.Drawing.Color.WhiteSmoke;
             this.salonPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.salonPanel.HorizontalScrollbar = true;
             this.salonPanel.HorizontalScrollbarBarColor = true;
             this.salonPanel.HorizontalScrollbarHighlightOnWheel = false;
             this.salonPanel.HorizontalScrollbarSize = 10;
@@ -288,17 +290,21 @@
             // 
             // MasaAltMenu
             // 
+            this.MasaAltMenu.AutoScroll = true;
             this.MasaAltMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.MasaAltMenu.Dock = System.Windows.Forms.DockStyle.Left;
+            this.MasaAltMenu.HorizontalScrollbar = true;
             this.MasaAltMenu.HorizontalScrollbarBarColor = true;
             this.MasaAltMenu.HorizontalScrollbarHighlightOnWheel = false;
             this.MasaAltMenu.HorizontalScrollbarSize = 10;
             this.MasaAltMenu.Location = new System.Drawing.Point(0, 128);
+            this.MasaAltMenu.MaximumSize = new System.Drawing.Size(228, 482);
             this.MasaAltMenu.Name = "MasaAltMenu";
             this.MasaAltMenu.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.MasaAltMenu.Size = new System.Drawing.Size(228, 482);
             this.MasaAltMenu.TabIndex = 4;
             this.MasaAltMenu.UseCustomBackColor = true;
+            this.MasaAltMenu.VerticalScrollbar = true;
             this.MasaAltMenu.VerticalScrollbarBarColor = true;
             this.MasaAltMenu.VerticalScrollbarHighlightOnWheel = false;
             this.MasaAltMenu.VerticalScrollbarSize = 10;

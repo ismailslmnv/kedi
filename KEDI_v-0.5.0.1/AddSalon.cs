@@ -32,21 +32,47 @@ namespace KEDI_v_0._5._0._1
         {
             salonAdi.Clear();
         }
-
+        private bool ValidateControl()
+        {
+            if (!String.IsNullOrEmpty(salonAdi.Text))
+                return true;
+            else
+            {
+                MessageBox.Show(AddSalon.ActiveForm, "Tüm Bilgileri Doldurmalısınız", "Eksik Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+        }
         private void OK_Click(object sender, EventArgs e)
         {
             try{
                 using (KEDIDBEntities context = new KEDIDBEntities())
-                {//sistem basariyla guncellendi bilgisini alamiyoruz
-                    Salonlar salonlar = new Salonlar()
+                {
+                    var result = (from salon in context.Salonlars select salon).ToList();
+                    short ayniDurumSayac = 0;
+
+                    foreach (Salonlar salon in result)
+                        if(salon.SalonAdi.Equals(this.salonAdi.Text))
+                            ayniDurumSayac++;
+
+                    if (ayniDurumSayac.Equals(0))
                     {
-                        SalonAdi = this.salonAdi.Text,
-                        Tarih = DateTime.Now
-                    };
-                    context.Salonlars.Add(salonlar);
-                    context.SaveChanges();
+                        if (ValidateControl())
+                        {
+                            Salonlar salonlar = new Salonlar()
+                            {
+                                SalonAdi = this.salonAdi.Text,
+                                Tarih = DateTime.Now
+                            };
+                            context.Salonlars.Add(salonlar);
+                            context.SaveChanges();
+                            MessageBox.Show(AddSalon.ActiveForm, "Yeni Salon Başarılı Bir Şekilde Kaydedildi", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(AddSalon.ActiveForm, "Aynı isimde bir salon mevcuttur", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
-                MessageBox.Show(AddSalon.ActiveForm, "Yeni Salon Başarılı Bir Şekilde Kaydedildi", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception)
             {
