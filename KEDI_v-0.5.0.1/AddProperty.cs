@@ -54,10 +54,13 @@ namespace KEDI_v_0._5._0._1
                 {
                     var result = (from urun in kEDIDB.Urunlers
                                   where urun.UrunID == _productID
-                                  select urun.UrunAdi).DefaultIfEmpty();
-                    if (result != null)
+                                  select urun.UstUrunID).FirstOrDefault();
+                    var _result = (from urun in kEDIDB.Urunlers
+                                   where urun.UrunID == result.Value
+                                   select urun.UrunAdi).FirstOrDefault();
+                    if (_result != null)
                     {
-                        prodSelect.SelectedItem = result;
+                        prodSelect.SelectedItem = _result;
                     }
                 }
 
@@ -125,12 +128,12 @@ namespace KEDI_v_0._5._0._1
                                 UstUrunID = prodID,
                                 AltOzellik =true,
                                 Tarih = DateTime.Now,
-                                Notlar=not.Text
-                                
+                                Notlar=not.Text                                
                             };
                             KEDIDB.Urunlers.Add(urunler);
                             KEDIDB.SaveChanges();
                             MessageBox.Show("Alt Özellik Başarıyla Eklendi.");
+                            _formClosing();
                         }
                     }
                     catch (Exception ex)
@@ -147,22 +150,22 @@ namespace KEDI_v_0._5._0._1
         }
         private  void reset()
         {
-            AddPermission add = new AddPermission();
+            AddProperty add = new AddProperty();
             add.Show();
             this.Dispose();         
         }
 
-        //private void _formClosing()
-        //{
-        //    var PermissionsReloader = Application.OpenForms.Cast<Form>()
-        //      .FirstOrDefault(c => c is Permissions);
-        //    if (PermissionsReloader != null)
-        //    {
-        //        PermissionsReloader.Visible = false;
-        //        PermissionsReloader.Visible = true;
-        //    }
-        //    this.Dispose();
-        //}
+        private void _formClosing()
+        {
+            var PermissionsReloader = Application.OpenForms.Cast<Form>()
+              .FirstOrDefault(c => c is ShowSubProducts);
+            if (PermissionsReloader != null)
+            {
+                PermissionsReloader.Visible = false;
+                PermissionsReloader.Visible = true;
+            }
+            this.Dispose();
+        }
 
         private decimal intChecker(string text)
         {
@@ -170,7 +173,7 @@ namespace KEDI_v_0._5._0._1
             {
                 if (ozellikAdi.Text != null && prodSelect.SelectedItem != null)
                 {
-                    if (text != null)
+                    if (text != null || !text.Equals(String.Empty)||!text.Equals(" ")||!text.Equals("\t")||!text.Equals("\n"))
                     { 
                         foreach (char item in text)
                         {

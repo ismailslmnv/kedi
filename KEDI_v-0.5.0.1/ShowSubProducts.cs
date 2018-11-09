@@ -19,8 +19,8 @@ namespace KEDI_v_0._5._0._1
         public ShowSubProducts()
         {
             InitializeComponent();
-            takeProduct();
-            createSubProducts();
+            //takeProduct();
+            //createSubProducts();
         }
         private void showSubProducts(string tileID, string tileText)
         {
@@ -91,6 +91,9 @@ namespace KEDI_v_0._5._0._1
         }
         private void edit(string ID)
         {
+            EditSubProduct.UrunID = Convert.ToInt32(ID.Trim());
+            EditSubProduct product = new EditSubProduct();
+            product.Show();
             //if (pressedControlButton == 1)
             //    foreach (var item in Menuler)
             //    {
@@ -118,6 +121,7 @@ namespace KEDI_v_0._5._0._1
         {
             try
             {
+                ozellikPanel.Controls.Clear();
                 using (KEDIDBEntities kEDIDB=new KEDIDBEntities())
                 {
                     var result = (from urun in kEDIDB.Urunlers
@@ -133,6 +137,43 @@ namespace KEDI_v_0._5._0._1
             {
 
                 MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void add_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities()) 
+                {
+                    var result = (from urun in kEDIDB.Urunlers
+                                  where urun.UrunID == ProductID
+                                  select urun.UstUrunID).FirstOrDefault();
+                    if (result != null)
+                    {
+                        AddProperty.ProductID = result.Value;
+                        AddProperty property = new AddProperty();
+                        property.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("İç Hata Oluştu. İşlem Gerçekleştirilemedi.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void ShowSubProducts_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+                takeProduct();
+                createSubProducts();
             }
         }
     }
