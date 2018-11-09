@@ -13,6 +13,7 @@ namespace KEDI_v_0._5._0._1
 {
     public partial class AddTable : MetroForm
     {
+        private IEnumerable<Salonlar> salonlar; 
         public AddTable()
         {
             InitializeComponent();
@@ -31,7 +32,17 @@ namespace KEDI_v_0._5._0._1
 
         private void Delete_Click(object sender, EventArgs e)
         {
-            this.Refresh();//+++++++++++ sılme yaptırılacak
+            masaAdi.Clear();
+        }
+        private bool ValidateControl()
+        {
+            if (!String.IsNullOrEmpty(masaAdi.Text) && !String.IsNullOrEmpty(SalonlarSelect.Text))
+                return true;
+            else
+            {
+                MessageBox.Show(AddSalon.ActiveForm, "Tüm Bilgileri Doldurmalısınız", "Eksik Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
         }
 
         private void OK_Click(object sender, EventArgs e)
@@ -40,17 +51,23 @@ namespace KEDI_v_0._5._0._1
             {
                 using (KEDIDBEntities context = new KEDIDBEntities())
                 {
-                    Salonlar salonlar = (from salon in context.Salonlars where salon.SalonAdi.Equals(this.SalonlarSelect.Text) select salon).First();
-
-                    Masalar masalar = new Masalar()
+                    if (ValidateControl())
                     {
-                        MasaAdi = this.masaAdi.Text,
-                        Tarih = DateTime.Now,
-                        SalonID = salonlar.SalonID,
-                    };
-                    context.Masalars.Add(masalar);
-                    context.SaveChanges();
-                    MessageBox.Show(AddSalon.ActiveForm, "Yeni Masa Başarılı Bir Şekilde Kaydedildi", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Masalar masalar = new Masalar()
+                        {
+                            MasaAdi = this.masaAdi.Text,
+                            Tarih = DateTime.Now,
+                            SalonID = salonlar.Where(x=>x.SalonAdi.Equals(SalonlarSelect.Text)).First().SalonID,
+                        };
+                        context.Masalars.Add(masalar);
+                        context.SaveChanges();
+                        MessageBox.Show(AddSalon.ActiveForm, "Yeni Masa Başarılı Bir Şekilde Kaydedildi", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show(this, "Geçerli Bir Salon Seçiniz veya Yeni Bir Salon Oluşturun", "HATA", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (Exception)
@@ -68,12 +85,12 @@ namespace KEDI_v_0._5._0._1
                     var result = (from salon in context.Salonlars
                                   where salon.SalonID != 0
                                   select salon).DefaultIfEmpty().ToList();
+                    salonlar = result;
+
                     if (result != null)
                     {
                         foreach (var item in result)
-                        {
                             SalonlarSelect.Items.Add(item.SalonAdi);
-                        }
                     }
                     else
                     {

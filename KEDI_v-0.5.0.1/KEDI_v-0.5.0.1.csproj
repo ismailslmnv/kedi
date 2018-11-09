@@ -216,6 +216,12 @@
     <Compile Include="select.Designer.cs">
       <DependentUpon>select.cs</DependentUpon>
     </Compile>
+    <Compile Include="selectSalon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="selectSalon.Designer.cs">
+      <DependentUpon>selectSalon.cs</DependentUpon>
+    </Compile>
     <Compile Include="ShowSubProducts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -303,6 +309,9 @@
     </Compile>
     <EmbeddedResource Include="select.resx">
       <DependentUpon>select.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="selectSalon.resx">
+      <DependentUpon>selectSalon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ShowSubProducts.resx">
       <DependentUpon>ShowSubProducts.cs</DependentUpon>
