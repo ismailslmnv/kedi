@@ -14,8 +14,8 @@ namespace KEDI_v_0._5._0._1
 {
     public partial class Tables : MetroForm
     {
-        private List<Salonlar> salon = new List<Salonlar>();
-        private List<Masalar> masa = new List<Masalar>();
+        private List<Salonlar> salonLIST = new List<Salonlar>();
+        private List<Masalar> masaLIST = new List<Masalar>();
 
         public Tables()
         {
@@ -25,14 +25,15 @@ namespace KEDI_v_0._5._0._1
             username.Text = Enterance.usernameText;
             add.Text = "Salon Ekle";
             getSalonFromDB();
+            
             salonPanel.Visible = true;
             tableDraggingPanel.Visible = false;
             masaDuzenle.Visible = false;
         }
         
-        private void TableQuery(int salonId)
+        private void getMasaFromDB(int salonId)
         {
-            this.masa.Clear();//Önceki Verilerin Temizlenmesi Gerek
+            this.masaLIST.Clear();//Önceki Verilerin Temizlenmesi Gerek
             try
             {
                 using (KEDIDBEntities context = new KEDIDBEntities())
@@ -44,7 +45,7 @@ namespace KEDI_v_0._5._0._1
                         foreach (var masa in resultMasa)
                         {
                             if (masa.Salonlar.SalonID.Equals(salonId))
-                                this.masa.Add(masa);
+                                this.masaLIST.Add(masa);
                         }
                     }
                 }
@@ -120,7 +121,7 @@ namespace KEDI_v_0._5._0._1
                     var masalar = (from masa in context.Masalars where masa.MasaID.Equals(sender.TabIndex) select masa).ToList();
                     foreach (Masalar masa in masalar)
                     {
-                        if (masa.SalonID.Equals(this.masa.First().Salonlar.SalonID))
+                        if (masa.SalonID.Equals(this.masaLIST.First().Salonlar.SalonID))
                         {
                             masa.KonumX = sender.Location.X;
                             masa.KonumY = sender.Location.Y;
@@ -146,13 +147,13 @@ namespace KEDI_v_0._5._0._1
             getSalonFromDB();
             this.salonPanel.Controls.Clear();//Onceki olusanlari Yok Etmek Icin
 
-            foreach (Salonlar salonlar in this.salon)
+            foreach (Salonlar salonlar in this.salonLIST)
                 CreateSalonTile(salonlar);
         }
 
         private void getSalonFromDB()
         {
-            salon.Clear();
+            salonLIST.Clear();
             try
             {
                 using (KEDIDBEntities context = new KEDIDBEntities())
@@ -163,7 +164,7 @@ namespace KEDI_v_0._5._0._1
                     if (result != null)
                     {
                         foreach (var item in result)
-                            salon.Add(item);
+                            salonLIST.Add(item);
                     }
                     else
                         MessageBox.Show(this, "Hiç Bir Kayıtlı Salon Bulunmamaktadır.", "HATA", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -194,7 +195,7 @@ namespace KEDI_v_0._5._0._1
         {
             selectSalon select = new selectSalon();
             selectSalon.selectedSalonTile = sender as MetroTile;
-            selectSalon.salonlar = this.salon;
+            selectSalon.salonlar = this.salonLIST;
             select.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SelectSalon_Closing);
             select.Show();
         }
@@ -202,7 +203,7 @@ namespace KEDI_v_0._5._0._1
         {
             getSalonFromDB();
             this.salonPanel.Controls.Clear();
-            foreach(Salonlar salonlar in this.salon)
+            foreach(Salonlar salonlar in this.salonLIST)
                 CreateSalonTile(salonlar);
         }
 
@@ -219,7 +220,7 @@ namespace KEDI_v_0._5._0._1
         private void MasaAltMenuOlustur()
         {
             MasaAltMenu.Controls.Clear();//Kalan Controllerin Tekrarini Engellemek
-            foreach (Salonlar s in salon)
+            foreach (Salonlar s in salonLIST)
                 MasaAltMenu_TileCreator(s.SalonAdi, s.SalonID);
         }
 
@@ -246,8 +247,8 @@ namespace KEDI_v_0._5._0._1
         {
             tableDraggingPanel.Controls.Clear();
             MetroTile tile = sender as MetroTile;
-            TableQuery(tile.TabIndex);
-            foreach (Masalar mas in this.masa)
+            getMasaFromDB(tile.TabIndex);
+            foreach (Masalar mas in this.masaLIST)
                 MasaCreate(mas);
             TableDraggingEvent();//Masa Olustuktan Sonra Cagiriliyor Ki sonradan Eklenenler Dragg Yapilsin
         }
@@ -273,7 +274,34 @@ namespace KEDI_v_0._5._0._1
         }
         private void exit_Click(object sender, EventArgs e)
         {
-            this.Close();// ????????????? Gerek Varmidir Bu Form Elemanina 
+            this.Close();
+        }
+
+        private void masaDuzenle_Click(object sender, EventArgs e)
+        {
+            this.tableDraggingPanel.DragOver -= new DragEventHandler(tableDraggingPanel_DragOver);
+            this.tableDraggingPanel.DragDrop -= new DragEventHandler(tableDraggingPanel_DragDrop);
+            foreach (Control c in this.tableDraggingPanel.Controls)
+            {
+                c.MouseDown -= new MouseEventHandler(tableDraggingPanel_MouseDown);
+                c.Click += new EventHandler(Masa_Click);
+            }
+        }
+        private void Masa_Click(object sender, EventArgs e)
+        {
+            selectMasa select = new selectMasa();
+            selectMasa.selectedMasaButton = sender as Button;
+            selectMasa.masalar = this.masaLIST;
+            select.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SelectMasa_Closing);
+            select.Show();
+        }
+        private void SelectMasa_Closing(object sender, EventArgs e)
+        {
+            getMasaFromDB(this.masaLIST.First().SalonID);
+            this.tableDraggingPanel.Controls.Clear();
+            foreach (Masalar mas in this.masaLIST)
+                MasaCreate(mas);
+            TableDraggingEvent();//+++++++ Burada Otomatik Sayfaya Dragging Gelmesi LAzim Ama Gelmiyor
         }
     }
 }

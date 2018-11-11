@@ -241,7 +241,7 @@
             this.masaDuzenle.Name = "masaDuzenle";
             this.masaDuzenle.Size = new System.Drawing.Size(184, 43);
             this.masaDuzenle.TabIndex = 3;
-            this.masaDuzenle.Text = "Yeni Masa Düzeni";
+            this.masaDuzenle.Text = "Masa Düzenle";
             this.masaDuzenle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.masaDuzenle.TileImage = global::KEDI_v_0._5._0._1.Properties.Resources.edit_badge;
             this.masaDuzenle.TileImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -249,6 +249,7 @@
             this.masaDuzenle.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
             this.masaDuzenle.UseSelectable = true;
             this.masaDuzenle.UseTileImage = true;
+            this.masaDuzenle.Click += new System.EventHandler(this.masaDuzenle_Click);
             // 
             // add
             // 
