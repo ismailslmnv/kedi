@@ -79,6 +79,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Discount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Discount.Designer.cs">
+      <DependentUpon>Discount.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddProduct.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +115,21 @@
     <Compile Include="AddTable.Designer.cs">
       <DependentUpon>AddTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddMenu.Designer.cs">
+      <DependentUpon>AddMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="deneme_Tablosu.cs">
+      <DependentUpon>ModelKedi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditMenu.Designer.cs">
+      <DependentUpon>EditMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditSubProduct.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,9 +153,6 @@
     </Compile>
     <Compile Include="EditPermission.Designer.cs">
       <DependentUpon>EditPermission.cs</DependentUpon>
-    </Compile>
-    <Compile Include="deneme_Tablosu.cs">
-      <DependentUpon>ModelKedi.tt</DependentUpon>
     </Compile>
     <Compile Include="AddPermission.cs">
       <SubType>Form</SubType>
@@ -190,6 +208,9 @@
     <Compile Include="Odeme.cs">
       <DependentUpon>ModelKedi.tt</DependentUpon>
     </Compile>
+    <Compile Include="Personel.cs">
+      <DependentUpon>ModelKedi.tt</DependentUpon>
+    </Compile>
     <Compile Include="Products.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,9 +222,6 @@
     </Compile>
     <Compile Include="Permissions.Designer.cs">
       <DependentUpon>Permissions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Personel.cs">
-      <DependentUpon>ModelKedi.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -258,6 +276,9 @@
     <Compile Include="Yetkiler.cs">
       <DependentUpon>ModelKedi.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Discount.resx">
+      <DependentUpon>Discount.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AddProduct.resx">
       <DependentUpon>AddProduct.cs</DependentUpon>
     </EmbeddedResource>
@@ -272,6 +293,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddTable.resx">
       <DependentUpon>AddTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddMenu.resx">
+      <DependentUpon>AddMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditMenu.resx">
+      <DependentUpon>EditMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditSubProduct.resx">
       <DependentUpon>EditSubProduct.cs</DependentUpon>

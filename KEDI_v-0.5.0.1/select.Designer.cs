@@ -31,6 +31,7 @@
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.ozellikgoster = new MetroFramework.Controls.MetroTile();
             this.urunEdit = new MetroFramework.Controls.MetroTile();
+            this.discount = new MetroFramework.Controls.MetroTile();
             this.metroPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,6 +43,7 @@
             this.metroPanel1.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel1.HorizontalScrollbarSize = 10;
             this.metroPanel1.Location = new System.Drawing.Point(0, 3);
+            this.metroPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel1.Name = "metroPanel1";
             this.metroPanel1.Size = new System.Drawing.Size(332, 99);
             this.metroPanel1.TabIndex = 0;
@@ -55,6 +57,7 @@
             this.ozellikgoster.AutoSize = true;
             this.ozellikgoster.Dock = System.Windows.Forms.DockStyle.Right;
             this.ozellikgoster.Location = new System.Drawing.Point(166, 0);
+            this.ozellikgoster.Margin = new System.Windows.Forms.Padding(0);
             this.ozellikgoster.Name = "ozellikgoster";
             this.ozellikgoster.Size = new System.Drawing.Size(166, 99);
             this.ozellikgoster.Style = MetroFramework.MetroColorStyle.Red;
@@ -81,12 +84,29 @@
             this.urunEdit.UseSelectable = true;
             this.urunEdit.Click += new System.EventHandler(this.urunEdit_Click);
             // 
+            // discount
+            // 
+            this.discount.ActiveControl = null;
+            this.discount.AutoSize = true;
+            this.discount.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.discount.Location = new System.Drawing.Point(0, 101);
+            this.discount.Name = "discount";
+            this.discount.Size = new System.Drawing.Size(333, 73);
+            this.discount.Style = MetroFramework.MetroColorStyle.Lime;
+            this.discount.TabIndex = 3;
+            this.discount.Text = "İndirim Ekle";
+            this.discount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.discount.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.discount.UseSelectable = true;
+            this.discount.Click += new System.EventHandler(this.discount_Click);
+            // 
             // select
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(333, 97);
+            this.ClientSize = new System.Drawing.Size(333, 174);
             this.ControlBox = false;
+            this.Controls.Add(this.discount);
             this.Controls.Add(this.metroPanel1);
             this.DisplayHeader = false;
             this.MaximizeBox = false;
@@ -102,6 +122,7 @@
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -110,5 +131,6 @@
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private MetroFramework.Controls.MetroTile ozellikgoster;
         private MetroFramework.Controls.MetroTile urunEdit;
+        private MetroFramework.Controls.MetroTile discount;
     }
 }

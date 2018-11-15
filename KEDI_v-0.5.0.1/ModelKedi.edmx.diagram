@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="ModelKediDB.sysdiagram" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelKediDB.Urunler" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelKediDB.Yetkiler" Width="1.5" PointX="1.5" PointY="19" IsExpanded="true" />
-        <AssociationConnector Association="ModelKediDB.FK_Indirimler_Urunler" ManuallyRouted="false" />
         <AssociationConnector Association="ModelKediDB.FK_Odeme_Indirimler" ManuallyRouted="false" />
         <AssociationConnector Association="ModelKediDB.FK_Masalar_Salonlar" ManuallyRouted="false" />
         <AssociationConnector Association="ModelKediDB.FK_Siparisler_Masalar" ManuallyRouted="false" />

@@ -17,7 +17,6 @@ namespace KEDI_v_0._5._0._1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Urunler()
         {
-            this.Indirimlers = new HashSet<Indirimler>();
             this.Siparislers = new HashSet<Siparisler>();
         }
     
@@ -29,8 +28,6 @@ namespace KEDI_v_0._5._0._1
         public string Notlar { get; set; }
         public Nullable<bool> AltOzellik { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Indirimler> Indirimlers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Siparisler> Siparislers { get; set; }
     }

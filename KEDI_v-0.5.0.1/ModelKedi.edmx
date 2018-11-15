@@ -11,6 +11,12 @@
           </Key>
           <Property Name="deneme" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="denemeTablosu">
+          <Property Name="Deneme" Type="nchar" MaxLength="10" />
+          <Property Name="deneme1" Type="nchar" MaxLength="10" />
+        </EntityType>-->
         <EntityType Name="GirisLogs">
           <Key>
             <PropertyRef Name="LogID" />
@@ -27,7 +33,7 @@
           <Property Name="IndirimAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Oran" Type="decimal" Precision="10" Scale="5" Nullable="false" />
           <Property Name="Tarih" Type="datetime" Nullable="false" />
-          <Property Name="UrunID" Type="int" />
+          <Property Name="UrunID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Loglars">
           <Key>
@@ -150,18 +156,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Indirimler_Urunler">
-          <End Role="Urunlers" Type="Self.Urunlers" Multiplicity="0..1" />
-          <End Role="Indirimlers" Type="Self.Indirimlers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Urunlers">
-              <PropertyRef Name="UrunID" />
-            </Principal>
-            <Dependent Role="Indirimlers">
-              <PropertyRef Name="UrunID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Masalar_Salonlar">
           <End Role="Salonlars" Type="Self.Salonlars" Multiplicity="1" />
           <End Role="Masalars" Type="Self.Masalars" Multiplicity="*" />
@@ -263,10 +257,6 @@
             <End Role="Personels" EntitySet="Personels" />
             <End Role="GirisLogs" EntitySet="GirisLogs" />
           </AssociationSet>
-          <AssociationSet Name="FK_Indirimler_Urunler" Association="Self.FK_Indirimler_Urunler">
-            <End Role="Urunlers" EntitySet="Urunlers" />
-            <End Role="Indirimlers" EntitySet="Indirimlers" />
-          </AssociationSet>
           <AssociationSet Name="FK_Masalar_Salonlar" Association="Self.FK_Masalar_Salonlar">
             <End Role="Salonlars" EntitySet="Salonlars" />
             <End Role="Masalars" EntitySet="Masalars" />
@@ -308,8 +298,7 @@
           <Property Name="IndirimAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Oran" Type="Decimal" Precision="10" Scale="5" Nullable="false" />
           <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UrunID" Type="Int32" />
-          <NavigationProperty Name="Urunler" Relationship="Self.FK_Indirimler_Urunler" FromRole="Indirimler" ToRole="Urunler" />
+          <Property Name="UrunID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Odemes" Relationship="Self.FK_Odeme_Indirimler" FromRole="Indirimler" ToRole="Odeme" />
         </EntityType>
         <EntityType Name="Loglar">
@@ -414,7 +403,6 @@
           <Property Name="Tarih" Type="DateTime" Precision="3" />
           <Property Name="Notlar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AltOzellik" Type="Boolean" />
-          <NavigationProperty Name="Indirimlers" Relationship="Self.FK_Indirimler_Urunler" FromRole="Urunler" ToRole="Indirimler" />
           <NavigationProperty Name="Siparislers" Relationship="Self.FK_Siparisler_Urunler" FromRole="Urunler" ToRole="Siparisler" />
         </EntityType>
         <EntityType Name="Yetkiler">
@@ -434,18 +422,6 @@
           <Property Name="Raporlama" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Personels" Relationship="Self.FK_Personel_Yetkiler" FromRole="Yetkiler" ToRole="Personel" />
         </EntityType>
-        <Association Name="FK_Indirimler_Urunler">
-          <End Role="Urunler" Type="Self.Urunler" Multiplicity="0..1" />
-          <End Role="Indirimler" Type="Self.Indirimler" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Urunler">
-              <PropertyRef Name="UrunID" />
-            </Principal>
-            <Dependent Role="Indirimler">
-              <PropertyRef Name="UrunID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Odeme_Indirimler">
           <End Role="Indirimler" Type="Self.Indirimler" Multiplicity="0..1" />
           <End Role="Odeme" Type="Self.Odeme" Multiplicity="*" />
@@ -541,10 +517,6 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Urunlers" EntityType="Self.Urunler" />
           <EntitySet Name="Yetkilers" EntityType="Self.Yetkiler" />
-          <AssociationSet Name="FK_Indirimler_Urunler" Association="Self.FK_Indirimler_Urunler">
-            <End Role="Urunler" EntitySet="Urunlers" />
-            <End Role="Indirimler" EntitySet="Indirimlers" />
-          </AssociationSet>
           <AssociationSet Name="FK_Odeme_Indirimler" Association="Self.FK_Odeme_Indirimler">
             <End Role="Indirimler" EntitySet="Indirimlers" />
             <End Role="Odeme" EntitySet="Odemes" />

@@ -83,7 +83,7 @@ namespace KEDI_v_0._5._0._1
             {
                 using (KEDIDBEntities context = new KEDIDBEntities())
                 {
-                    var result = (from menu in context.Urunlers where menu.UstUrunID==null select menu).DefaultIfEmpty().ToList();
+                    var result = (from menu in context.Urunlers where menu.UstUrunID==0 select menu).DefaultIfEmpty().ToList();
                     if (result != null)
                     {
                         foreach (var item in result)
@@ -112,8 +112,8 @@ namespace KEDI_v_0._5._0._1
                 {
                     if (item.UrunID.ToString().Equals(ID))
                     {
-                        EditPermission.YetkiID = item.UrunID;
-                        EditPermission edit = new EditPermission();
+                        EditMenu.UrunID = item.UrunID;
+                        EditMenu edit = new EditMenu();
                         edit.Show();
                     }
                 }
@@ -139,8 +139,9 @@ namespace KEDI_v_0._5._0._1
         {
             if(pressedControlButton==1)
             {
-                
-               // add.Show();
+
+                AddMenu add = new AddMenu();
+                add.Show();
             }
             else if (pressedControlButton == 2)
             {
@@ -217,7 +218,30 @@ namespace KEDI_v_0._5._0._1
         }
         private void indirimler_Click(object sender, EventArgs e)
         {
-
+            pressedControlButton = 3;
+            getIndirimFromDb();
+        }
+        private void getIndirimFromDb()
+        {
+            try
+            {
+                tilePanel.Controls.Clear();
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from i in kEDIDB.Indirimlers select i).DefaultIfEmpty().ToList();
+                    if (result.Count!=0)
+                    {
+                        foreach (var item in result)
+                        {
+                            tileCreator(item.IndirimAdi, item.IndirimID.ToString());
+                        }
+                        Indirim = result;
+                    }
+                }
+            } catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

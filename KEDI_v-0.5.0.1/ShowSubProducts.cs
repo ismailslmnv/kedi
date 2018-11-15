@@ -129,7 +129,7 @@ namespace KEDI_v_0._5._0._1
                                   select urun.UrunAdi).DefaultIfEmpty().ToList();
                     if (result.Count > 0)
                     {
-                        this.Text = this.Text + result[0];
+                        this.Text = "Alt Özellikler - " + result[0].TrimStart();
                     }
                 }
             }
@@ -144,22 +144,22 @@ namespace KEDI_v_0._5._0._1
         {
             try
             {
-                using (KEDIDBEntities kEDIDB = new KEDIDBEntities()) 
-                {
-                    var result = (from urun in kEDIDB.Urunlers
-                                  where urun.UrunID == ProductID
-                                  select urun.UstUrunID).FirstOrDefault();
-                    if (result != null)
-                    {
-                        AddProperty.ProductID = result.Value;
-                        AddProperty property = new AddProperty();
+                //using (KEDIDBEntities kEDIDB = new KEDIDBEntities()) 
+                //{
+                //    var result = (from urun in kEDIDB.Urunlers
+                //                  where urun.UrunID == ProductID
+                //                  select urun.UstUrunID).FirstOrDefault();
+                //    if (result != null)
+                //    {
+                AddProperty.ProductID = ProductID;
+                AddProperty property = new AddProperty();
                         property.Show();
-                    }
-                    else
-                    {
-                        MessageBox.Show("İç Hata Oluştu. İşlem Gerçekleştirilemedi.");
-                    }
-                }
+                //    }
+                //    else
+                //    {
+                //        MessageBox.Show("İç Hata Oluştu. İşlem Gerçekleştirilemedi.");
+                //    }
+                //}
             }
             catch (Exception ex)
             {

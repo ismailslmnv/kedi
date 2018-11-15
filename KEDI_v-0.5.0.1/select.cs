@@ -51,5 +51,13 @@ namespace KEDI_v_0._5._0._1
             show.Show();
             this.Close();
         }
+
+        private void discount_Click(object sender, EventArgs e)
+        {
+            Discount.UrunID = UrunID;
+            Discount disc = new Discount();
+            disc.Show();
+            this.Close();
+        }
     }
 }

@@ -38,9 +38,9 @@
             this.metroPanel5 = new MetroFramework.Controls.MetroPanel();
             this.add = new MetroFramework.Controls.MetroTile();
             this.metroPanel6 = new MetroFramework.Controls.MetroPanel();
+            this.indirimler = new MetroFramework.Controls.MetroTile();
             this.product = new MetroFramework.Controls.MetroTile();
             this.menu = new MetroFramework.Controls.MetroTile();
-            this.indirimler = new MetroFramework.Controls.MetroTile();
             this.metroPanel3.SuspendLayout();
             this.metroPanel2.SuspendLayout();
             this.metroPanel1.SuspendLayout();
@@ -60,10 +60,10 @@
             this.metroPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.metroPanel3.Name = "metroPanel3";
             this.metroPanel3.Padding = new System.Windows.Forms.Padding(0, 1, 1, 1);
-            this.metroPanel3.Size = new System.Drawing.Size(1280, 50);
+            this.metroPanel3.Size = new System.Drawing.Size(887, 50);
             this.metroPanel3.TabIndex = 9;
             this.metroPanel3.VerticalScrollbarBarColor = true;
-            this.metroPanel3.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel3.VerticalScrollbarHighlightOnWheel = true;
             this.metroPanel3.VerticalScrollbarSize = 10;
             // 
             // Back
@@ -91,7 +91,7 @@
             this.metroPanel2.HorizontalScrollbarBarColor = true;
             this.metroPanel2.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel2.HorizontalScrollbarSize = 10;
-            this.metroPanel2.Location = new System.Drawing.Point(1022, 1);
+            this.metroPanel2.Location = new System.Drawing.Point(629, 1);
             this.metroPanel2.Name = "metroPanel2";
             this.metroPanel2.Size = new System.Drawing.Size(257, 48);
             this.metroPanel2.Style = MetroFramework.MetroColorStyle.Blue;
@@ -128,7 +128,7 @@
             this.metroPanel1.HorizontalScrollbarSize = 10;
             this.metroPanel1.Location = new System.Drawing.Point(0, 110);
             this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Size = new System.Drawing.Size(1280, 610);
+            this.metroPanel1.Size = new System.Drawing.Size(887, 351);
             this.metroPanel1.Style = MetroFramework.MetroColorStyle.Silver;
             this.metroPanel1.TabIndex = 10;
             this.metroPanel1.UseCustomBackColor = true;
@@ -138,22 +138,27 @@
             // 
             // tilePanel
             // 
+            this.tilePanel.AutoScroll = true;
+            this.tilePanel.AutoScrollMargin = new System.Drawing.Size(4, 4);
+            this.tilePanel.AutoScrollMinSize = new System.Drawing.Size(1, 1);
             this.tilePanel.AutoSize = true;
             this.tilePanel.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tilePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tilePanel.HorizontalScrollbar = true;
             this.tilePanel.HorizontalScrollbarBarColor = true;
             this.tilePanel.HorizontalScrollbarHighlightOnWheel = false;
             this.tilePanel.HorizontalScrollbarSize = 10;
             this.tilePanel.Location = new System.Drawing.Point(228, 128);
             this.tilePanel.Name = "tilePanel";
-            this.tilePanel.Padding = new System.Windows.Forms.Padding(100, 10, 50, 10);
-            this.tilePanel.Size = new System.Drawing.Size(1052, 482);
+            this.tilePanel.Padding = new System.Windows.Forms.Padding(100, 10, 50, 50);
+            this.tilePanel.Size = new System.Drawing.Size(659, 223);
             this.tilePanel.TabIndex = 4;
             this.tilePanel.UseCustomBackColor = true;
+            this.tilePanel.UseStyleColors = true;
             this.tilePanel.VerticalScrollbar = true;
             this.tilePanel.VerticalScrollbarBarColor = true;
-            this.tilePanel.VerticalScrollbarHighlightOnWheel = false;
-            this.tilePanel.VerticalScrollbarSize = 10;
+            this.tilePanel.VerticalScrollbarHighlightOnWheel = true;
+            this.tilePanel.VerticalScrollbarSize = 20;
             // 
             // metroPanel5
             // 
@@ -166,7 +171,7 @@
             this.metroPanel5.Location = new System.Drawing.Point(228, 0);
             this.metroPanel5.Name = "metroPanel5";
             this.metroPanel5.Padding = new System.Windows.Forms.Padding(0, 82, 50, 3);
-            this.metroPanel5.Size = new System.Drawing.Size(1052, 128);
+            this.metroPanel5.Size = new System.Drawing.Size(659, 128);
             this.metroPanel5.TabIndex = 3;
             this.metroPanel5.UseCustomBackColor = true;
             this.metroPanel5.VerticalScrollbarBarColor = true;
@@ -178,7 +183,7 @@
             // 
             this.add.ActiveControl = null;
             this.add.Dock = System.Windows.Forms.DockStyle.Right;
-            this.add.Location = new System.Drawing.Point(818, 82);
+            this.add.Location = new System.Drawing.Point(425, 82);
             this.add.Name = "add";
             this.add.Size = new System.Drawing.Size(184, 43);
             this.add.TabIndex = 2;
@@ -204,12 +209,29 @@
             this.metroPanel6.HorizontalScrollbarSize = 10;
             this.metroPanel6.Location = new System.Drawing.Point(0, 0);
             this.metroPanel6.Name = "metroPanel6";
-            this.metroPanel6.Size = new System.Drawing.Size(228, 610);
+            this.metroPanel6.Size = new System.Drawing.Size(228, 351);
             this.metroPanel6.TabIndex = 2;
             this.metroPanel6.UseCustomBackColor = true;
             this.metroPanel6.VerticalScrollbarBarColor = true;
             this.metroPanel6.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel6.VerticalScrollbarSize = 10;
+            // 
+            // indirimler
+            // 
+            this.indirimler.ActiveControl = null;
+            this.indirimler.Dock = System.Windows.Forms.DockStyle.Top;
+            this.indirimler.Location = new System.Drawing.Point(0, 128);
+            this.indirimler.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.indirimler.Name = "indirimler";
+            this.indirimler.Size = new System.Drawing.Size(228, 64);
+            this.indirimler.Style = MetroFramework.MetroColorStyle.Red;
+            this.indirimler.TabIndex = 4;
+            this.indirimler.Text = "Ürün İndirimleri";
+            this.indirimler.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.indirimler.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
+            this.indirimler.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.indirimler.UseSelectable = true;
+            this.indirimler.Click += new System.EventHandler(this.indirimler_Click);
             // 
             // product
             // 
@@ -244,28 +266,11 @@
             this.menu.UseSelectable = true;
             this.menu.Click += new System.EventHandler(this.menu_Click);
             // 
-            // indirimler
-            // 
-            this.indirimler.ActiveControl = null;
-            this.indirimler.Dock = System.Windows.Forms.DockStyle.Top;
-            this.indirimler.Location = new System.Drawing.Point(0, 128);
-            this.indirimler.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.indirimler.Name = "indirimler";
-            this.indirimler.Size = new System.Drawing.Size(228, 64);
-            this.indirimler.Style = MetroFramework.MetroColorStyle.Red;
-            this.indirimler.TabIndex = 4;
-            this.indirimler.Text = "Ürün İndirimleri";
-            this.indirimler.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.indirimler.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
-            this.indirimler.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.indirimler.UseSelectable = true;
-            this.indirimler.Click += new System.EventHandler(this.indirimler_Click);
-            // 
             // Products
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1280, 720);
+            this.ClientSize = new System.Drawing.Size(887, 461);
             this.Controls.Add(this.metroPanel1);
             this.Controls.Add(this.metroPanel3);
             this.Name = "Products";

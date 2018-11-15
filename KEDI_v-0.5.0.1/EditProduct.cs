@@ -241,7 +241,7 @@ namespace KEDI_v_0._5._0._1
                     var result = (from urun in kEDIDB.Urunlers where urun.UrunID== _urunID
                                   select urun.UrunAdi).FirstOrDefault();
                     var _result = (from urun in kEDIDB.Urunlers
-                                   where urun.UstUrunID==null
+                                   where urun.UstUrunID==0
                                    select urun.UrunAdi).DefaultIfEmpty().ToList();
                     if(_result != null)
                     {

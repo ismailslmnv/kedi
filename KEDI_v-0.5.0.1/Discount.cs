@@ -12,37 +12,34 @@ using MetroFramework.Forms;
 
 namespace KEDI_v_0._5._0._1
 {
-    public partial class AddProduct : MetroForm
+    public partial class Discount : MetroForm
     {
-        public AddProduct()
+        public Discount()
         {
             InitializeComponent();
-            menuLoader();
+            _loader();
         }
-        private void menuLoader()
+        public static int UrunID;       
+        private void _loader()
         {
-            List<Urunler> urun = new List<Urunler>();
             try
             {
+                int _urunID = UrunID;
                 using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
                 {
-                    var result = (from urunler in kEDIDB.Urunlers
-                                  where urunler.UstUrunID==0
-                                  select urunler.UrunAdi).DefaultIfEmpty().ToList();
+                    var result = (from u in kEDIDB.Urunlers where u.UrunID == _urunID select u).FirstOrDefault();
                     if (result != null)
                     {
-                        foreach(var item in result)
-                        {
-                            menuSelect.Items.Add(item);
-                        }
+                        this.productName.Text = result.UrunAdi;
+                        this.price.Text = result.Fiyat.ToString();
                     }
                 }
-            }
-            catch(Exception ex)
+
+            }catch(Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-        }     
+        }
         private void AddProduct_Load(object sender, EventArgs e)
         {
 
@@ -63,52 +60,27 @@ namespace KEDI_v_0._5._0._1
         {
             reset();
         }
-        private int _comboboxSolver()
-        {
-            try
-            {
-                string selectedItem = menuSelect.SelectedItem.ToString();
-                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
-                {
-                    var result = (from menu in kEDIDB.Urunlers
-                                  where menu.UrunAdi.Equals(selectedItem)
-                                  select menu.UrunID).FirstOrDefault();
-                    if (result > 0)
-                        return result;
-                }          
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            return -1;
-        }
         private void OK_Clicked()
         {
             decimal _price = intChecker(price.Text);
             if (_price>-1)
             {
-                int menuID = _comboboxSolver();
-                if (menuID >= 0)
-                {
+                int _urunID = UrunID;
                     try
                     {
                         Cursor.Current = Cursors.WaitCursor;
                         using (KEDIDBEntities KEDIDB = new KEDIDBEntities())
                         {
-                            Urunler urun = new Urunler()
+                            Indirimler indirim = new Indirimler()
                             {
-                                UrunAdi = urunAdi.Text,
-                                UstUrunID = menuID,
-                                Fiyat = _price,
-                                Notlar = not.Text,
-                                Tarih = DateTime.Now,
-                                AltOzellik = false
-                                
+                                IndirimAdi = dicountName.Text,
+                                UrunID = _urunID,
+                                Oran = _price,                                
+                                Tarih = DateTime.Now                                                             
                             };
-                            KEDIDB.Urunlers.Add(urun);
+                            KEDIDB.Indirimlers.Add(indirim);
                             KEDIDB.SaveChanges();
-                            MessageBox.Show("Ürün Başarıyla Eklendi.");
+                            MessageBox.Show("Indirim Başarıyla Eklendi.");
                         }
                     }
                     catch (Exception ex)
@@ -122,9 +94,7 @@ namespace KEDI_v_0._5._0._1
                     MessageBox.Show("Birşeyler Yanlış Gitti. İşlem Tamamlanamadı..");
                 }
                 _formClosing();
-                Cursor.Current = Cursors.Default;
-            }
-            else MessageBox.Show("Lütfen Fiyat Alanına Sadece rakam ve \",\" giriniz.");
+                Cursor.Current = Cursors.Default;            
         }
         private  void reset()
         {
@@ -147,7 +117,7 @@ namespace KEDI_v_0._5._0._1
         {
             try
             {
-                if (text != null && urunAdi.Text != null && menuSelect.SelectedItem != null)
+                if (text != null && dicountName.Text != null)
                 {
                     foreach (char item in text)
                     {
@@ -181,6 +151,18 @@ namespace KEDI_v_0._5._0._1
                
             }
             return -1;
+        }
+        private void calcDiscount()
+        {
+            decimal value = intChecker(discountValue.Text.Trim());
+            decimal firstValue = Convert.ToDecimal(price.Text.Trim());
+            finalPrice.Text = (firstValue-(firstValue * value / 100)).ToString();
+        }
+
+        private void discountValue_TextChanged_1(object sender, EventArgs e)
+        {
+            if(discountValue.Text!=null)
+                calcDiscount();
         }
     }
 }
