@@ -39,6 +39,9 @@
             this.salonPanel = new MetroFramework.Controls.MetroPanel();
             this.tableDraggingPanel = new MetroFramework.Controls.MetroPanel();
             this.metroPanel5 = new MetroFramework.Controls.MetroPanel();
+            this.cancelChanges = new MetroFramework.Controls.MetroTile();
+            this.saveChanges = new MetroFramework.Controls.MetroTile();
+            this.masaDuzenlemeModu = new MetroFramework.Drawing.Html.HtmlLabel();
             this.masaDuzenle = new MetroFramework.Controls.MetroTile();
             this.add = new MetroFramework.Controls.MetroTile();
             this.metroPanel6 = new MetroFramework.Controls.MetroPanel();
@@ -212,10 +215,16 @@
             this.tableDraggingPanel.VerticalScrollbarBarColor = true;
             this.tableDraggingPanel.VerticalScrollbarHighlightOnWheel = false;
             this.tableDraggingPanel.VerticalScrollbarSize = 10;
+            this.tableDraggingPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tableDraggingPanel_MouseClick);
+            this.tableDraggingPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tableDraggingPanel_MouseMove);
+            this.tableDraggingPanel.Move += new System.EventHandler(this.tableDraggingPanel_Move);
             // 
             // metroPanel5
             // 
             this.metroPanel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.metroPanel5.Controls.Add(this.cancelChanges);
+            this.metroPanel5.Controls.Add(this.saveChanges);
+            this.metroPanel5.Controls.Add(this.masaDuzenlemeModu);
             this.metroPanel5.Controls.Add(this.masaDuzenle);
             this.metroPanel5.Controls.Add(this.add);
             this.metroPanel5.Dock = System.Windows.Forms.DockStyle.Top;
@@ -232,12 +241,66 @@
             this.metroPanel5.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel5.VerticalScrollbarSize = 10;
             // 
+            // cancelChanges
+            // 
+            this.cancelChanges.ActiveControl = null;
+            this.cancelChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cancelChanges.ForeColor = System.Drawing.SystemColors.Control;
+            this.cancelChanges.Location = new System.Drawing.Point(818, 14);
+            this.cancelChanges.Name = "cancelChanges";
+            this.cancelChanges.Size = new System.Drawing.Size(184, 47);
+            this.cancelChanges.TabIndex = 6;
+            this.cancelChanges.Text = "Vazgeç";
+            this.cancelChanges.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cancelChanges.TileImage = global::KEDI_v_0._5._0._1.Properties.Resources.delete_button;
+            this.cancelChanges.TileImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cancelChanges.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
+            this.cancelChanges.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.cancelChanges.UseSelectable = true;
+            this.cancelChanges.UseTileImage = true;
+            this.cancelChanges.Visible = false;
+            this.cancelChanges.Click += new System.EventHandler(this.cancelChanges_Click);
+            // 
+            // saveChanges
+            // 
+            this.saveChanges.ActiveControl = null;
+            this.saveChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveChanges.ForeColor = System.Drawing.SystemColors.Control;
+            this.saveChanges.Location = new System.Drawing.Point(818, 75);
+            this.saveChanges.Name = "saveChanges";
+            this.saveChanges.Size = new System.Drawing.Size(184, 47);
+            this.saveChanges.TabIndex = 5;
+            this.saveChanges.Text = "Kaydet";
+            this.saveChanges.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.saveChanges.TileImage = global::KEDI_v_0._5._0._1.Properties.Resources.btnSave_Image;
+            this.saveChanges.TileImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.saveChanges.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
+            this.saveChanges.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.saveChanges.UseSelectable = true;
+            this.saveChanges.UseTileImage = true;
+            this.saveChanges.Visible = false;
+            this.saveChanges.Click += new System.EventHandler(this.saveChanges_Click);
+            // 
+            // masaDuzenlemeModu
+            // 
+            this.masaDuzenlemeModu.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.masaDuzenlemeModu.AutoScroll = true;
+            this.masaDuzenlemeModu.AutoScrollMinSize = new System.Drawing.Size(10, 0);
+            this.masaDuzenlemeModu.AutoSize = false;
+            this.masaDuzenlemeModu.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.masaDuzenlemeModu.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.masaDuzenlemeModu.Location = new System.Drawing.Point(276, 21);
+            this.masaDuzenlemeModu.Name = "masaDuzenlemeModu";
+            this.masaDuzenlemeModu.Size = new System.Drawing.Size(285, 43);
+            this.masaDuzenlemeModu.TabIndex = 4;
+            this.masaDuzenlemeModu.Visible = false;
+            // 
             // masaDuzenle
             // 
             this.masaDuzenle.ActiveControl = null;
-            this.masaDuzenle.Dock = System.Windows.Forms.DockStyle.Right;
+            this.masaDuzenle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.masaDuzenle.ForeColor = System.Drawing.SystemColors.Control;
-            this.masaDuzenle.Location = new System.Drawing.Point(634, 82);
+            this.masaDuzenle.Location = new System.Drawing.Point(818, 21);
             this.masaDuzenle.Name = "masaDuzenle";
             this.masaDuzenle.Size = new System.Drawing.Size(184, 43);
             this.masaDuzenle.TabIndex = 3;
@@ -249,6 +312,7 @@
             this.masaDuzenle.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
             this.masaDuzenle.UseSelectable = true;
             this.masaDuzenle.UseTileImage = true;
+            this.masaDuzenle.Visible = false;
             this.masaDuzenle.Click += new System.EventHandler(this.masaDuzenle_Click);
             // 
             // add
@@ -386,7 +450,10 @@
         private MetroFramework.Controls.MetroTile Back;
         private MetroFramework.Controls.MetroPanel salonPanel;
         private MetroFramework.Controls.MetroPanel MasaAltMenu;
-        private MetroFramework.Controls.MetroTile masaDuzenle;
         private MetroFramework.Controls.MetroTile add;
+        private MetroFramework.Controls.MetroTile masaDuzenle;
+        private MetroFramework.Drawing.Html.HtmlLabel masaDuzenlemeModu;
+        private MetroFramework.Controls.MetroTile saveChanges;
+        private MetroFramework.Controls.MetroTile cancelChanges;
     }
 }

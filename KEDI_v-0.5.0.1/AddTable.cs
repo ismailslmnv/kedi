@@ -32,7 +32,9 @@ namespace KEDI_v_0._5._0._1
 
         private void Delete_Click(object sender, EventArgs e)
         {
-            masaAdi.Clear();
+            this.masaAdi.Clear();
+            this.boyutX.Clear();
+            this.boyutY.Clear();
         }
         private bool ValidateControl()
         {
@@ -57,6 +59,8 @@ namespace KEDI_v_0._5._0._1
                         {
                             MasaAdi = this.masaAdi.Text,
                             Tarih = DateTime.Now,
+                            BoyutX = float.Parse(this.boyutX.Text),
+                            BoyutY = float.Parse(this.boyutY.Text),
                             SalonID = salonlar.Where(x=>x.SalonAdi.Equals(SalonlarSelect.Text)).First().SalonID,
                         };
                         context.Masalars.Add(masalar);

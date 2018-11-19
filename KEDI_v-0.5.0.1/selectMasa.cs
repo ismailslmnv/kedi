@@ -22,7 +22,7 @@ namespace KEDI_v_0._5._0._1
 
         private void selectMasa_Load(object sender, EventArgs e)
         {
-            editMasaTextbox.Text = selectedMasaButton.Text;
+            masaAdi.Text = selectedMasaButton.Text;
         }
 
         private void masaSil_Click(object sender, EventArgs e)
@@ -46,25 +46,38 @@ namespace KEDI_v_0._5._0._1
                 MessageBox.Show(selectSalon.ActiveForm, "Bir Hata Meydana Geldi Tekrar Deneyiniz", "HATA", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        
 
-        private void kaydetButton_Click(object sender, EventArgs e)
+        private void masaEdit_Click(object sender, EventArgs e)
+        {
+            this.Size = new Size(447, 380);
+            masaSil.Visible = false;
+            masaEdit.Visible = false;
+            metroLabel2.Visible = true;
+            metroLabel3.Visible = true;
+        }
+
+        private void selectMasa_Deactivate(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void OK_Click(object sender, EventArgs e)
         {
             try
             {
                 using (KEDIDBEntities db = new KEDIDBEntities())
                 {
                     var result = (from masa in db.Masalars where masa.MasaID.Equals(selectedMasaButton.TabIndex) select masa).First();
-                    if (!String.IsNullOrEmpty(editMasaTextbox.Text))
+                    if (!String.IsNullOrEmpty(masaAdi.Text))
                     {
-                        result.MasaAdi = editMasaTextbox.Text;
+                        result.MasaAdi = masaAdi.Text;
                         db.SaveChanges();
-                        editPanel.Visible = false;
                         this.Close();
                     }
                     else
                     {
                         MessageBox.Show(selectSalon.ActiveForm, "Bir İsim vermelisiniz", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        editPanel.Visible = false;
                         this.Close();
                     }
                 }
@@ -76,12 +89,7 @@ namespace KEDI_v_0._5._0._1
             }
         }
 
-        private void masaEdit_Click(object sender, EventArgs e)
-        {
-            editPanel.Visible = true;
-        }
-
-        private void selectMasa_Deactivate(object sender, EventArgs e)
+        private void Cancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }

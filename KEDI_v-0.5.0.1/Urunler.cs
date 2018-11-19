@@ -18,6 +18,7 @@ namespace KEDI_v_0._5._0._1
         public Urunler()
         {
             this.Siparislers = new HashSet<Siparisler>();
+            this.Indirimlers = new HashSet<Indirimler>();
         }
     
         public int UrunID { get; set; }
@@ -30,5 +31,7 @@ namespace KEDI_v_0._5._0._1
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Siparisler> Siparislers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Indirimler> Indirimlers { get; set; }
     }
 }

@@ -11,12 +11,6 @@
           </Key>
           <Property Name="deneme" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="denemeTablosu">
-          <Property Name="Deneme" Type="nchar" MaxLength="10" />
-          <Property Name="deneme1" Type="nchar" MaxLength="10" />
-        </EntityType>-->
         <EntityType Name="GirisLogs">
           <Key>
             <PropertyRef Name="LogID" />
@@ -53,10 +47,12 @@ warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary ke
           <Property Name="MasaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MasaAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SalonID" Type="int" Nullable="false" />
-          <Property Name="KonumX" Type="decimal" Precision="10" Scale="5" Nullable="false" />
-          <Property Name="KonumY" Type="decimal" Precision="10" Scale="5" Nullable="false" />
+          <Property Name="KonumX" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="KonumY" Type="decimal" Precision="10" Scale="0" Nullable="false" />
           <Property Name="Tarih" Type="datetime" Nullable="false" />
           <Property Name="Aktif" Type="bit" Nullable="false" />
+          <Property Name="BoyutX" Type="float" />
+          <Property Name="BoyutY" Type="float" />
         </EntityType>
         <EntityType Name="Odemes">
           <Key>
@@ -90,6 +86,8 @@ warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary ke
           <Property Name="SalonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SalonAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Tarih" Type="datetime" Nullable="false" />
+          <Property Name="BoyutX" Type="float" />
+          <Property Name="BoyutY" Type="float" />
         </EntityType>
         <EntityType Name="Siparislers">
           <Key>
@@ -153,6 +151,18 @@ warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary ke
             </Principal>
             <Dependent Role="GirisLogs">
               <PropertyRef Name="KullaniciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Indirimler_Urunler">
+          <End Role="Urunlers" Type="Self.Urunlers" Multiplicity="1" />
+          <End Role="Indirimlers" Type="Self.Indirimlers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urunlers">
+              <PropertyRef Name="UrunID" />
+            </Principal>
+            <Dependent Role="Indirimlers">
+              <PropertyRef Name="UrunID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -257,6 +267,10 @@ warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary ke
             <End Role="Personels" EntitySet="Personels" />
             <End Role="GirisLogs" EntitySet="GirisLogs" />
           </AssociationSet>
+          <AssociationSet Name="FK_Indirimler_Urunler" Association="Self.FK_Indirimler_Urunler">
+            <End Role="Urunlers" EntitySet="Urunlers" />
+            <End Role="Indirimlers" EntitySet="Indirimlers" />
+          </AssociationSet>
           <AssociationSet Name="FK_Masalar_Salonlar" Association="Self.FK_Masalar_Salonlar">
             <End Role="Salonlars" EntitySet="Salonlars" />
             <End Role="Masalars" EntitySet="Masalars" />
@@ -300,6 +314,7 @@ warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary ke
           <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UrunID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Odemes" Relationship="Self.FK_Odeme_Indirimler" FromRole="Indirimler" ToRole="Odeme" />
+          <NavigationProperty Name="Urunler" Relationship="ModelKediDB.FK_Indirimler_Urunler" FromRole="Indirimler" ToRole="Urunler" />
         </EntityType>
         <EntityType Name="Loglar">
           <Key>
@@ -319,12 +334,14 @@ warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary ke
           <Property Name="MasaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MasaAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SalonID" Type="Int32" Nullable="false" />
-          <Property Name="KonumX" Type="Decimal" Precision="10" Scale="5" Nullable="false" />
-          <Property Name="KonumY" Type="Decimal" Precision="10" Scale="5" Nullable="false" />
+          <Property Name="KonumX" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="KonumY" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
           <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Salonlar" Relationship="Self.FK_Masalar_Salonlar" FromRole="Masalar" ToRole="Salonlar" />
           <NavigationProperty Name="Siparislers" Relationship="Self.FK_Siparisler_Masalar" FromRole="Masalar" ToRole="Siparisler" />
           <Property Name="Aktif" Type="Boolean" Nullable="false" />
+          <Property Name="BoyutX" Type="Double" />
+          <Property Name="BoyutY" Type="Double" />
         </EntityType>
         <EntityType Name="Odeme">
           <Key>
@@ -364,6 +381,8 @@ warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary ke
           <Property Name="SalonAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Masalars" Relationship="Self.FK_Masalar_Salonlar" FromRole="Salonlar" ToRole="Masalar" />
+          <Property Name="BoyutX" Type="Double" />
+          <Property Name="BoyutY" Type="Double" />
         </EntityType>
         <EntityType Name="Siparisler">
           <Key>
@@ -404,6 +423,7 @@ warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary ke
           <Property Name="Notlar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AltOzellik" Type="Boolean" />
           <NavigationProperty Name="Siparislers" Relationship="Self.FK_Siparisler_Urunler" FromRole="Urunler" ToRole="Siparisler" />
+          <NavigationProperty Name="Indirimlers" Relationship="ModelKediDB.FK_Indirimler_Urunler" FromRole="Urunler" ToRole="Indirimler" />
         </EntityType>
         <EntityType Name="Yetkiler">
           <Key>
@@ -581,6 +601,10 @@ warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary ke
             <End Role="GirisLog" EntitySet="GirisLogs" />
           </AssociationSet>
           <EntitySet Name="deneme_Tablosu" EntityType="ModelKediDB.deneme_Tablosu" />
+          <AssociationSet Name="FK_Indirimler_Urunler" Association="ModelKediDB.FK_Indirimler_Urunler">
+            <End Role="Urunler" EntitySet="Urunlers" />
+            <End Role="Indirimler" EntitySet="Indirimlers" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -620,6 +644,18 @@ warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary ke
           </Key>
           <Property Name="deneme" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
+        <Association Name="FK_Indirimler_Urunler">
+          <End Type="ModelKediDB.Urunler" Role="Urunler" Multiplicity="1" />
+          <End Type="ModelKediDB.Indirimler" Role="Indirimler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urunler">
+              <PropertyRef Name="UrunID" />
+            </Principal>
+            <Dependent Role="Indirimler">
+              <PropertyRef Name="UrunID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -652,7 +688,9 @@ warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary ke
     <EntitySetMapping Name="Masalars">
       <EntityTypeMapping TypeName="IsTypeOf(ModelKediDB.Masalar)">
         <MappingFragment StoreEntitySet="Masalars">
-          <ScalarProperty Name="Aktif" ColumnName="Aktif" />
+          <ScalarProperty Name="BoyutY" ColumnName="BoyutY" />
+                <ScalarProperty Name="BoyutX" ColumnName="BoyutX" />
+                <ScalarProperty Name="Aktif" ColumnName="Aktif" />
                 <ScalarProperty Name="MasaID" ColumnName="MasaID" />
           <ScalarProperty Name="MasaAdi" ColumnName="MasaAdi" />
           <ScalarProperty Name="SalonID" ColumnName="SalonID" />
@@ -692,7 +730,9 @@ warning 6013: The table/view 'KEDI.dbo.denemeTablosu' does not have a primary ke
     <EntitySetMapping Name="Salonlars">
       <EntityTypeMapping TypeName="IsTypeOf(ModelKediDB.Salonlar)">
         <MappingFragment StoreEntitySet="Salonlars">
-          <ScalarProperty Name="SalonID" ColumnName="SalonID" />
+          <ScalarProperty Name="BoyutY" ColumnName="BoyutY" />
+                <ScalarProperty Name="BoyutX" ColumnName="BoyutX" />
+                <ScalarProperty Name="SalonID" ColumnName="SalonID" />
           <ScalarProperty Name="SalonAdi" ColumnName="SalonAdi" />
           <ScalarProperty Name="Tarih" ColumnName="Tarih" />
         </MappingFragment>

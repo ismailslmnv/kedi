@@ -16,6 +16,8 @@ namespace KEDI_v_0._5._0._1
     {
         private List<Salonlar> salonLIST = new List<Salonlar>();
         private List<Masalar> masaLIST = new List<Masalar>();
+        private Point[,] squares;
+        private int salonBoyutx, salonBoyuty;
 
         public Tables()
         {
@@ -104,7 +106,6 @@ namespace KEDI_v_0._5._0._1
                 c.Location = this.tableDraggingPanel.PointToClient(new Point(e.X, e.Y));
                 this.tableDraggingPanel.Controls.Add(c);
             }
-            TableSaveLocation(c);//Drag Drop Ta tekrardan Yerleri Kayit Ediliyor DB te
             //++++++++ Daha sonradan cizilecek duvar yerine masanin gelmesi yasak olacak
         }
 
@@ -213,7 +214,6 @@ namespace KEDI_v_0._5._0._1
             tableDraggingPanel.Visible = true;
             salonPanel.Visible = false;
             MasaAltMenu.Visible = true;
-            masaDuzenle.Visible = true;
             MasaAltMenuOlustur();
         }
 
@@ -242,7 +242,28 @@ namespace KEDI_v_0._5._0._1
             metroTile.UseSelectable = true;
             metroTile.MouseClick += new System.Windows.Forms.MouseEventHandler(MasaAltMenu_MouseClick);
         }
-
+        private void graphPanel()
+        {
+            int satir = tableDraggingPanel.Size.Height / salonBoyuty, stun = tableDraggingPanel.Size.Width / salonBoyutx;
+            makeSquare( satir,stun);
+            squares = new Point[satir, stun];
+            for (int i = 0; i < satir; i++)
+            {
+                for (int j = 0; j < stun; j++)
+                {
+                    squares[i,j] = new Point(j * (salonBoyutx), i * (salonBoyuty));
+                }
+            }
+        }
+        private void makeSquare(int x,int y)
+        {
+            Graphics g = tableDraggingPanel.CreateGraphics();
+            Pen p = new Pen(Color.Black);
+            for (int i = 1; i <= x; i++)
+                g.DrawLine(p,0,i*(salonBoyuty),tableDraggingPanel.Size.Width, i *(salonBoyuty));
+            for (int i = 1; i <=  y; i++)
+                g.DrawLine(p, i * (salonBoyutx), 0, i * (salonBoyutx), tableDraggingPanel.Size.Height);
+        }
         private void MasaAltMenu_MouseClick(object sender, MouseEventArgs e)
         {
             tableDraggingPanel.Controls.Clear();
@@ -250,27 +271,52 @@ namespace KEDI_v_0._5._0._1
             getMasaFromDB(tile.TabIndex);
             foreach (Masalar mas in this.masaLIST)
                 MasaCreate(mas);
-            TableDraggingEvent();//Masa Olustuktan Sonra Cagiriliyor Ki sonradan Eklenenler Dragg Yapilsin
+            RemoveTableDraggingEvent();
+            masaDuzenle.Visible = true;
+            foreach(Salonlar sal in this.salonLIST)
+            {
+                salonBoyutx = (sal.SalonID == tile.TabIndex) ? Convert.ToInt32(sal.BoyutX) : 0;
+                salonBoyuty = (sal.SalonID == tile.TabIndex) ? Convert.ToInt32(sal.BoyutY) : 0;
+                if (salonBoyutx != 0 && salonBoyuty != 0) break;
+            }
+            graphPanel();
         }
         private void MasaCreate(Masalar masalar)
         {
             Button masa = new Button();
-            masa.Location = new System.Drawing.Point(Convert.ToInt32(masalar.KonumX), Convert.ToInt32(masalar.KonumY));//?????? Decimal Kabul Etmiyor
-            masa.Size = new System.Drawing.Size(50, 50);
+            masa.Location = new System.Drawing.Point(Convert.ToInt32(masalar.KonumX), Convert.ToInt32(masalar.KonumY));
+            masa.Size = new System.Drawing.Size(Convert.ToInt32(masalar.BoyutX) + 10 , Convert.ToInt32(masalar.BoyutY) + 10);
             masa.TabIndex = masalar.MasaID;
             masa.Text = masalar.MasaAdi;
             masa.UseVisualStyleBackColor = true;
             this.tableDraggingPanel.Controls.Add(masa);
         }
-        private void TableDraggingEvent()
+        private void AddTableDraggingEvent()
         {
             this.tableDraggingPanel.AllowDrop = true;
             foreach (Control c in this.tableDraggingPanel.Controls)
             {
                 c.MouseDown += new MouseEventHandler(tableDraggingPanel_MouseDown);
+                c.Click -= new EventHandler(Masa_Click);
+                c.MouseMove += new MouseEventHandler(screenGrapher);
             }
             this.tableDraggingPanel.DragOver += new DragEventHandler(tableDraggingPanel_DragOver);
             this.tableDraggingPanel.DragDrop += new DragEventHandler(tableDraggingPanel_DragDrop);
+        }
+        private void screenGrapher(object sender,MouseEventArgs e)
+        {
+            graphPanel();
+        }
+        private void RemoveTableDraggingEvent()
+        {
+            this.tableDraggingPanel.DragOver -= new DragEventHandler(tableDraggingPanel_DragOver);
+            this.tableDraggingPanel.DragDrop -= new DragEventHandler(tableDraggingPanel_DragDrop);
+            foreach (Control c in this.tableDraggingPanel.Controls)
+            {
+                c.MouseDown -= new MouseEventHandler(tableDraggingPanel_MouseDown);
+                c.Click += new EventHandler(Masa_Click);
+                c.MouseMove -= new MouseEventHandler(screenGrapher);
+            }
         }
         private void exit_Click(object sender, EventArgs e)
         {
@@ -279,13 +325,13 @@ namespace KEDI_v_0._5._0._1
 
         private void masaDuzenle_Click(object sender, EventArgs e)
         {
-            this.tableDraggingPanel.DragOver -= new DragEventHandler(tableDraggingPanel_DragOver);
-            this.tableDraggingPanel.DragDrop -= new DragEventHandler(tableDraggingPanel_DragDrop);
-            foreach (Control c in this.tableDraggingPanel.Controls)
-            {
-                c.MouseDown -= new MouseEventHandler(tableDraggingPanel_MouseDown);
-                c.Click += new EventHandler(Masa_Click);
-            }
+            AddTableDraggingEvent();
+            masaDuzenlemeModu.Text = "Masa Düzenleme Modu Aktif";
+            add.Visible = false;
+            masaDuzenle.Visible = false;
+            masaDuzenlemeModu.Visible = true;
+            saveChanges.Visible = true;
+            cancelChanges.Visible = true;
         }
         private void Masa_Click(object sender, EventArgs e)
         {
@@ -301,7 +347,55 @@ namespace KEDI_v_0._5._0._1
             this.tableDraggingPanel.Controls.Clear();
             foreach (Masalar mas in this.masaLIST)
                 MasaCreate(mas);
-            TableDraggingEvent();//+++++++ Burada Otomatik Sayfaya Dragging Gelmesi LAzim Ama Gelmiyor
+            AddTableDraggingEvent();
+        }
+
+        private void saveChanges_Click(object sender, EventArgs e)
+        {
+            foreach (Button c in this.tableDraggingPanel.Controls)
+            {
+                TableSaveLocation(c);
+            }
+            RemoveTableDraggingEvent();
+            add.Visible = true;
+            masaDuzenle.Visible = true;
+            masaDuzenlemeModu.Visible = false;
+            saveChanges.Visible = false;
+            cancelChanges.Visible = false;
+        }
+
+        private void cancelChanges_Click(object sender, EventArgs e)
+        {
+            RemoveTableDraggingEvent();
+            add.Visible = true;
+            masaDuzenle.Visible = true;
+            masaDuzenlemeModu.Visible = false;
+            saveChanges.Visible = false;
+            cancelChanges.Visible = false;
+        }
+
+        private void tableDraggingPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void tableDraggingPanel_Move(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void tableDraggingPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            Graphics g = tableDraggingPanel.CreateGraphics();
+            for (int i = 0; i < squares.GetLength(0); i++)
+            {
+                for (int j = 0; j < squares.GetLength(1); j++)
+                {
+                    if (squares[i, j].X + 10 > e.Location.X && squares[i, j].X < e.Location.X && squares[i, j].Y + 20 > e.Location.Y && squares[i, j].Y < e.Location.Y)
+                    {
+                        g.FillRectangle(Brushes.Aqua, squares[i, j].X, squares[i, j].Y, salonBoyutx, salonBoyuty);
+                    }
+                }
+            }
         }
     }
 }

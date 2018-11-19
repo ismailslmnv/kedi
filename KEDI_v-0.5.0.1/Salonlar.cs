@@ -23,6 +23,8 @@ namespace KEDI_v_0._5._0._1
         public int SalonID { get; set; }
         public string SalonAdi { get; set; }
         public System.DateTime Tarih { get; set; }
+        public Nullable<double> BoyutX { get; set; }
+        public Nullable<double> BoyutY { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Masalar> Masalars { get; set; }

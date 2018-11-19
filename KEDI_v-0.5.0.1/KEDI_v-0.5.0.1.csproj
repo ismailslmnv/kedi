@@ -400,6 +400,8 @@
       <DependentUpon>ModelKedi.edmx</DependentUpon>
       <LastGenOutput>ModelKedi.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\delete-button.png" />
+    <None Include="Resources\btnSave.Image.png" />
     <None Include="Resources\edit-badge.png" />
   </ItemGroup>
   <ItemGroup>

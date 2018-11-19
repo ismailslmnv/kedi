@@ -30,7 +30,9 @@ namespace KEDI_v_0._5._0._1
 
         private void Delete_Click(object sender, EventArgs e)
         {
-            salonAdi.Clear();
+            this.salonAdi.Clear();
+            this.boyutX.Clear();
+            this.boyutY.Clear();
         }
         private bool ValidateControl()
         {
@@ -61,6 +63,8 @@ namespace KEDI_v_0._5._0._1
                             Salonlar salonlar = new Salonlar()
                             {
                                 SalonAdi = this.salonAdi.Text,
+                                BoyutX = float.Parse(this.boyutX.Text),
+                                BoyutY = float.Parse(this.boyutY.Text),
                                 Tarih = DateTime.Now
                             };
                             context.Salonlars.Add(salonlar);

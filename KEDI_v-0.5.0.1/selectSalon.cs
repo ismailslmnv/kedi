@@ -15,6 +15,7 @@ namespace KEDI_v_0._5._0._1
     {
         public static MetroFramework.Controls.MetroTile selectedSalonTile;
         public static IEnumerable<Salonlar> salonlar;
+
         public selectSalon()
         {
             InitializeComponent();
@@ -22,12 +23,16 @@ namespace KEDI_v_0._5._0._1
 
         private void selectSalon_Load(object sender, EventArgs e)
         {
-            editSalonTextbox.Text = selectedSalonTile.Text;
+            salonAdi.Text = selectedSalonTile.Text;
         }
 
         private void salonEdit_Click(object sender, EventArgs e)
         {
-            editPanel.Visible = true;
+            this.Size = new Size(450, 388);
+            this.salonEdit.Visible = false;
+            this.salonSil.Visible = false;
+            metroPanel3.Visible = true;
+            metroPanel2.Visible = true;
         }
 
         private void salonSil_Click(object sender, EventArgs e)
@@ -61,25 +66,25 @@ namespace KEDI_v_0._5._0._1
         {
             this.Close();
         }
-
-        private void kaydetButton_Click(object sender, EventArgs e)
+        
+        private void OK_Click(object sender, EventArgs e)
         {
             try
             {
                 using (KEDIDBEntities db = new KEDIDBEntities())
                 {
                     var result = (from salon in db.Salonlars where salon.SalonID.Equals(selectedSalonTile.TabIndex) select salon).First();
-                    if (!String.IsNullOrEmpty(editSalonTextbox.Text))
+                    if (!String.IsNullOrEmpty(salonAdi.Text))
                     {
-                        result.SalonAdi = editSalonTextbox.Text;
+                        result.SalonAdi = salonAdi.Text;
+                        result.BoyutX = float.Parse(this.boyutX.Text);
+                        result.BoyutY = float.Parse(this.boyutY.Text);
                         db.SaveChanges();
-                        editPanel.Visible = false;
                         this.Close();
                     }
                     else
                     {
                         MessageBox.Show(selectSalon.ActiveForm, "Bir İsim vermelisiniz", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        editPanel.Visible = false;
                         this.Close();
                     }
                 }
@@ -89,6 +94,11 @@ namespace KEDI_v_0._5._0._1
                 MessageBox.Show(selectSalon.ActiveForm, "Bir Hata Meydana Geldi Tekrar Deneyiniz", "HATA", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
             }
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

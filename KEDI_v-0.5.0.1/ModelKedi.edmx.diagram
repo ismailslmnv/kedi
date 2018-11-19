@@ -25,6 +25,7 @@
         <EntityTypeShape EntityType="ModelKediDB.GirisLog" Width="1.5" PointX="3" PointY="15.875" />
         <AssociationConnector Association="ModelKediDB.FK_GirisLog_Personel" />
         <EntityTypeShape EntityType="ModelKediDB.deneme_Tablosu" Width="1.5" PointX="5.375" PointY="0.75" />
+        <AssociationConnector Association="ModelKediDB.FK_Indirimler_Urunler" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
