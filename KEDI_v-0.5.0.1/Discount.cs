@@ -62,7 +62,7 @@ namespace KEDI_v_0._5._0._1
         }
         private void OK_Clicked()
         {
-            decimal _price = intChecker(price.Text);
+            decimal _price = intChecker(discountValue.Text);
             if (_price>-1)
             {
                 int _urunID = UrunID;

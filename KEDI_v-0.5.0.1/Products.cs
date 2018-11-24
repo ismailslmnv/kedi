@@ -129,6 +129,18 @@ namespace KEDI_v_0._5._0._1
                     }
                 }
             }
+            else if (pressedControlButton == 3)
+            {
+                foreach(var item in Indirim)
+                {
+                    if (item.IndirimID.ToString().Equals(ID))
+                    {
+                        EditDiscount.IndirimID = item.IndirimID;
+                        EditDiscount discount = new EditDiscount();
+                        discount.Show();
+                    }
+                }
+            }
         }
 
         private void metroPanel5_Paint(object sender, PaintEventArgs e)
@@ -150,7 +162,7 @@ namespace KEDI_v_0._5._0._1
             }
             else if (pressedControlButton == 3)
             {
-
+                add.Visible = false;
             }            
         }
 
@@ -180,7 +192,11 @@ namespace KEDI_v_0._5._0._1
                 else if (pressedControlButton == 2)
                 {                                        
                     getUrunFromDb();
-                }                    
+                }
+                else if (pressedControlButton == 3)
+                {
+                    getIndirimFromDb();
+                }
             }
         }
         private void getUrunFromDb()
@@ -225,6 +241,7 @@ namespace KEDI_v_0._5._0._1
         {
             try
             {
+                add.Visible = false;
                 tilePanel.Controls.Clear();
                 using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
                 {
