@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.buttonsPanel = new MetroFramework.Controls.MetroPanel();
-            this.sidePanel = new MetroFramework.Controls.MetroPanel();
-            this.mainPanel = new MetroFramework.Controls.MetroPanel();
-            this.username = new MetroFramework.Controls.MetroTile();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.divide = new MetroFramework.Controls.MetroTile();
             this.metroPanel6 = new MetroFramework.Controls.MetroPanel();
@@ -46,8 +43,15 @@
             this.cancel = new MetroFramework.Controls.MetroTile();
             this.metroPanel7 = new MetroFramework.Controls.MetroPanel();
             this.save = new MetroFramework.Controls.MetroTile();
+            this.username = new MetroFramework.Controls.MetroTile();
+            this.sidePanel = new MetroFramework.Controls.MetroPanel();
+            this.mainPanel = new MetroFramework.Controls.MetroPanel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.metroToggle1 = new MetroFramework.Controls.MetroToggle();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.buttonsPanel.SuspendLayout();
             this.metroPanel1.SuspendLayout();
+            this.mainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonsPanel
@@ -69,48 +73,6 @@
             this.buttonsPanel.VerticalScrollbarBarColor = false;
             this.buttonsPanel.VerticalScrollbarHighlightOnWheel = false;
             this.buttonsPanel.VerticalScrollbarSize = 10;
-            // 
-            // sidePanel
-            // 
-            this.sidePanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.sidePanel.HorizontalScrollbarBarColor = true;
-            this.sidePanel.HorizontalScrollbarHighlightOnWheel = false;
-            this.sidePanel.HorizontalScrollbarSize = 10;
-            this.sidePanel.Location = new System.Drawing.Point(0, 105);
-            this.sidePanel.Name = "sidePanel";
-            this.sidePanel.Size = new System.Drawing.Size(123, 345);
-            this.sidePanel.TabIndex = 1;
-            this.sidePanel.VerticalScrollbarBarColor = true;
-            this.sidePanel.VerticalScrollbarHighlightOnWheel = false;
-            this.sidePanel.VerticalScrollbarSize = 10;
-            // 
-            // mainPanel
-            // 
-            this.mainPanel.BackColor = System.Drawing.Color.Silver;
-            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainPanel.HorizontalScrollbarBarColor = true;
-            this.mainPanel.HorizontalScrollbarHighlightOnWheel = false;
-            this.mainPanel.HorizontalScrollbarSize = 10;
-            this.mainPanel.Location = new System.Drawing.Point(123, 105);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(677, 345);
-            this.mainPanel.TabIndex = 2;
-            this.mainPanel.UseStyleColors = true;
-            this.mainPanel.VerticalScrollbarBarColor = true;
-            this.mainPanel.VerticalScrollbarHighlightOnWheel = false;
-            this.mainPanel.VerticalScrollbarSize = 10;
-            // 
-            // username
-            // 
-            this.username.ActiveControl = null;
-            this.username.Dock = System.Windows.Forms.DockStyle.Right;
-            this.username.Location = new System.Drawing.Point(666, 3);
-            this.username.Margin = new System.Windows.Forms.Padding(0);
-            this.username.Name = "username";
-            this.username.Size = new System.Drawing.Size(131, 39);
-            this.username.TabIndex = 2;
-            this.username.Text = "Kullanıcı Adı";
-            this.username.UseSelectable = true;
             // 
             // metroPanel1
             // 
@@ -160,6 +122,7 @@
             this.metroPanel6.AutoScroll = true;
             this.metroPanel6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.metroPanel6.Dock = System.Windows.Forms.DockStyle.Left;
+            this.metroPanel6.HorizontalScrollbar = true;
             this.metroPanel6.HorizontalScrollbarBarColor = true;
             this.metroPanel6.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel6.HorizontalScrollbarSize = 10;
@@ -167,6 +130,7 @@
             this.metroPanel6.Name = "metroPanel6";
             this.metroPanel6.Size = new System.Drawing.Size(10, 39);
             this.metroPanel6.TabIndex = 28;
+            this.metroPanel6.VerticalScrollbar = true;
             this.metroPanel6.VerticalScrollbarBarColor = false;
             this.metroPanel6.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel6.VerticalScrollbarSize = 10;
@@ -193,6 +157,7 @@
             this.metroPanel5.AutoScroll = true;
             this.metroPanel5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.metroPanel5.Dock = System.Windows.Forms.DockStyle.Left;
+            this.metroPanel5.HorizontalScrollbar = true;
             this.metroPanel5.HorizontalScrollbarBarColor = true;
             this.metroPanel5.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel5.HorizontalScrollbarSize = 10;
@@ -200,6 +165,7 @@
             this.metroPanel5.Name = "metroPanel5";
             this.metroPanel5.Size = new System.Drawing.Size(10, 39);
             this.metroPanel5.TabIndex = 26;
+            this.metroPanel5.VerticalScrollbar = true;
             this.metroPanel5.VerticalScrollbarBarColor = false;
             this.metroPanel5.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel5.VerticalScrollbarSize = 10;
@@ -224,6 +190,7 @@
             this.metroPanel4.AutoScroll = true;
             this.metroPanel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.metroPanel4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.metroPanel4.HorizontalScrollbar = true;
             this.metroPanel4.HorizontalScrollbarBarColor = true;
             this.metroPanel4.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel4.HorizontalScrollbarSize = 10;
@@ -231,6 +198,7 @@
             this.metroPanel4.Name = "metroPanel4";
             this.metroPanel4.Size = new System.Drawing.Size(10, 39);
             this.metroPanel4.TabIndex = 24;
+            this.metroPanel4.VerticalScrollbar = true;
             this.metroPanel4.VerticalScrollbarBarColor = false;
             this.metroPanel4.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel4.VerticalScrollbarSize = 10;
@@ -254,6 +222,7 @@
             this.metroPanel3.AutoScroll = true;
             this.metroPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.metroPanel3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.metroPanel3.HorizontalScrollbar = true;
             this.metroPanel3.HorizontalScrollbarBarColor = true;
             this.metroPanel3.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel3.HorizontalScrollbarSize = 10;
@@ -261,6 +230,7 @@
             this.metroPanel3.Name = "metroPanel3";
             this.metroPanel3.Size = new System.Drawing.Size(10, 39);
             this.metroPanel3.TabIndex = 22;
+            this.metroPanel3.VerticalScrollbar = true;
             this.metroPanel3.VerticalScrollbarBarColor = false;
             this.metroPanel3.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel3.VerticalScrollbarSize = 10;
@@ -285,6 +255,7 @@
             this.metroPanel2.AutoScroll = true;
             this.metroPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.metroPanel2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.metroPanel2.HorizontalScrollbar = true;
             this.metroPanel2.HorizontalScrollbarBarColor = true;
             this.metroPanel2.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel2.HorizontalScrollbarSize = 10;
@@ -292,6 +263,7 @@
             this.metroPanel2.Name = "metroPanel2";
             this.metroPanel2.Size = new System.Drawing.Size(10, 39);
             this.metroPanel2.TabIndex = 20;
+            this.metroPanel2.VerticalScrollbar = true;
             this.metroPanel2.VerticalScrollbarBarColor = false;
             this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel2.VerticalScrollbarSize = 10;
@@ -318,6 +290,7 @@
             this.metroPanel7.AutoScroll = true;
             this.metroPanel7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.metroPanel7.Dock = System.Windows.Forms.DockStyle.Left;
+            this.metroPanel7.HorizontalScrollbar = true;
             this.metroPanel7.HorizontalScrollbarBarColor = true;
             this.metroPanel7.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel7.HorizontalScrollbarSize = 10;
@@ -325,6 +298,7 @@
             this.metroPanel7.Name = "metroPanel7";
             this.metroPanel7.Size = new System.Drawing.Size(10, 39);
             this.metroPanel7.TabIndex = 18;
+            this.metroPanel7.VerticalScrollbar = true;
             this.metroPanel7.VerticalScrollbarBarColor = false;
             this.metroPanel7.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel7.VerticalScrollbarSize = 10;
@@ -347,12 +321,116 @@
             this.save.UseStyleColors = true;
             this.save.Click += new System.EventHandler(this.save_Click);
             // 
+            // username
+            // 
+            this.username.ActiveControl = null;
+            this.username.Dock = System.Windows.Forms.DockStyle.Right;
+            this.username.Location = new System.Drawing.Point(666, 3);
+            this.username.Margin = new System.Windows.Forms.Padding(0);
+            this.username.Name = "username";
+            this.username.Size = new System.Drawing.Size(131, 39);
+            this.username.TabIndex = 2;
+            this.username.Text = "Kullanıcı Adı";
+            this.username.UseSelectable = true;
+            // 
+            // sidePanel
+            // 
+            this.sidePanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.sidePanel.HorizontalScrollbarBarColor = true;
+            this.sidePanel.HorizontalScrollbarHighlightOnWheel = false;
+            this.sidePanel.HorizontalScrollbarSize = 10;
+            this.sidePanel.Location = new System.Drawing.Point(0, 105);
+            this.sidePanel.Name = "sidePanel";
+            this.sidePanel.Size = new System.Drawing.Size(123, 345);
+            this.sidePanel.TabIndex = 1;
+            this.sidePanel.VerticalScrollbarBarColor = true;
+            this.sidePanel.VerticalScrollbarHighlightOnWheel = false;
+            this.sidePanel.VerticalScrollbarSize = 10;
+            // 
+            // mainPanel
+            // 
+            this.mainPanel.BackColor = System.Drawing.Color.Silver;
+            this.mainPanel.Controls.Add(this.tableLayoutPanel1);
+            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainPanel.HorizontalScrollbarBarColor = true;
+            this.mainPanel.HorizontalScrollbarHighlightOnWheel = false;
+            this.mainPanel.HorizontalScrollbarSize = 10;
+            this.mainPanel.Location = new System.Drawing.Point(123, 105);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(677, 345);
+            this.mainPanel.TabIndex = 2;
+            this.mainPanel.UseStyleColors = true;
+            this.mainPanel.VerticalScrollbarBarColor = true;
+            this.mainPanel.VerticalScrollbarHighlightOnWheel = false;
+            this.mainPanel.VerticalScrollbarSize = 10;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.AutoScroll = true;
+            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel1.ColumnCount = 10;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 9;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(677, 345);
+            this.tableLayoutPanel1.TabIndex = 2;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint_1);
+            // 
+            // metroToggle1
+            // 
+            this.metroToggle1.AutoSize = true;
+            this.metroToggle1.Checked = true;
+            this.metroToggle1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.metroToggle1.Location = new System.Drawing.Point(225, 31);
+            this.metroToggle1.Name = "metroToggle1";
+            this.metroToggle1.Size = new System.Drawing.Size(80, 17);
+            this.metroToggle1.TabIndex = 2;
+            this.metroToggle1.Text = "On";
+            this.metroToggle1.UseSelectable = true;
+            // 
+            // metroLabel1
+            // 
+            this.metroLabel1.AutoSize = true;
+            this.metroLabel1.Location = new System.Drawing.Point(225, 9);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(176, 19);
+            this.metroLabel1.TabIndex = 3;
+            this.metroLabel1.Text = "Masaları Liste Olarak Göster:";
+            // 
             // Order
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
+            this.Controls.Add(this.metroLabel1);
+            this.Controls.Add(this.metroToggle1);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.sidePanel);
             this.Controls.Add(this.buttonsPanel);
@@ -363,7 +441,10 @@
             this.buttonsPanel.ResumeLayout(false);
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel1.PerformLayout();
+            this.mainPanel.ResumeLayout(false);
+            this.mainPanel.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -387,5 +468,8 @@
         private MetroFramework.Controls.MetroTile cancel;
         private MetroFramework.Controls.MetroPanel metroPanel7;
         private MetroFramework.Controls.MetroTile save;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private MetroFramework.Controls.MetroToggle metroToggle1;
+        private MetroFramework.Controls.MetroLabel metroLabel1;
     }
 }
