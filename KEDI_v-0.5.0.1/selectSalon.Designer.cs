@@ -41,7 +41,6 @@
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
             this.OK = new MetroFramework.Controls.MetroTile();
-            this.Delete = new MetroFramework.Controls.MetroTile();
             this.Cancel = new MetroFramework.Controls.MetroTile();
             this.secenekMenuPanel.SuspendLayout();
             this.metroPanel3.SuspendLayout();
@@ -249,7 +248,6 @@
             // metroPanel2
             // 
             this.metroPanel2.Controls.Add(this.OK);
-            this.metroPanel2.Controls.Add(this.Delete);
             this.metroPanel2.Controls.Add(this.Cancel);
             this.metroPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.metroPanel2.HorizontalScrollbarBarColor = true;
@@ -279,21 +277,6 @@
             this.OK.UseSelectable = true;
             this.OK.UseStyleColors = true;
             this.OK.Click += new System.EventHandler(this.OK_Click);
-            // 
-            // Delete
-            // 
-            this.Delete.ActiveControl = null;
-            this.Delete.Location = new System.Drawing.Point(142, 11);
-            this.Delete.Name = "Delete";
-            this.Delete.Size = new System.Drawing.Size(133, 48);
-            this.Delete.Style = MetroFramework.MetroColorStyle.Red;
-            this.Delete.TabIndex = 3;
-            this.Delete.Text = "Temizle";
-            this.Delete.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Delete.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
-            this.Delete.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.Delete.UseSelectable = true;
-            this.Delete.UseStyleColors = true;
             // 
             // Cancel
             // 
@@ -355,7 +338,6 @@
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroPanel metroPanel2;
         private MetroFramework.Controls.MetroTile OK;
-        private MetroFramework.Controls.MetroTile Delete;
         private MetroFramework.Controls.MetroTile Cancel;
     }
 }

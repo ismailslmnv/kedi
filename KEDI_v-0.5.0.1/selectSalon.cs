@@ -74,7 +74,7 @@ namespace KEDI_v_0._5._0._1
                 using (KEDIDBEntities db = new KEDIDBEntities())
                 {
                     var result = (from salon in db.Salonlars where salon.SalonID.Equals(selectedSalonTile.TabIndex) select salon).First();
-                    if (!String.IsNullOrEmpty(salonAdi.Text))
+                    if (!String.IsNullOrEmpty(salonAdi.Text) && !String.IsNullOrEmpty(boyutX.Text) && !String.IsNullOrEmpty(boyutY.Text))
                     {
                         result.SalonAdi = salonAdi.Text;
                         result.BoyutX = float.Parse(this.boyutX.Text);

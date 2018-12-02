@@ -38,7 +38,7 @@ namespace KEDI_v_0._5._0._1
         }
         private bool ValidateControl()
         {
-            if (!String.IsNullOrEmpty(masaAdi.Text) && !String.IsNullOrEmpty(SalonlarSelect.Text))
+            if (!String.IsNullOrEmpty(masaAdi.Text) && !String.IsNullOrEmpty(SalonlarSelect.Text) && !String.IsNullOrEmpty(boyutX.Text) && !String.IsNullOrEmpty(boyutY.Text))
                 return true;
             else
             {

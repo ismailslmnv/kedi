@@ -51,7 +51,6 @@ namespace KEDI_v_0._5._0._1
         private void masaEdit_Click(object sender, EventArgs e)
         {
             this.Size = new Size(447, 380);
-            masaSil.Visible = false;
             masaEdit.Visible = false;
             metroLabel2.Visible = true;
             metroLabel3.Visible = true;
@@ -69,7 +68,7 @@ namespace KEDI_v_0._5._0._1
                 using (KEDIDBEntities db = new KEDIDBEntities())
                 {
                     var result = (from masa in db.Masalars where masa.MasaID.Equals(selectedMasaButton.TabIndex) select masa).First();
-                    if (!String.IsNullOrEmpty(masaAdi.Text))
+                    if (!String.IsNullOrEmpty(masaAdi.Text) && !String.IsNullOrEmpty(boyutX.Text) && !String.IsNullOrEmpty(boyutY.Text))
                     {
                         result.MasaAdi = masaAdi.Text;
                         db.SaveChanges();

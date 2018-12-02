@@ -88,6 +88,7 @@
           <Property Name="Tarih" Type="datetime" Nullable="false" />
           <Property Name="BoyutX" Type="float" />
           <Property Name="BoyutY" Type="float" />
+          <Property Name="Duvarlar" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Siparislers">
           <Key>
@@ -383,6 +384,7 @@
           <NavigationProperty Name="Masalars" Relationship="Self.FK_Masalar_Salonlar" FromRole="Salonlar" ToRole="Masalar" />
           <Property Name="BoyutX" Type="Double" />
           <Property Name="BoyutY" Type="Double" />
+          <Property Name="Duvarlar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Siparisler">
           <Key>
@@ -730,7 +732,8 @@
     <EntitySetMapping Name="Salonlars">
       <EntityTypeMapping TypeName="IsTypeOf(ModelKediDB.Salonlar)">
         <MappingFragment StoreEntitySet="Salonlars">
-          <ScalarProperty Name="BoyutY" ColumnName="BoyutY" />
+          <ScalarProperty Name="Duvarlar" ColumnName="Duvarlar" />
+                <ScalarProperty Name="BoyutY" ColumnName="BoyutY" />
                 <ScalarProperty Name="BoyutX" ColumnName="BoyutX" />
                 <ScalarProperty Name="SalonID" ColumnName="SalonID" />
           <ScalarProperty Name="SalonAdi" ColumnName="SalonAdi" />

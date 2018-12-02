@@ -39,6 +39,7 @@
             this.salonPanel = new MetroFramework.Controls.MetroPanel();
             this.tableDraggingPanel = new MetroFramework.Controls.MetroPanel();
             this.metroPanel5 = new MetroFramework.Controls.MetroPanel();
+            this.addWalls = new MetroFramework.Controls.MetroTile();
             this.cancelChanges = new MetroFramework.Controls.MetroTile();
             this.saveChanges = new MetroFramework.Controls.MetroTile();
             this.masaDuzenlemeModu = new MetroFramework.Drawing.Html.HtmlLabel();
@@ -215,13 +216,12 @@
             this.tableDraggingPanel.VerticalScrollbarBarColor = true;
             this.tableDraggingPanel.VerticalScrollbarHighlightOnWheel = false;
             this.tableDraggingPanel.VerticalScrollbarSize = 10;
-            this.tableDraggingPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tableDraggingPanel_MouseClick);
-            this.tableDraggingPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tableDraggingPanel_MouseMove);
-            this.tableDraggingPanel.Move += new System.EventHandler(this.tableDraggingPanel_Move);
+            this.tableDraggingPanel.Visible = false;
             // 
             // metroPanel5
             // 
             this.metroPanel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.metroPanel5.Controls.Add(this.addWalls);
             this.metroPanel5.Controls.Add(this.cancelChanges);
             this.metroPanel5.Controls.Add(this.saveChanges);
             this.metroPanel5.Controls.Add(this.masaDuzenlemeModu);
@@ -240,6 +240,26 @@
             this.metroPanel5.VerticalScrollbarBarColor = true;
             this.metroPanel5.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel5.VerticalScrollbarSize = 10;
+            // 
+            // addWalls
+            // 
+            this.addWalls.ActiveControl = null;
+            this.addWalls.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.addWalls.ForeColor = System.Drawing.SystemColors.Control;
+            this.addWalls.Location = new System.Drawing.Point(628, 14);
+            this.addWalls.Name = "addWalls";
+            this.addWalls.Size = new System.Drawing.Size(184, 47);
+            this.addWalls.TabIndex = 7;
+            this.addWalls.Text = "Duvar Ekle";
+            this.addWalls.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.addWalls.TileImage = ((System.Drawing.Image)(resources.GetObject("addWalls.TileImage")));
+            this.addWalls.TileImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.addWalls.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
+            this.addWalls.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            this.addWalls.UseSelectable = true;
+            this.addWalls.UseTileImage = true;
+            this.addWalls.Visible = false;
+            this.addWalls.Click += new System.EventHandler(this.addWalls_Click);
             // 
             // cancelChanges
             // 
@@ -304,7 +324,7 @@
             this.masaDuzenle.Name = "masaDuzenle";
             this.masaDuzenle.Size = new System.Drawing.Size(184, 43);
             this.masaDuzenle.TabIndex = 3;
-            this.masaDuzenle.Text = "Masa Düzenle";
+            this.masaDuzenle.Text = "Salon Düzenle";
             this.masaDuzenle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.masaDuzenle.TileImage = global::KEDI_v_0._5._0._1.Properties.Resources.edit_badge;
             this.masaDuzenle.TileImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -421,7 +441,6 @@
             this.Text = "Kedi Pos - Masalar ve Salonlar";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Tables_FormClosing);
-            this.Load += new System.EventHandler(this.Tables_Load);
             this.metroPanel3.ResumeLayout(false);
             this.metroPanel3.PerformLayout();
             this.metroPanel2.ResumeLayout(false);
@@ -455,5 +474,6 @@
         private MetroFramework.Drawing.Html.HtmlLabel masaDuzenlemeModu;
         private MetroFramework.Controls.MetroTile saveChanges;
         private MetroFramework.Controls.MetroTile cancelChanges;
+        private MetroFramework.Controls.MetroTile addWalls;
     }
 }
