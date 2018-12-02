@@ -16,29 +16,34 @@ namespace KEDI_v_0._5._0._1
     public partial class Order : MetroForm
     {
         public static int PersonalID;
-        public static int persCount;        
+        public static int persCount;
+        private double _countPrice=0.0;
         List<Salonlar> _salon = new List<Salonlar>();
+        List<List<string>> _productToShow = new List<List<string>>();
+        List<Urunler> yeniEklenenUrun = new List<Urunler>();
+        List<int> yeniEklenenUrunSayi = new List<int>();
+        ListViewItem lastRemovedItem = new ListViewItem(); // UrunListten Cikarilan en son eleman
         private List<MetroTile> masalar = new List<MetroTile>();
         int salonPanelType = 0; // 1 - Salon
         int tablePanelType = 0; // 1 - Masa
         int selectedSalonID = 0;
-        int selectedTableID = 0;
+        int selectedTableID = 0;        
         public Order()
         {
             InitializeComponent();
-            salonLoader();
+            salonLoader();                        
         }
 
         private void save_Click(object sender, EventArgs e)
         {
             masaLoader(selectedSalonID.ToString());
         }
-        private void tileCreator(string tileText, string tileID, int Type)//Type -- 1=Salon 2=Masa 3=Menu 4=Urun
+        private void tileCreator(string tileText, string tileID, int Type,int isMasaFull)//Type -- 1=Salon 2=Masa 3=Menu 4=Urun
         {
     
             //     _tile.UseTileImage = true;
  
-            if (Type == 1)
+            if (Type == 1)//salon
             {
                 ComponentResourceManager resources = new ComponentResourceManager(typeof(Order));
                 MetroTile _tile = new MetroTile();
@@ -49,17 +54,14 @@ namespace KEDI_v_0._5._0._1
                 _tile.Style = MetroFramework.MetroColorStyle.Yellow;
                 _tile.Text = tileText;
                 _tile.TextAlign = ContentAlignment.MiddleLeft;
-                //_tile.TileImage = Image.FromFile(@"D:\projects\KEDI\Icons\Icons-20180611T000513Z-001\Icons\edit11.png");               
-                //       _tile.TileImageAlign = System.Drawing.ContentAlignment.MiddleRight;
                 _tile.TileTextFontSize = MetroTileTextSize.Tall;
                 _tile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
                 _tile.UseSelectable = true;
                 _tile.Click += _tile_Click;
                 sidePanel.Controls.Add(_tile);
                 sidePanel.Controls.Add(breaker(tileID + 1));
-
             }
-            else if(Type==2)
+            else if(Type==2)//masa
             {
                 ComponentResourceManager resources = new ComponentResourceManager(typeof(Order));
                 MetroTile _tile = new MetroTile();
@@ -67,15 +69,15 @@ namespace KEDI_v_0._5._0._1
                 _tile.Location = new System.Drawing.Point(100, 10);
                 _tile.Name = tileID;
                 _tile.Size = new System.Drawing.Size(100, 60);
-                _tile.Style = MetroFramework.MetroColorStyle.Brown;
+                if (isMasaFull==1)
+                    _tile.Style = MetroFramework.MetroColorStyle.Teal;
+                else
+                    _tile.Style = MetroFramework.MetroColorStyle.Brown;
                 _tile.Text = tileText;
                 _tile.TextAlign = ContentAlignment.MiddleLeft;
-                //_tile.TileImage = Image.FromFile(@"D:\projects\KEDI\Icons\Icons-20180611T000513Z-001\Icons\edit11.png");               
-                //       _tile.TileImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-                _tile.TileTextFontSize = MetroTileTextSize.Tall;
+                _tile.TileTextFontSize = MetroTileTextSize.Small;
                 _tile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-                _tile.UseSelectable = true;
-                //     _tile.UseTileImage = true;
+                _tile.UseSelectable = true;               
                 _tile.Click += _masa_Click;
                 tableLayoutPanel1.Controls.Add(_tile);
                 masalar.Add(_tile);
@@ -91,16 +93,13 @@ namespace KEDI_v_0._5._0._1
                 _tile.Style = MetroFramework.MetroColorStyle.Lime;
                 _tile.Text = tileText;
                 _tile.TextAlign = ContentAlignment.MiddleCenter;
-                //_tile.TileImage = Image.FromFile(@"D:\projects\KEDI\Icons\Icons-20180611T000513Z-001\Icons\edit11.png");               
-                //       _tile.TileImageAlign = System.Drawing.ContentAlignment.MiddleRight;
                 _tile.TileTextFontSize = MetroTileTextSize.Small;
                 _tile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Bold;
-                _tile.UseSelectable = true;
-                //     _tile.UseTileImage = true;
+                _tile.UseSelectable = true;              
                 _tile.Click += _menu_Click;
                 MenuTable.Controls.Add(_tile);
             }
-            else if (Type==4)
+            else if (Type==4)//urun
             {
                 MetroTile _tile = new MetroTile();
                 _tile.Dock = System.Windows.Forms.DockStyle.Left;
@@ -110,22 +109,76 @@ namespace KEDI_v_0._5._0._1
                 _tile.Style = MetroFramework.MetroColorStyle.Blue;
                 _tile.Text = tileText;
                 _tile.TextAlign = ContentAlignment.MiddleLeft;
-                //_tile.TileImage = Image.FromFile(@"D:\projects\KEDI\Icons\Icons-20180611T000513Z-001\Icons\edit11.png");               
-                //       _tile.TileImageAlign = System.Drawing.ContentAlignment.MiddleRight;
                 _tile.TileTextFontSize = MetroTileTextSize.Small;
                 _tile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Light;
-                _tile.UseSelectable = true;
-                //     _tile.UseTileImage = true;
+                _tile.UseSelectable = true;                
                 _tile.Click += _urun_Click;
                 tableLayoutPanel1.Controls.Add(_tile);
             }
         }
 
         private void _urun_Click(object sender, EventArgs e)
-        {
-
+        {            
+            MetroTile product = (MetroTile)sender;
+            addProdToOrder(product.Name);
         }
-
+        private void addProdToOrder(string productID)
+        {
+            try
+            {
+                int _productID = Convert.ToInt32(productID);
+                using (KEDIDBEntities kEDIDB=new KEDIDBEntities())
+                {
+                    var result = (from urun in kEDIDB.Urunlers
+                                  where urun.UrunID == _productID select urun).FirstOrDefault();
+                    if (result!=null)
+                    {
+                        int _urunMiktari;
+                        if (!string.IsNullOrEmpty(urunMiktari.Text))
+                        {
+                            _urunMiktari = Convert.ToInt32(urunMiktari.Text.Trim());                            
+                        }
+                        else
+                        {
+                            _urunMiktari = 1;
+                        }
+                        double toplamFiyat = _urunMiktari * (double)result.Fiyat;
+                        if (yeniEklenenUrunSayi.Count != 0)
+                        {
+                            for (int j = (urunList.Items.Count - 1) - yeniEklenenUrunSayi.Count; j < urunList.Items.Count; j++)
+                            {
+                                if (urunList.Items[j].Text.Equals(result.UrunAdi))
+                                {
+                                    foreach (var item in yeniEklenenUrun)
+                                    {
+                                        if (item.UrunID==result.UrunID)
+                                        {                                            
+                                            urunList.Items[j].SubItems[1].Text= (yeniEklenenUrunSayi[yeniEklenenUrun.IndexOf(item)]+=_urunMiktari).ToString();
+                                            urunList.Items[j].SubItems[2].Text = (Convert.ToDouble(urunList.Items[j].SubItems[2].Text.Trim()) + toplamFiyat).ToString();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            yeniEklenenUrun.Add(result);
+                            yeniEklenenUrunSayi.Add(_urunMiktari);
+                            urunList.Items.Add(result.UrunAdi);
+                            urunList.Items[urunList.Items.Count - 1].SubItems.Add(_urunMiktari.ToString());
+                            urunList.Items[urunList.Items.Count - 1].SubItems.Add(toplamFiyat.ToString());
+                            urunList.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+                        }
+                        double _tFiyat = Convert.ToDouble(countPrice.Text.Trim()) + (toplamFiyat);
+                        countPrice.Text = _tFiyat.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
         private void _menu_Click(object sender, EventArgs e)
         {
             tableLayoutPanel1.Controls.Clear();
@@ -150,7 +203,7 @@ namespace KEDI_v_0._5._0._1
                     {
                         foreach (var item in results)
                         {
-                            tileCreator(item.UrunAdi + "\n" + ((double)item.Fiyat).ToString(), item.UrunID.ToString(), 4);
+                            tileCreator(item.UrunAdi + "\n" + ((double)item.Fiyat).ToString(), item.UrunID.ToString(), 4,0);
                         }
                     }
                 }
@@ -168,11 +221,23 @@ namespace KEDI_v_0._5._0._1
                 try
                 {
                     MetroTile table = (MetroTile)sender;
-                    selectedTableID = Convert.ToInt32(table.Name.Trim());                    
-                    PersonCount.TableID = selectedTableID;
-                    PersonCount count = new PersonCount();
-                    count.ShowDialog();
-                    productLoader();
+                    selectedTableID = Convert.ToInt32(table.Name.Trim());
+                    activateMasa(selectedTableID);
+                    bool full = isMasaFull(selectedTableID);
+                    if (full)
+                    {
+                        productLoader();
+                    }
+                    else
+                    {
+                        PersonCount.TableID = selectedTableID;
+                        PersonCount count = new PersonCount();
+                        DialogResult res= count.ShowDialog();                                                
+                        if (res!=DialogResult.Cancel)
+                        {
+                            productLoader();
+                        }
+                    }                    
                 }
                 catch (Exception ex)
                 {
@@ -182,7 +247,53 @@ namespace KEDI_v_0._5._0._1
                 
             }
         }
+        private bool isMasaFull(int masaID)
+        {
+            try
+            {
+                using (KEDIDBEntities kEDIDB=new KEDIDBEntities())
+                {
+                    var result = (from adisyon in kEDIDB.Siparislers
+                                  where adisyon.MasaID == masaID select adisyon).FirstOrDefault();
+                    if (result != null)
+                    {
+                        var _result = (from odeme in kEDIDB.Odemes
+                                       where odeme.SiparisID == result.SiparisID select odeme).FirstOrDefault();
+                        if (_result==null)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
 
+                MessageBox.Show(ex.ToString());
+            }
+            return false;
+
+        }
+        private void activateMasa(int masaID)
+        {
+            try
+            {
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from masa in kEDIDB.Masalars where masa.MasaID == masaID select masa).FirstOrDefault();
+                    if (result!=null)
+                    {
+                        result.Aktif = true;
+                    }
+                    kEDIDB.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+        }
         private MetroPanel breaker(string panelName)
         {
             MetroPanel breaker = new MetroPanel();
@@ -223,7 +334,7 @@ namespace KEDI_v_0._5._0._1
                         {
                             if (item != null)
                             {
-                                tileCreator(item.SalonAdi, item.SalonID.ToString(), 1);
+                                tileCreator(item.SalonAdi, item.SalonID.ToString(), 1,0);
                             }
                         }
                         _salon = result;
@@ -243,6 +354,7 @@ namespace KEDI_v_0._5._0._1
             sidePanel.Visible = true;
             save.Enabled = false;
             cancel.Enabled = false;
+            tableLayoutPanel1.Controls.Clear();
             try
             {
                 int _salonID = Convert.ToInt32(salonID.Trim());
@@ -250,14 +362,41 @@ namespace KEDI_v_0._5._0._1
                 {
                     var result = (from masa in kediDB.Masalars
                             where masa.SalonID == _salonID
-                            select masa).DefaultIfEmpty();
+                            select masa).DefaultIfEmpty();                    
                     if (result!=null)
                     {
+                        DateTime controlTime = DateTime.Parse("1990-01-01 01:01:01.001");
+                        DateTime siparisTime = DateTime.Parse("1990-01-01 01:01:01.001");
                         tableLayoutPanel1.ColumnCount = 10;
-                        tableLayoutPanel1.RowCount = 9;
+                        tableLayoutPanel1.RowCount = 9;                        
                         foreach (var _item in result.ToList())
-                        {
-                            tileCreator(_item.MasaAdi, _item.MasaID.ToString(), 2);
+                        {                            
+                            var _result = (from siparis in kediDB.Siparislers where siparis.MasaID == _item.MasaID select siparis).DefaultIfEmpty();
+                            if (_result!=null)
+                            {
+                                foreach (var item in _result)
+                                {
+                                    if (item!=null)
+                                    {
+                                        var __result = (from odeme in kediDB.Odemes
+                                                        where odeme.SiparisID == item.SiparisID
+                                                        select odeme).FirstOrDefault();
+                                        if (__result == null)
+                                        {
+                                            siparisTime = item.Tarih;
+                                            break;
+                                        }
+                                    }                                    
+                                }
+                            }                            
+                            if (!siparisTime.Equals(controlTime))
+                            {
+                                TimeSpan minutes =DateTime.Now-siparisTime;
+                                tileCreator(_item.MasaAdi+"\n"+((int)minutes.TotalMinutes).ToString()+"dk", _item.MasaID.ToString(), 2,1);
+                                siparisTime = controlTime;
+                            }
+                            else
+                                tileCreator(_item.MasaAdi, _item.MasaID.ToString(), 2,0);
                         }
                         tablePanelType = 1;
                     }
@@ -275,11 +414,30 @@ namespace KEDI_v_0._5._0._1
             sidePanel.Visible = false;
             save.Enabled = true;
             cancel.Enabled = true;
+            _countPrice = 0.0;
             MenuTable.Controls.Clear();
             tableLayoutPanel1.Controls.Clear();
             NumbersPanel.Controls.Clear();
+            //uruns.Text = "Ürün:";
+            //counts.Text = "Adet:";
+            //prices.Text = "Toplam:";         
+            _productToShow.Clear();
             numGenerator();
             getMenu();
+            getOrder();
+            urunList.Items.Clear();
+            yeniEklenenUrun.Clear();
+            yeniEklenenUrunSayi.Clear();
+            for (int i = 0; i < _productToShow.Count; i++)
+            {
+                urunList.Items.Add(_productToShow[i][0]);
+                urunList.Items[i].SubItems.Add(_productToShow[i][1]);
+                urunList.Items[i].SubItems.Add(_productToShow[i][2]);
+
+            }
+            urunList.View = View.Details;
+            urunList.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+            countPrice.Text = _countPrice.ToString();
         }
         // NUMbers Panel Generator//
         private void numGenerator()
@@ -329,6 +487,53 @@ namespace KEDI_v_0._5._0._1
             _clear.Click += _ClearClick;
             NumbersPanel.Controls.Add(_clear);
         }
+        private void getOrder()
+        {
+            try
+            {
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from siparis in kEDIDB.Siparislers
+                                  where siparis.MasaID == selectedTableID select siparis).DefaultIfEmpty();
+                    if (result!=null)
+                    {
+                        foreach (var item in result)
+                        {
+                            if (item != null)
+                            {
+                                var _result = (from odeme in kEDIDB.Odemes
+                                               where odeme.SiparisID == item.SiparisID
+                                               select odeme).FirstOrDefault();
+                                if (_result == null)
+                                {
+                                    var __result = (from urun in kEDIDB.Urunlers
+                                                    where urun.UrunID == item.UrunID
+                                                    select new
+                                                    {
+                                                        urun.UrunAdi,
+                                                        urun.Fiyat
+                                                    }).FirstOrDefault();
+                                    if (__result != null)
+                                    {
+                                        _countPrice += ((double)__result.Fiyat) * item.UrunSayi;
+                                        List<string> prod = new List<string>();
+                                        prod.Add(__result.UrunAdi);
+                                        prod.Add(item.UrunSayi.ToString());
+                                        prod.Add((((double)__result.Fiyat) * item.UrunSayi).ToString());
+                                        _productToShow.Add(prod);
+                                    }
+                                }
+                            }                            
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+        }
         private void getMenu()
         {
             try
@@ -346,7 +551,7 @@ namespace KEDI_v_0._5._0._1
                     {
                         foreach (var item in results.ToList())
                         {
-                            tileCreator(item.UrunAdi, item.UrunID.ToString(), 3);
+                            tileCreator(item.UrunAdi, item.UrunID.ToString(), 3,0);
                         }
                     }
                 }
@@ -376,6 +581,52 @@ namespace KEDI_v_0._5._0._1
         private void cancel_Click(object sender, EventArgs e)
         {
             masaLoader(selectedSalonID.ToString());
+        }        
+        private void urunList_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+          
+        }
+        private void urunList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void urunList_Click(object sender, EventArgs e)
+        {
+             foreach (var item in urunList.SelectedIndices)
+            {
+                //ListViewItem _item = (ListViewItem)item;
+                MessageBox.Show(item.ToString());
+                //if (!lastRemovedItem.Name.Equals(urunList.Items[(int)item].Name))
+                //{
+                    MessageBox.Show("Test");
+                    int selectedIndex = urunList.Items.Count - ((int)item);
+                    //int nonSelectableIndexes = urunList.Items.Count - yeniEklenenUrunSayi.Count;
+                    if (selectedIndex > yeniEklenenUrunSayi.Count)
+                    {
+                        MessageBox.Show(this, "Adisyona Eklenmiş Ürünleri Silemezsiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        DialogResult deleteOrNot = MessageBox.Show(this, "Bu Ürünü Silmek İstediğinize Emin Misiniz?", "Ürün Silme", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                        if (deleteOrNot == DialogResult.Yes)
+                        {                            
+                            foreach (var __item in yeniEklenenUrun)
+                            {
+                                if (__item.UrunAdi.Equals(urunList.Items[(int)item]))
+                                {
+                                    yeniEklenenUrunSayi.RemoveAt(yeniEklenenUrun.IndexOf(__item));
+                                    yeniEklenenUrun.Remove(__item);
+                                    lastRemovedItem = urunList.Items[(int)item];
+                                    break;
+                                }
+                            }
+                            urunList.Items.RemoveAt((int)item);
+                        }
+                    }
+               // }
+                break;
+            }
         }
     }
 }

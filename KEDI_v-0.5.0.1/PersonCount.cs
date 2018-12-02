@@ -67,12 +67,14 @@ namespace KEDI_v_0._5._0._1
                 {
                     _tile.Style = MetroFramework.MetroColorStyle.Red;
                     _tile.Name = CANCEL;
+                    _tile.DialogResult = DialogResult.Cancel;
                     _tile.Text = "Vazgeç";
                 }
                 else
                 {
                     _tile.Style = MetroFramework.MetroColorStyle.Green;
                     _tile.Name = PROCEED;
+                    _tile.DialogResult = DialogResult.OK;
                     _tile.Text = "Devam Et";
                 }
                 _tile.TextAlign = ContentAlignment.MiddleCenter;
@@ -90,9 +92,12 @@ namespace KEDI_v_0._5._0._1
             MetroTile button = (MetroTile)sender;
             if (button.Name.Equals(PROCEED))
             {
-                numChecker();
+                if (!numChecker())
+                {
+                    DialogResult=DialogResult.Cancel;
+                }
             }
-            else this.Close();
+            this.Close();
         }
 
         private void _numClick(object sender, EventArgs e)
@@ -107,14 +112,14 @@ namespace KEDI_v_0._5._0._1
             {
                 int txt = Convert.ToInt32(persCount.Text.Trim());
                 Order.persCount = txt;
-                this.Close();
+                return true;
             }
             catch (Exception ex)
             {
 
                 MessageBox.Show(ex.ToString());
-            }
-           
+
+            }          
             return false;
         }
     }
