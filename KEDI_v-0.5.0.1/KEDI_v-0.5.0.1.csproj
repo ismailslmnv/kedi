@@ -220,6 +220,12 @@
     <Compile Include="Order.Designer.cs">
       <DependentUpon>Order.cs</DependentUpon>
     </Compile>
+    <Compile Include="PersonCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PersonCount.Designer.cs">
+      <DependentUpon>PersonCount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Personel.cs">
       <DependentUpon>ModelKedi.tt</DependentUpon>
     </Compile>
@@ -341,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Order.resx">
       <DependentUpon>Order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PersonCount.resx">
+      <DependentUpon>PersonCount.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Products.resx">
       <DependentUpon>Products.cs</DependentUpon>
