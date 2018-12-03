@@ -19,15 +19,15 @@ namespace KEDI_v_0._5._0._1
         public static int persCount;
         private double _countPrice=0.0;
         List<Salonlar> _salon = new List<Salonlar>();
-        List<List<string>> _productToShow = new List<List<string>>();
-        List<Urunler> yeniEklenenUrun = new List<Urunler>();
-        List<int> yeniEklenenUrunSayi = new List<int>();
-        ListViewItem lastRemovedItem = new ListViewItem(); // UrunListten Cikarilan en son eleman
+        List<List<string>> _productToShow = new List<List<string>>();        
         private List<MetroTile> masalar = new List<MetroTile>();
+        private int oldProds=0;
         int salonPanelType = 0; // 1 - Salon
         int tablePanelType = 0; // 1 - Masa
         int selectedSalonID = 0;
-        int selectedTableID = 0;        
+        int selectedTableID = 0;
+        int selectedMenuID = 0;
+        string selectedTableName = String.Empty;
         public Order()
         {
             InitializeComponent();
@@ -38,7 +38,7 @@ namespace KEDI_v_0._5._0._1
         {
             masaLoader(selectedSalonID.ToString());
         }
-        private void tileCreator(string tileText, string tileID, int Type,int isMasaFull)//Type -- 1=Salon 2=Masa 3=Menu 4=Urun
+        private void tileCreator(string tileText, string tileID, int Type,int isMasaFull)//Type -- 1=Salon 2=Masa 3=Menu 4=Urun 5=SubProd
         {
     
             //     _tile.UseTileImage = true;
@@ -115,12 +115,96 @@ namespace KEDI_v_0._5._0._1
                 _tile.Click += _urun_Click;
                 tableLayoutPanel1.Controls.Add(_tile);
             }
-        }
+            else if (Type==5)
+            {
+                MetroTile _tile = new MetroTile();
+                _tile.Dock = System.Windows.Forms.DockStyle.Left;
+                _tile.Location = new System.Drawing.Point(100, 10);
+                _tile.Name = tileID;
+                _tile.Size = new System.Drawing.Size(100, 60);
+                _tile.Style = MetroFramework.MetroColorStyle.Blue;
+                _tile.Text = tileText;
+                _tile.TextAlign = ContentAlignment.MiddleLeft;
+                _tile.TileTextFontSize = MetroTileTextSize.Small;
+                _tile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Light;
+                _tile.UseSelectable = true;
+                _tile.Click += subProdClick;
+                tableLayoutPanel1.Controls.Add(_tile);
 
+            }
+        }
+        private void subProdClick(object sender, EventArgs e)
+        {
+            try
+            {
+                MetroTile subProd = (MetroTile)sender;
+                int subProdID = Convert.ToInt32(subProd.Name.Trim());
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from products in kEDIDB.Urunlers where products.UrunID == subProdID select products).FirstOrDefault();
+                    var _result = (from products in kEDIDB.Urunlers where products.UrunID == result.UstUrunID select products.UrunAdi).FirstOrDefault();
+                    int _urunMiktari;
+                    if (!string.IsNullOrEmpty(urunMiktari.Text))
+                    {
+                        _urunMiktari = Convert.ToInt32(urunMiktari.Text.Trim());
+                    }
+                    else
+                    {
+                        _urunMiktari = 1;
+                    }
+                    double toplamFiyat = _urunMiktari * (double)result.Fiyat;
+                    if (oldProds != 0)
+                    {
+                        if (oldProds != urunList.Items.Count)
+                        {
+                            for (int j = oldProds; j < urunList.Items.Count; j++)
+                            {
+                                if (urunList.Items[j].Text.Equals(_result))
+                                {                                       
+                                    urunList.Items.Insert(j + 1, ("***"+result.UrunAdi));
+                                    urunList.Items[j+1].SubItems.Add( _urunMiktari.ToString());
+                                    urunList.Items[j+1].SubItems.Add(toplamFiyat.ToString());
+                                    urunList.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+                                    break;
+                                }
+                                else if (j == (urunList.Items.Count - 1))
+                                {
+                                    urunList.Items.Add(("***" + result.UrunAdi));
+                                    urunList.Items[urunList.Items.Count - 1].SubItems.Add(_urunMiktari.ToString());
+                                    urunList.Items[urunList.Items.Count - 1].SubItems.Add(toplamFiyat.ToString());
+                                    urunList.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            urunList.Items.Add(("***" + result.UrunAdi));
+                            urunList.Items[urunList.Items.Count - 1].SubItems.Add(_urunMiktari.ToString());
+                            urunList.Items[urunList.Items.Count - 1].SubItems.Add(toplamFiyat.ToString());
+                            urunList.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+                        }
+                    }
+                    else
+                    {
+                        urunList.Items.Add(("***" + result.UrunAdi));
+                        urunList.Items[urunList.Items.Count - 1].SubItems.Add(_urunMiktari.ToString());
+                        urunList.Items[urunList.Items.Count - 1].SubItems.Add(toplamFiyat.ToString());
+                        urunList.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+                    }
+                    double _tFiyat = Convert.ToDouble(countPrice.Text.Trim()) + (toplamFiyat);
+                    countPrice.Text = _tFiyat.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }   
+        }
         private void _urun_Click(object sender, EventArgs e)
         {            
             MetroTile product = (MetroTile)sender;
-            addProdToOrder(product.Name);
+            addProdToOrder(product.Name);                
         }
         private void addProdToOrder(string productID)
         {
@@ -143,35 +227,67 @@ namespace KEDI_v_0._5._0._1
                             _urunMiktari = 1;
                         }
                         double toplamFiyat = _urunMiktari * (double)result.Fiyat;
-                        if (yeniEklenenUrunSayi.Count != 0)
+                        if (oldProds != 0)
                         {
-                            for (int j = (urunList.Items.Count - 1) - yeniEklenenUrunSayi.Count; j < urunList.Items.Count; j++)
+                            if (oldProds != urunList.Items.Count)
                             {
-                                if (urunList.Items[j].Text.Equals(result.UrunAdi))
+                                for (int j = oldProds; j < urunList.Items.Count; j++)
                                 {
-                                    foreach (var item in yeniEklenenUrun)
-                                    {
-                                        if (item.UrunID==result.UrunID)
-                                        {                                            
-                                            urunList.Items[j].SubItems[1].Text= (yeniEklenenUrunSayi[yeniEklenenUrun.IndexOf(item)]+=_urunMiktari).ToString();
-                                            urunList.Items[j].SubItems[2].Text = (Convert.ToDouble(urunList.Items[j].SubItems[2].Text.Trim()) + toplamFiyat).ToString();
-                                        }
+                                    if (urunList.Items[j].Text.Equals(result.UrunAdi))
+                                    {                                        
+                                        urunList.Items[j].SubItems[1].Text = (Convert.ToInt32(urunList.Items[j].SubItems[1].Text.Trim()) + _urunMiktari).ToString();
+                                        urunList.Items[j].SubItems[2].Text = (Convert.ToDouble(urunList.Items[j].SubItems[2].Text.Trim()) + toplamFiyat).ToString();
+                                        break;
+                                    }
+                                    else if (j == (urunList.Items.Count - 1))
+                                    {                                        
+                                        urunList.Items.Add(result.UrunAdi);
+                                        urunList.Items[urunList.Items.Count - 1].SubItems.Add(_urunMiktari.ToString());
+                                        urunList.Items[urunList.Items.Count - 1].SubItems.Add(toplamFiyat.ToString());
+                                        urunList.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+                                        break;
                                     }
                                 }
                             }
+                            else
+                            {                                
+                                urunList.Items.Add(result.UrunAdi);
+                                urunList.Items[urunList.Items.Count - 1].SubItems.Add(_urunMiktari.ToString());
+                                urunList.Items[urunList.Items.Count - 1].SubItems.Add(toplamFiyat.ToString());
+                                urunList.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+                            }
                         }
-                        else
-                        {
-                            yeniEklenenUrun.Add(result);
-                            yeniEklenenUrunSayi.Add(_urunMiktari);
+                        else if (urunList.Items.Count == 0)
+                        {                            
                             urunList.Items.Add(result.UrunAdi);
                             urunList.Items[urunList.Items.Count - 1].SubItems.Add(_urunMiktari.ToString());
                             urunList.Items[urunList.Items.Count - 1].SubItems.Add(toplamFiyat.ToString());
                             urunList.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
                         }
+                        else
+                        {
+                            for (int j = 0; j < urunList.Items.Count; j++)
+                            {
+                                if (urunList.Items[j].Text.Equals(result.UrunAdi))
+                                {                            
+                                    urunList.Items[j].SubItems[1].Text = (Convert.ToInt32(urunList.Items[j].SubItems[1].Text.Trim()) + _urunMiktari).ToString();
+                                    urunList.Items[j].SubItems[2].Text = (Convert.ToDouble(urunList.Items[j].SubItems[2].Text.Trim()) + toplamFiyat).ToString();
+                                    break;
+                                }
+                                else if (j == (urunList.Items.Count - 1))
+                                {                            
+                                    urunList.Items.Add(result.UrunAdi);
+                                    urunList.Items[urunList.Items.Count - 1].SubItems.Add(_urunMiktari.ToString());
+                                    urunList.Items[urunList.Items.Count - 1].SubItems.Add(toplamFiyat.ToString());
+                                    urunList.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+                                    break;
+                                }
+                            }
+                        }
                         double _tFiyat = Convert.ToDouble(countPrice.Text.Trim()) + (toplamFiyat);
                         countPrice.Text = _tFiyat.ToString();
                     }
+                    loadSubProducts(result.UrunID);
                 }
             }
             catch (Exception ex)
@@ -179,14 +295,65 @@ namespace KEDI_v_0._5._0._1
                 MessageBox.Show(ex.ToString());
             }
         }
-        private void _menu_Click(object sender, EventArgs e)
+        private void loadSubProducts(int ProdID)
         {
-            tableLayoutPanel1.Controls.Clear();
+            try
+            {
+                using (KEDIDBEntities kEDIDB=new KEDIDBEntities())
+                {
+                    var result = (from altozellik in kEDIDB.Urunlers
+                                  where altozellik.UstUrunID == ProdID
+                                  where altozellik.AltOzellik == true
+                                  select altozellik).DefaultIfEmpty().ToList();
+                    if (result.Count>0)
+                    {
+                        tableLayoutPanel1.Controls.Clear();
+
+                        MetroTile _tile = new MetroTile();
+                        _tile.Dock = System.Windows.Forms.DockStyle.Top;
+                        _tile.Location = new System.Drawing.Point(100, 10);
+                        _tile.Name = "Proceed";
+                        _tile.Size = new System.Drawing.Size(100, 60);
+                        _tile.Style = MetroFramework.MetroColorStyle.Green;
+                        _tile.Text = "Devam Et";
+                        _tile.TextAlign = ContentAlignment.MiddleLeft;
+                        _tile.TileTextFontSize = MetroTileTextSize.Tall;
+                        _tile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+                        _tile.UseSelectable = true;
+                        _tile.Click += proceedClicked;
+                        tableLayoutPanel1.Controls.Add(_tile);
+
+                        foreach (var item in result)
+                        {
+                            tileCreator(item.UrunAdi + "\n" + ((double)item.Fiyat).ToString(), item.UrunID.ToString(), 5, 0);
+                        }                        
+                    }
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                getProd(selectedMenuID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void proceedClicked(object sender, EventArgs e)
+        {
+            getProd(selectedMenuID);
+        }
+
+        private void _menu_Click(object sender, EventArgs e)
+        {            
             MetroTile menu = (MetroTile)sender;
-            getProd(Convert.ToInt32(menu.Name.Trim()));
+            selectedMenuID = Convert.ToInt32(menu.Name.Trim());
+            getProd(selectedMenuID);
         }
         private void getProd(int menuID)
         {
+            tableLayoutPanel1.Controls.Clear();
             try
             {
                 using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
@@ -222,6 +389,7 @@ namespace KEDI_v_0._5._0._1
                 {
                     MetroTile table = (MetroTile)sender;
                     selectedTableID = Convert.ToInt32(table.Name.Trim());
+                    selectedTableName = table.Text;
                     activateMasa(selectedTableID);
                     bool full = isMasaFull(selectedTableID);
                     if (full)
@@ -418,22 +586,23 @@ namespace KEDI_v_0._5._0._1
             MenuTable.Controls.Clear();
             tableLayoutPanel1.Controls.Clear();
             NumbersPanel.Controls.Clear();
-            //uruns.Text = "Ürün:";
-            //counts.Text = "Adet:";
-            //prices.Text = "Toplam:";         
+            AdisyonName.Text = String.Empty;
             _productToShow.Clear();
+            oldProds = 0;
+
             numGenerator();
             getMenu();
             getOrder();
-            urunList.Items.Clear();
-            yeniEklenenUrun.Clear();
-            yeniEklenenUrunSayi.Clear();
+            urunList.Items.Clear();            
+            MasaShow.Text = selectedTableName;
+            PersonCountShow.Text = persCount.ToString();
+
             for (int i = 0; i < _productToShow.Count; i++)
             {
                 urunList.Items.Add(_productToShow[i][0]);
                 urunList.Items[i].SubItems.Add(_productToShow[i][1]);
                 urunList.Items[i].SubItems.Add(_productToShow[i][2]);
-
+                oldProds++;
             }
             urunList.View = View.Details;
             urunList.Columns[0].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -520,11 +689,13 @@ namespace KEDI_v_0._5._0._1
                                         prod.Add(__result.UrunAdi);
                                         prod.Add(item.UrunSayi.ToString());
                                         prod.Add((((double)__result.Fiyat) * item.UrunSayi).ToString());
-                                        _productToShow.Add(prod);
+                                        _productToShow.Add(prod);                                       
                                     }
                                 }
+                                AdisyonName.Text = result.ToList()[0].SiparisAdi;
+                                stringParser(result.ToList()[0].SiparisAdi);
                             }                            
-                        }
+                        }                        
                     }
                 }
             }
@@ -533,6 +704,14 @@ namespace KEDI_v_0._5._0._1
 
                 MessageBox.Show(ex.ToString());
             }
+        }
+        private void stringParser(string text)
+        {
+            char[] arr = text.ToCharArray();
+            Array.Reverse(arr);
+            string PersonCount = new string(arr);            
+            PersonCount=PersonCount.Substring(0, PersonCount.IndexOf('p'));            
+            persCount = Convert.ToInt32(PersonCount.Trim());
         }
         private void getMenu()
         {
@@ -582,49 +761,24 @@ namespace KEDI_v_0._5._0._1
         {
             masaLoader(selectedSalonID.ToString());
         }        
-        private void urunList_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-          
-        }
-        private void urunList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-           
-        }
 
-        private void urunList_Click(object sender, EventArgs e)
+        private void urunList_ItemActivate(object sender, EventArgs e)
         {
-             foreach (var item in urunList.SelectedIndices)
-            {
-                //ListViewItem _item = (ListViewItem)item;
-                MessageBox.Show(item.ToString());
-                //if (!lastRemovedItem.Name.Equals(urunList.Items[(int)item].Name))
-                //{
-                    MessageBox.Show("Test");
-                    int selectedIndex = urunList.Items.Count - ((int)item);
-                    //int nonSelectableIndexes = urunList.Items.Count - yeniEklenenUrunSayi.Count;
-                    if (selectedIndex > yeniEklenenUrunSayi.Count)
+            foreach (var item in urunList.SelectedIndices)
+            {                 
+               // int selectedIndex = urunList.Items.Count - ((int)item);              
+                if ((int)item < oldProds)
+                {
+                    MessageBox.Show(this, "Adisyona Eklenmiş Ürünleri Silemezsiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    DialogResult deleteOrNot = MessageBox.Show(this, "Bu Ürünü Silmek İstediğinize Emin Misiniz?", "Ürün Silme", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                    if (deleteOrNot == DialogResult.Yes)
                     {
-                        MessageBox.Show(this, "Adisyona Eklenmiş Ürünleri Silemezsiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        urunList.Items.RemoveAt((int)item);                     
                     }
-                    else
-                    {
-                        DialogResult deleteOrNot = MessageBox.Show(this, "Bu Ürünü Silmek İstediğinize Emin Misiniz?", "Ürün Silme", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                        if (deleteOrNot == DialogResult.Yes)
-                        {                            
-                            foreach (var __item in yeniEklenenUrun)
-                            {
-                                if (__item.UrunAdi.Equals(urunList.Items[(int)item]))
-                                {
-                                    yeniEklenenUrunSayi.RemoveAt(yeniEklenenUrun.IndexOf(__item));
-                                    yeniEklenenUrun.Remove(__item);
-                                    lastRemovedItem = urunList.Items[(int)item];
-                                    break;
-                                }
-                            }
-                            urunList.Items.RemoveAt((int)item);
-                        }
-                    }
-               // }
+                }                
                 break;
             }
         }
