@@ -35,6 +35,18 @@
             this.MenuTable = new System.Windows.Forms.TableLayoutPanel();
             this.processPanel = new MetroFramework.Controls.MetroPanel();
             this.metroPanel10 = new MetroFramework.Controls.MetroPanel();
+            this.urunList = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.metroPanel12 = new MetroFramework.Controls.MetroPanel();
+            this.PersonCountShow = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
+            this.MasaShow = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel7 = new MetroFramework.Controls.MetroLabel();
+            this.metroPanel13 = new MetroFramework.Controls.MetroPanel();
+            this.AdisyonName = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel11 = new MetroFramework.Controls.MetroPanel();
             this.countPrice = new MetroFramework.Controls.MetroLabel();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
@@ -61,29 +73,18 @@
             this.metroPanel7 = new MetroFramework.Controls.MetroPanel();
             this.save = new MetroFramework.Controls.MetroTile();
             this.buttonsPanel = new MetroFramework.Controls.MetroPanel();
-            this.metroPanel12 = new MetroFramework.Controls.MetroPanel();
-            this.urunList = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.metroPanel13 = new MetroFramework.Controls.MetroPanel();
-            this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
-            this.AdisyonName = new MetroFramework.Controls.MetroLabel();
-            this.PersonCountShow = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
-            this.MasaShow = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel7 = new MetroFramework.Controls.MetroLabel();
+            this.OrderPrinter = new System.Drawing.Printing.PrintDocument();
             this.mainPanel.SuspendLayout();
             this.MenuPanel.SuspendLayout();
             this.processPanel.SuspendLayout();
             this.metroPanel10.SuspendLayout();
+            this.metroPanel12.SuspendLayout();
+            this.metroPanel13.SuspendLayout();
             this.metroPanel11.SuspendLayout();
             this.metroPanel9.SuspendLayout();
             this.metroPanel8.SuspendLayout();
             this.metroPanel1.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
-            this.metroPanel12.SuspendLayout();
-            this.metroPanel13.SuspendLayout();
             this.SuspendLayout();
             // 
             // sidePanel
@@ -232,6 +233,133 @@
             this.metroPanel10.VerticalScrollbarBarColor = true;
             this.metroPanel10.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel10.VerticalScrollbarSize = 10;
+            // 
+            // urunList
+            // 
+            this.urunList.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.urunList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3});
+            this.urunList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.urunList.HideSelection = false;
+            this.urunList.Location = new System.Drawing.Point(5, 45);
+            this.urunList.MultiSelect = false;
+            this.urunList.Name = "urunList";
+            this.urunList.Size = new System.Drawing.Size(306, 15);
+            this.urunList.TabIndex = 7;
+            this.urunList.UseCompatibleStateImageBehavior = false;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Adı:";
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Miktar:";
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Toplam:";
+            // 
+            // metroPanel12
+            // 
+            this.metroPanel12.Controls.Add(this.PersonCountShow);
+            this.metroPanel12.Controls.Add(this.metroLabel6);
+            this.metroPanel12.Controls.Add(this.MasaShow);
+            this.metroPanel12.Controls.Add(this.metroLabel7);
+            this.metroPanel12.Controls.Add(this.metroPanel13);
+            this.metroPanel12.Dock = System.Windows.Forms.DockStyle.Top;
+            this.metroPanel12.HorizontalScrollbarBarColor = true;
+            this.metroPanel12.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel12.HorizontalScrollbarSize = 10;
+            this.metroPanel12.Location = new System.Drawing.Point(5, 5);
+            this.metroPanel12.Name = "metroPanel12";
+            this.metroPanel12.Padding = new System.Windows.Forms.Padding(3);
+            this.metroPanel12.Size = new System.Drawing.Size(306, 40);
+            this.metroPanel12.TabIndex = 6;
+            this.metroPanel12.VerticalScrollbarBarColor = true;
+            this.metroPanel12.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel12.VerticalScrollbarSize = 10;
+            // 
+            // PersonCountShow
+            // 
+            this.PersonCountShow.AutoSize = true;
+            this.PersonCountShow.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PersonCountShow.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.PersonCountShow.Location = new System.Drawing.Point(111, 22);
+            this.PersonCountShow.Name = "PersonCountShow";
+            this.PersonCountShow.Size = new System.Drawing.Size(0, 0);
+            this.PersonCountShow.TabIndex = 13;
+            // 
+            // metroLabel6
+            // 
+            this.metroLabel6.AutoSize = true;
+            this.metroLabel6.Dock = System.Windows.Forms.DockStyle.Left;
+            this.metroLabel6.Location = new System.Drawing.Point(46, 22);
+            this.metroLabel6.Name = "metroLabel6";
+            this.metroLabel6.Size = new System.Drawing.Size(65, 19);
+            this.metroLabel6.TabIndex = 12;
+            this.metroLabel6.Text = "Kişi Sayısı:";
+            // 
+            // MasaShow
+            // 
+            this.MasaShow.AutoSize = true;
+            this.MasaShow.Dock = System.Windows.Forms.DockStyle.Left;
+            this.MasaShow.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.MasaShow.Location = new System.Drawing.Point(46, 22);
+            this.MasaShow.Name = "MasaShow";
+            this.MasaShow.Size = new System.Drawing.Size(0, 0);
+            this.MasaShow.TabIndex = 11;
+            // 
+            // metroLabel7
+            // 
+            this.metroLabel7.AutoSize = true;
+            this.metroLabel7.Dock = System.Windows.Forms.DockStyle.Left;
+            this.metroLabel7.Location = new System.Drawing.Point(3, 22);
+            this.metroLabel7.Name = "metroLabel7";
+            this.metroLabel7.Size = new System.Drawing.Size(43, 19);
+            this.metroLabel7.TabIndex = 10;
+            this.metroLabel7.Text = "Masa:";
+            // 
+            // metroPanel13
+            // 
+            this.metroPanel13.Controls.Add(this.AdisyonName);
+            this.metroPanel13.Controls.Add(this.metroLabel4);
+            this.metroPanel13.Dock = System.Windows.Forms.DockStyle.Top;
+            this.metroPanel13.HorizontalScrollbarBarColor = true;
+            this.metroPanel13.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel13.HorizontalScrollbarSize = 10;
+            this.metroPanel13.Location = new System.Drawing.Point(3, 3);
+            this.metroPanel13.Name = "metroPanel13";
+            this.metroPanel13.Padding = new System.Windows.Forms.Padding(2);
+            this.metroPanel13.Size = new System.Drawing.Size(300, 19);
+            this.metroPanel13.TabIndex = 2;
+            this.metroPanel13.VerticalScrollbarBarColor = true;
+            this.metroPanel13.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel13.VerticalScrollbarSize = 10;
+            // 
+            // AdisyonName
+            // 
+            this.AdisyonName.AutoSize = true;
+            this.AdisyonName.Dock = System.Windows.Forms.DockStyle.Left;
+            this.AdisyonName.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.AdisyonName.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.AdisyonName.Location = new System.Drawing.Point(52, 2);
+            this.AdisyonName.Name = "AdisyonName";
+            this.AdisyonName.Size = new System.Drawing.Size(0, 0);
+            this.AdisyonName.TabIndex = 3;
+            // 
+            // metroLabel4
+            // 
+            this.metroLabel4.AutoSize = true;
+            this.metroLabel4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.metroLabel4.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel4.Location = new System.Drawing.Point(2, 2);
+            this.metroLabel4.Name = "metroLabel4";
+            this.metroLabel4.Size = new System.Drawing.Size(50, 15);
+            this.metroLabel4.TabIndex = 2;
+            this.metroLabel4.Text = "Adisyon:";
             // 
             // metroPanel11
             // 
@@ -647,132 +775,10 @@
             this.buttonsPanel.VerticalScrollbarHighlightOnWheel = false;
             this.buttonsPanel.VerticalScrollbarSize = 10;
             // 
-            // metroPanel12
+            // OrderPrinter
             // 
-            this.metroPanel12.Controls.Add(this.PersonCountShow);
-            this.metroPanel12.Controls.Add(this.metroLabel6);
-            this.metroPanel12.Controls.Add(this.MasaShow);
-            this.metroPanel12.Controls.Add(this.metroLabel7);
-            this.metroPanel12.Controls.Add(this.metroPanel13);
-            this.metroPanel12.Dock = System.Windows.Forms.DockStyle.Top;
-            this.metroPanel12.HorizontalScrollbarBarColor = true;
-            this.metroPanel12.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel12.HorizontalScrollbarSize = 10;
-            this.metroPanel12.Location = new System.Drawing.Point(5, 5);
-            this.metroPanel12.Name = "metroPanel12";
-            this.metroPanel12.Padding = new System.Windows.Forms.Padding(3);
-            this.metroPanel12.Size = new System.Drawing.Size(306, 40);
-            this.metroPanel12.TabIndex = 6;
-            this.metroPanel12.VerticalScrollbarBarColor = true;
-            this.metroPanel12.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel12.VerticalScrollbarSize = 10;
-            // 
-            // urunList
-            // 
-            this.urunList.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.urunList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3});
-            this.urunList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.urunList.HideSelection = false;
-            this.urunList.Location = new System.Drawing.Point(5, 45);
-            this.urunList.MultiSelect = false;
-            this.urunList.Name = "urunList";
-            this.urunList.Size = new System.Drawing.Size(306, 15);
-            this.urunList.TabIndex = 7;
-            this.urunList.UseCompatibleStateImageBehavior = false;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Adı:";
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Miktar:";
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Toplam:";
-            // 
-            // metroPanel13
-            // 
-            this.metroPanel13.Controls.Add(this.AdisyonName);
-            this.metroPanel13.Controls.Add(this.metroLabel4);
-            this.metroPanel13.Dock = System.Windows.Forms.DockStyle.Top;
-            this.metroPanel13.HorizontalScrollbarBarColor = true;
-            this.metroPanel13.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel13.HorizontalScrollbarSize = 10;
-            this.metroPanel13.Location = new System.Drawing.Point(3, 3);
-            this.metroPanel13.Name = "metroPanel13";
-            this.metroPanel13.Padding = new System.Windows.Forms.Padding(2);
-            this.metroPanel13.Size = new System.Drawing.Size(300, 19);
-            this.metroPanel13.TabIndex = 2;
-            this.metroPanel13.VerticalScrollbarBarColor = true;
-            this.metroPanel13.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel13.VerticalScrollbarSize = 10;
-            // 
-            // metroLabel4
-            // 
-            this.metroLabel4.AutoSize = true;
-            this.metroLabel4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.metroLabel4.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel4.Location = new System.Drawing.Point(2, 2);
-            this.metroLabel4.Name = "metroLabel4";
-            this.metroLabel4.Size = new System.Drawing.Size(50, 15);
-            this.metroLabel4.TabIndex = 2;
-            this.metroLabel4.Text = "Adisyon:";
-            // 
-            // AdisyonName
-            // 
-            this.AdisyonName.AutoSize = true;
-            this.AdisyonName.Dock = System.Windows.Forms.DockStyle.Left;
-            this.AdisyonName.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.AdisyonName.FontWeight = MetroFramework.MetroLabelWeight.Bold;
-            this.AdisyonName.Location = new System.Drawing.Point(52, 2);
-            this.AdisyonName.Name = "AdisyonName";
-            this.AdisyonName.Size = new System.Drawing.Size(0, 0);
-            this.AdisyonName.TabIndex = 3;
-            // 
-            // PersonCountShow
-            // 
-            this.PersonCountShow.AutoSize = true;
-            this.PersonCountShow.Dock = System.Windows.Forms.DockStyle.Left;
-            this.PersonCountShow.FontWeight = MetroFramework.MetroLabelWeight.Bold;
-            this.PersonCountShow.Location = new System.Drawing.Point(111, 22);
-            this.PersonCountShow.Name = "PersonCountShow";
-            this.PersonCountShow.Size = new System.Drawing.Size(0, 0);
-            this.PersonCountShow.TabIndex = 13;
-            // 
-            // metroLabel6
-            // 
-            this.metroLabel6.AutoSize = true;
-            this.metroLabel6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.metroLabel6.Location = new System.Drawing.Point(46, 22);
-            this.metroLabel6.Name = "metroLabel6";
-            this.metroLabel6.Size = new System.Drawing.Size(65, 19);
-            this.metroLabel6.TabIndex = 12;
-            this.metroLabel6.Text = "Kişi Sayısı:";
-            // 
-            // MasaShow
-            // 
-            this.MasaShow.AutoSize = true;
-            this.MasaShow.Dock = System.Windows.Forms.DockStyle.Left;
-            this.MasaShow.FontWeight = MetroFramework.MetroLabelWeight.Bold;
-            this.MasaShow.Location = new System.Drawing.Point(46, 22);
-            this.MasaShow.Name = "MasaShow";
-            this.MasaShow.Size = new System.Drawing.Size(0, 0);
-            this.MasaShow.TabIndex = 11;
-            // 
-            // metroLabel7
-            // 
-            this.metroLabel7.AutoSize = true;
-            this.metroLabel7.Dock = System.Windows.Forms.DockStyle.Left;
-            this.metroLabel7.Location = new System.Drawing.Point(3, 22);
-            this.metroLabel7.Name = "metroLabel7";
-            this.metroLabel7.Size = new System.Drawing.Size(43, 19);
-            this.metroLabel7.TabIndex = 10;
-            this.metroLabel7.Text = "Masa:";
+            this.OrderPrinter.OriginAtMargins = true;
+            this.OrderPrinter.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.OrderPrinter_PrintPage);
             // 
             // Order
             // 
@@ -798,6 +804,10 @@
             this.MenuPanel.ResumeLayout(false);
             this.processPanel.ResumeLayout(false);
             this.metroPanel10.ResumeLayout(false);
+            this.metroPanel12.ResumeLayout(false);
+            this.metroPanel12.PerformLayout();
+            this.metroPanel13.ResumeLayout(false);
+            this.metroPanel13.PerformLayout();
             this.metroPanel11.ResumeLayout(false);
             this.metroPanel11.PerformLayout();
             this.metroPanel9.ResumeLayout(false);
@@ -806,10 +816,6 @@
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel1.PerformLayout();
             this.buttonsPanel.ResumeLayout(false);
-            this.metroPanel12.ResumeLayout(false);
-            this.metroPanel12.PerformLayout();
-            this.metroPanel13.ResumeLayout(false);
-            this.metroPanel13.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -861,5 +867,6 @@
         private MetroFramework.Controls.MetroPanel metroPanel13;
         private MetroFramework.Controls.MetroLabel AdisyonName;
         private MetroFramework.Controls.MetroLabel metroLabel4;
+        private System.Drawing.Printing.PrintDocument OrderPrinter;
     }
 }

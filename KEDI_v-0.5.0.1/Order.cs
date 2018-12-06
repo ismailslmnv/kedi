@@ -10,12 +10,13 @@ using System.Windows.Forms;
 using MetroFramework.Forms;
 using MetroFramework;
 using MetroFramework.Controls;
+using System.Drawing.Printing;
 
 namespace KEDI_v_0._5._0._1
 {
     public partial class Order : MetroForm
     {
-        public static int PersonalID;
+        public static int PersonalID=3;
         public static int persCount;
         private double _countPrice=0.0;
         List<Salonlar> _salon = new List<Salonlar>();
@@ -36,7 +37,194 @@ namespace KEDI_v_0._5._0._1
 
         private void save_Click(object sender, EventArgs e)
         {
+            for (int i = oldProds; i < urunList.Items.Count; i++)
+            {
+                int urunID = getUrunID(urunList.Items[i].Text);
+                if (urunID!=-1)
+                {
+                    DbSaver(urunID, Convert.ToInt32(urunList.Items[i].SubItems[1].Text));                                        
+                }                
+            }
+            if (oldProds!=urunList.Items.Count)
+            {
+                printNewOrder();
+            }
             masaLoader(selectedSalonID.ToString());
+        }
+        private void printNewOrder()
+        {
+           // PrintDialog dialog = new PrintDialog();
+            PrintDocument print = new PrintDocument();
+            //dialog.Document = print;
+            print.DocumentName = "Yeni Ürün Adisyonu";
+            print.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(newOrderDocument);
+            print.PrintController = new StandardPrintController();
+           // DialogResult res = dialog.ShowDialog();
+
+            PrinterSettings ps = new PrinterSettings();
+            ps.PrinterName = "Mimcrosoft Print To PDF";
+            //ps.PrintToFile = true;
+            print.PrinterSettings = ps;
+
+            //if (res==DialogResult.OK)
+            //{
+                print.Print();
+           // }
+        }
+
+        private void newOrderDocument(object sender, PrintPageEventArgs e)
+        {
+            Graphics graphics = e.Graphics;
+            Font font = new Font("Arial", 12);
+            float fontHeight = font.Height;
+            int startX = 10;
+            int startY = 10;
+            int offset = 30;
+            graphics.DrawString("NANA Cafe & Restaurant", new Font("Arial", 20), new SolidBrush(Color.Green), startX, startY);
+
+            string _top = "Masa:" + pickTable();
+            graphics.DrawString(_top, font, new SolidBrush(Color.Black), startX, startY + offset);
+
+            offset += 5 + (int)fontHeight;
+            string __top = "Garson:" + pickUser();
+            graphics.DrawString(__top, font, new SolidBrush(Color.Black), startX, startY + offset);
+
+            offset += 5 + (int)fontHeight;
+            string ___top = "Sipariş Tarihi:" + DateTime.Now;
+            graphics.DrawString(___top, font, new SolidBrush(Color.Black), startX, startY + offset);
+
+            offset += 5 + (int)fontHeight;
+            string ____top = "Kişi Sayısı:" + persCount;
+            graphics.DrawString(____top, font, new SolidBrush(Color.Black), startX, startY + offset);
+
+            offset += 5 + (int)fontHeight;
+            string _____top = "Adisyon Numarası:" + AdisyonName.Text;
+            graphics.DrawString(_____top, font, new SolidBrush(Color.Black), startX, startY + offset);
+
+            offset += 10 + (int)fontHeight;
+            string top = "Ürün Adı".PadRight(40) + "Adet";
+            graphics.DrawString(top, font, new SolidBrush(Color.Black), startX, startY + offset);
+
+            offset += (int)fontHeight;
+            graphics.DrawString("--------------------------------------------------", font, new SolidBrush(Color.Black), startX, startY + offset);
+            offset += 5 + (int)fontHeight;
+
+            StringFormat drawFormatCenter = new StringFormat();
+            drawFormatCenter.Alignment = StringAlignment.Center;
+            StringFormat drawFormatLeft = new StringFormat();
+            drawFormatLeft.Alignment = StringAlignment.Near;
+            StringFormat drawFormatRight = new StringFormat();
+            drawFormatRight.Alignment = StringAlignment.Far;
+
+            string _line;
+            for (int i = oldProds; i < urunList.Items.Count; i++)
+            {
+                //int space = top.Length - (urunList.Items[i].Text.Length + urunList.Items[i].SubItems[1].Text.Length);                     ;
+                _line = urunList.Items[i].Text;
+                graphics.DrawString(_line, font, new SolidBrush(Color.Black), new RectangleF(startX,startY+offset, 270,0),drawFormatLeft);
+                _line = urunList.Items[i].SubItems[1].Text;
+                graphics.DrawString(_line, font, new SolidBrush(Color.Black), new RectangleF(startX, startY + offset, 270, 0), drawFormatRight);
+                offset += 5+(int)fontHeight;
+            }
+        }
+        private string dots (int count)
+        {
+            string dot = ".";
+            for (int i = 0; i < count; i++)
+            {
+                dot += ".";
+            }
+            return dot;
+        }
+        private string pickUser()
+        {
+            try
+            {
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from kullanici in kEDIDB.Personels where kullanici.KullaniciID == PersonalID select kullanici.KullaniciAdi).FirstOrDefault();
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+            return String.Empty;
+        }
+        private string pickTable()
+        {
+            try
+            {
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from masa in kEDIDB.Masalars where masa.MasaID == selectedTableID select masa.MasaAdi).FirstOrDefault();
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+            return string.Empty;
+        }
+        private void DbSaver(int urunID, int count)
+        {
+            try
+            {
+                string generatedAdisyon = AdisyonName.Text;
+                
+                if (string.IsNullOrEmpty(generatedAdisyon))
+                {
+                    generatedAdisyon = getToday();
+                    AdisyonName.Text = generatedAdisyon;
+
+                }                
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {                    
+                    Siparisler yeniSiparis = new Siparisler()
+                    {
+                        MasaID = selectedTableID,
+                        KullaniciID = PersonalID,
+                        SiparisAdi = generatedAdisyon,                      
+                        UrunID = urunID,
+                        UrunSayi = count,
+                        Tarih = DateTime.Now
+                    };
+                    kEDIDB.Siparislers.Add(yeniSiparis);
+                    kEDIDB.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private int getUrunID(string urunAdi)
+        {
+            try
+            {
+                if (urunAdi[0]=='*')
+                {
+                    urunAdi = urunAdi.Substring(3);
+                }
+                using (KEDIDBEntities kEDIDB=new KEDIDBEntities())
+                {
+                    var result = (from urun in kEDIDB.Urunlers where urun.UrunAdi.Equals(urunAdi) select urun.UrunID).First();
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                return -1;
+            }
+        }
+        private string getToday()
+        {
+            return DateTime.Today.Day + "" + DateTime.Today.Month + "" + DateTime.Today.Year + "" + DateTime.Now.Hour + "" + DateTime.Now.Minute + "" + selectedTableName + "p" + persCount;
         }
         private void tileCreator(string tileText, string tileID, int Type,int isMasaFull)//Type -- 1=Salon 2=Masa 3=Menu 4=Urun 5=SubProd
         {
@@ -143,16 +331,16 @@ namespace KEDI_v_0._5._0._1
                 {
                     var result = (from products in kEDIDB.Urunlers where products.UrunID == subProdID select products).FirstOrDefault();
                     var _result = (from products in kEDIDB.Urunlers where products.UrunID == result.UstUrunID select products.UrunAdi).FirstOrDefault();
-                    int _urunMiktari;
+                    decimal _urunMiktari=0;
                     if (!string.IsNullOrEmpty(urunMiktari.Text))
                     {
-                        _urunMiktari = Convert.ToInt32(urunMiktari.Text.Trim());
+                        _urunMiktari = Convert.ToDecimal(urunMiktari.Text.Trim());
                     }
                     else
                     {
                         _urunMiktari = 1;
                     }
-                    double toplamFiyat = _urunMiktari * (double)result.Fiyat;
+                    double toplamFiyat = (double)(_urunMiktari * (decimal)result.Fiyat);
                     if (oldProds != 0)
                     {
                         if (oldProds != urunList.Items.Count)
@@ -217,16 +405,16 @@ namespace KEDI_v_0._5._0._1
                                   where urun.UrunID == _productID select urun).FirstOrDefault();
                     if (result!=null)
                     {
-                        int _urunMiktari;
+                        double _urunMiktari=0;
                         if (!string.IsNullOrEmpty(urunMiktari.Text))
                         {
-                            _urunMiktari = Convert.ToInt32(urunMiktari.Text.Trim());                            
+                            _urunMiktari = Convert.ToDouble(urunMiktari.Text.Trim());                            
                         }
                         else
                         {
                             _urunMiktari = 1;
                         }
-                        double toplamFiyat = _urunMiktari * (double)result.Fiyat;
+                        double toplamFiyat = (_urunMiktari * (double)result.Fiyat);
                         if (oldProds != 0)
                         {
                             if (oldProds != urunList.Items.Count)
@@ -235,7 +423,7 @@ namespace KEDI_v_0._5._0._1
                                 {
                                     if (urunList.Items[j].Text.Equals(result.UrunAdi))
                                     {                                        
-                                        urunList.Items[j].SubItems[1].Text = (Convert.ToInt32(urunList.Items[j].SubItems[1].Text.Trim()) + _urunMiktari).ToString();
+                                        urunList.Items[j].SubItems[1].Text = (Convert.ToDouble(urunList.Items[j].SubItems[1].Text.Trim()) + _urunMiktari).ToString();
                                         urunList.Items[j].SubItems[2].Text = (Convert.ToDouble(urunList.Items[j].SubItems[2].Text.Trim()) + toplamFiyat).ToString();
                                         break;
                                     }
@@ -270,7 +458,7 @@ namespace KEDI_v_0._5._0._1
                             {
                                 if (urunList.Items[j].Text.Equals(result.UrunAdi))
                                 {                            
-                                    urunList.Items[j].SubItems[1].Text = (Convert.ToInt32(urunList.Items[j].SubItems[1].Text.Trim()) + _urunMiktari).ToString();
+                                    urunList.Items[j].SubItems[1].Text = (Convert.ToDouble(urunList.Items[j].SubItems[1].Text.Trim()) + _urunMiktari).ToString();
                                     urunList.Items[j].SubItems[2].Text = (Convert.ToDouble(urunList.Items[j].SubItems[2].Text.Trim()) + toplamFiyat).ToString();
                                     break;
                                 }
@@ -509,7 +697,7 @@ namespace KEDI_v_0._5._0._1
                         salonPanelType = 1;
                     }
                 }
-            }
+            }            
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
@@ -642,6 +830,20 @@ namespace KEDI_v_0._5._0._1
             _zerotile.Click += _numClick;
             NumbersPanel.Controls.Add(_zerotile);
 
+            MetroTile _commatile = new MetroTile();
+           _commatile.Dock = System.Windows.Forms.DockStyle.Left;
+           _commatile.Location = new System.Drawing.Point(100, 10);
+           _commatile.Name = ",";
+           _commatile.Size = new System.Drawing.Size(100, 50);
+           _commatile.Style = MetroFramework.MetroColorStyle.Lime;
+           _commatile.Text = ",";
+           _commatile.TextAlign = ContentAlignment.MiddleCenter;
+           _commatile.TileTextFontSize = MetroTileTextSize.Tall;
+           _commatile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+           _commatile.UseSelectable = true;
+           _commatile.Click += _numClick;
+            NumbersPanel.Controls.Add(_commatile);
+
             MetroTile _clear = new MetroTile();
             _clear.Dock = System.Windows.Forms.DockStyle.Left;
             _clear.Location = new System.Drawing.Point(100, 10);
@@ -680,13 +882,19 @@ namespace KEDI_v_0._5._0._1
                                                     select new
                                                     {
                                                         urun.UrunAdi,
-                                                        urun.Fiyat
+                                                        urun.Fiyat,
+                                                        urun.AltOzellik
                                                     }).FirstOrDefault();
                                     if (__result != null)
                                     {
                                         _countPrice += ((double)__result.Fiyat) * item.UrunSayi;
                                         List<string> prod = new List<string>();
-                                        prod.Add(__result.UrunAdi);
+                                        if (__result.AltOzellik==true)
+                                        {
+                                            prod.Add("***"+__result.UrunAdi);
+                                        }
+                                        else
+                                            prod.Add(__result.UrunAdi);
                                         prod.Add(item.UrunSayi.ToString());
                                         prod.Add((((double)__result.Fiyat) * item.UrunSayi).ToString());
                                         _productToShow.Add(prod);                                       
@@ -781,6 +989,11 @@ namespace KEDI_v_0._5._0._1
                 }                
                 break;
             }
+        }
+
+        private void OrderPrinter_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+
         }
     }
 }
