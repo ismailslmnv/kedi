@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
+            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
+            this.boyutY = new MetroFramework.Controls.MetroTextBox();
+            this.boyutX = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
             this.OK = new MetroFramework.Controls.MetroTile();
             this.Delete = new MetroFramework.Controls.MetroTile();
@@ -37,11 +42,6 @@
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.masaAdi = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
-            this.boyutY = new MetroFramework.Controls.MetroTextBox();
-            this.boyutX = new MetroFramework.Controls.MetroTextBox();
-            this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel3.SuspendLayout();
             this.metroPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -69,6 +69,95 @@
             this.metroPanel3.VerticalScrollbarBarColor = true;
             this.metroPanel3.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel3.VerticalScrollbarSize = 10;
+            // 
+            // metroLabel2
+            // 
+            this.metroLabel2.AutoSize = true;
+            this.metroLabel2.Location = new System.Drawing.Point(200, 207);
+            this.metroLabel2.Name = "metroLabel2";
+            this.metroLabel2.Size = new System.Drawing.Size(17, 19);
+            this.metroLabel2.TabIndex = 18;
+            this.metroLabel2.Text = "X";
+            // 
+            // metroLabel3
+            // 
+            this.metroLabel3.AutoSize = true;
+            this.metroLabel3.Location = new System.Drawing.Point(226, 174);
+            this.metroLabel3.Name = "metroLabel3";
+            this.metroLabel3.Size = new System.Drawing.Size(66, 19);
+            this.metroLabel3.TabIndex = 17;
+            this.metroLabel3.Text = "Masa Boy";
+            // 
+            // boyutY
+            // 
+            // 
+            // 
+            // 
+            this.boyutY.CustomButton.Image = null;
+            this.boyutY.CustomButton.Location = new System.Drawing.Point(104, 2);
+            this.boyutY.CustomButton.Name = "";
+            this.boyutY.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.boyutY.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.boyutY.CustomButton.TabIndex = 1;
+            this.boyutY.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.boyutY.CustomButton.UseSelectable = true;
+            this.boyutY.CustomButton.Visible = false;
+            this.boyutY.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.boyutY.Lines = new string[0];
+            this.boyutY.Location = new System.Drawing.Point(226, 196);
+            this.boyutY.MaxLength = 32767;
+            this.boyutY.Name = "boyutY";
+            this.boyutY.PasswordChar = '\0';
+            this.boyutY.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.boyutY.SelectedText = "";
+            this.boyutY.SelectionLength = 0;
+            this.boyutY.SelectionStart = 0;
+            this.boyutY.ShortcutsEnabled = true;
+            this.boyutY.Size = new System.Drawing.Size(132, 30);
+            this.boyutY.TabIndex = 16;
+            this.boyutY.UseSelectable = true;
+            this.boyutY.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.boyutY.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // boyutX
+            // 
+            // 
+            // 
+            // 
+            this.boyutX.CustomButton.Image = null;
+            this.boyutX.CustomButton.Location = new System.Drawing.Point(104, 2);
+            this.boyutX.CustomButton.Name = "";
+            this.boyutX.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.boyutX.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.boyutX.CustomButton.TabIndex = 1;
+            this.boyutX.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.boyutX.CustomButton.UseSelectable = true;
+            this.boyutX.CustomButton.Visible = false;
+            this.boyutX.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.boyutX.Lines = new string[0];
+            this.boyutX.Location = new System.Drawing.Point(62, 196);
+            this.boyutX.MaxLength = 32767;
+            this.boyutX.Name = "boyutX";
+            this.boyutX.PasswordChar = '\0';
+            this.boyutX.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.boyutX.SelectedText = "";
+            this.boyutX.SelectionLength = 0;
+            this.boyutX.SelectionStart = 0;
+            this.boyutX.ShortcutsEnabled = true;
+            this.boyutX.Size = new System.Drawing.Size(132, 30);
+            this.boyutX.TabIndex = 15;
+            this.boyutX.UseSelectable = true;
+            this.boyutX.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.boyutX.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // metroLabel5
+            // 
+            this.metroLabel5.AutoSize = true;
+            this.metroLabel5.Location = new System.Drawing.Point(62, 174);
+            this.metroLabel5.Name = "metroLabel5";
+            this.metroLabel5.Size = new System.Drawing.Size(58, 19);
+            this.metroLabel5.TabIndex = 14;
+            this.metroLabel5.Text = "Masa En";
             // 
             // metroPanel2
             // 
@@ -197,95 +286,6 @@
             this.metroLabel1.TabIndex = 2;
             this.metroLabel1.Text = "Masa Adı:";
             // 
-            // metroLabel2
-            // 
-            this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(200, 207);
-            this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(17, 19);
-            this.metroLabel2.TabIndex = 18;
-            this.metroLabel2.Text = "X";
-            // 
-            // metroLabel3
-            // 
-            this.metroLabel3.AutoSize = true;
-            this.metroLabel3.Location = new System.Drawing.Point(226, 174);
-            this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Size = new System.Drawing.Size(66, 19);
-            this.metroLabel3.TabIndex = 17;
-            this.metroLabel3.Text = "Masa Boy";
-            // 
-            // boyutY
-            // 
-            // 
-            // 
-            // 
-            this.boyutY.CustomButton.Image = null;
-            this.boyutY.CustomButton.Location = new System.Drawing.Point(104, 2);
-            this.boyutY.CustomButton.Name = "";
-            this.boyutY.CustomButton.Size = new System.Drawing.Size(25, 25);
-            this.boyutY.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.boyutY.CustomButton.TabIndex = 1;
-            this.boyutY.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.boyutY.CustomButton.UseSelectable = true;
-            this.boyutY.CustomButton.Visible = false;
-            this.boyutY.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.boyutY.Lines = new string[0];
-            this.boyutY.Location = new System.Drawing.Point(226, 196);
-            this.boyutY.MaxLength = 32767;
-            this.boyutY.Name = "boyutY";
-            this.boyutY.PasswordChar = '\0';
-            this.boyutY.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.boyutY.SelectedText = "";
-            this.boyutY.SelectionLength = 0;
-            this.boyutY.SelectionStart = 0;
-            this.boyutY.ShortcutsEnabled = true;
-            this.boyutY.Size = new System.Drawing.Size(132, 30);
-            this.boyutY.TabIndex = 16;
-            this.boyutY.UseSelectable = true;
-            this.boyutY.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.boyutY.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // boyutX
-            // 
-            // 
-            // 
-            // 
-            this.boyutX.CustomButton.Image = null;
-            this.boyutX.CustomButton.Location = new System.Drawing.Point(104, 2);
-            this.boyutX.CustomButton.Name = "";
-            this.boyutX.CustomButton.Size = new System.Drawing.Size(25, 25);
-            this.boyutX.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.boyutX.CustomButton.TabIndex = 1;
-            this.boyutX.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.boyutX.CustomButton.UseSelectable = true;
-            this.boyutX.CustomButton.Visible = false;
-            this.boyutX.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.boyutX.Lines = new string[0];
-            this.boyutX.Location = new System.Drawing.Point(62, 196);
-            this.boyutX.MaxLength = 32767;
-            this.boyutX.Name = "boyutX";
-            this.boyutX.PasswordChar = '\0';
-            this.boyutX.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.boyutX.SelectedText = "";
-            this.boyutX.SelectionLength = 0;
-            this.boyutX.SelectionStart = 0;
-            this.boyutX.ShortcutsEnabled = true;
-            this.boyutX.Size = new System.Drawing.Size(132, 30);
-            this.boyutX.TabIndex = 15;
-            this.boyutX.UseSelectable = true;
-            this.boyutX.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.boyutX.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // metroLabel5
-            // 
-            this.metroLabel5.AutoSize = true;
-            this.metroLabel5.Location = new System.Drawing.Point(62, 174);
-            this.metroLabel5.Name = "metroLabel5";
-            this.metroLabel5.Size = new System.Drawing.Size(58, 19);
-            this.metroLabel5.TabIndex = 14;
-            this.metroLabel5.Text = "Masa En";
-            // 
             // AddTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -293,6 +293,7 @@
             this.ClientSize = new System.Drawing.Size(472, 428);
             this.Controls.Add(this.metroPanel3);
             this.Name = "AddTable";
+            this.Resizable = false;
             this.Style = MetroFramework.MetroColorStyle.Orange;
             this.Text = "Yeni Masa Ekle";
             this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;

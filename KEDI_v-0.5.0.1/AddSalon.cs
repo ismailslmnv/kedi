@@ -36,7 +36,7 @@ namespace KEDI_v_0._5._0._1
         }
         private bool ValidateControl()
         {
-            if (!String.IsNullOrEmpty(salonAdi.Text))
+            if (!String.IsNullOrEmpty(salonAdi.Text) && !String.IsNullOrEmpty(boyutX.Text) && !String.IsNullOrEmpty(boyutY.Text))
                 return true;
             else
             {
