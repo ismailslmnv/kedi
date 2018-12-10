@@ -158,6 +158,7 @@
             this.genelAyar.UseSelectable = true;
             this.genelAyar.UseStyleColors = true;
             this.genelAyar.UseTileImage = true;
+            this.genelAyar.Click += new System.EventHandler(this.genelAyar_Click);
             // 
             // siparis
             // 

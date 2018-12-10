@@ -20,14 +20,19 @@ namespace KEDI_v_0._5._0._1
         public static int persCount;
         private double _countPrice=0.0;
         List<Salonlar> _salon = new List<Salonlar>();
-        List<List<string>> _productToShow = new List<List<string>>();        
+        List<List<string>> _productToShow = new List<List<string>>();
+        List<Siparisler> toPrint = new List<Siparisler>();
         private List<MetroTile> masalar = new List<MetroTile>();
+        List<Urunler> urunler = new List<Urunler>();
+        List<int> selectedProdIDs = new List<int>();
         private int oldProds=0;
         int salonPanelType = 0; // 1 - Salon
         int tablePanelType = 0; // 1 - Masa
         int selectedSalonID = 0;
         int selectedTableID = 0;
         int selectedMenuID = 0;
+        int selectedPaymentMethod = 0;
+        bool printClicked = false;
         string selectedTableName = String.Empty;
         public Order()
         {
@@ -62,7 +67,7 @@ namespace KEDI_v_0._5._0._1
            // DialogResult res = dialog.ShowDialog();
 
             PrinterSettings ps = new PrinterSettings();
-            ps.PrinterName = "Mimcrosoft Print To PDF";
+            ps.PrinterName = "Microsoft Print To PDF";
             //ps.PrintToFile = true;
             print.PrinterSettings = ps;
 
@@ -126,16 +131,7 @@ namespace KEDI_v_0._5._0._1
                 graphics.DrawString(_line, font, new SolidBrush(Color.Black), new RectangleF(startX, startY + offset, 270, 0), drawFormatRight);
                 offset += 5+(int)fontHeight;
             }
-        }
-        private string dots (int count)
-        {
-            string dot = ".";
-            for (int i = 0; i < count; i++)
-            {
-                dot += ".";
-            }
-            return dot;
-        }
+        }       
         private string pickUser()
         {
             try
@@ -228,7 +224,7 @@ namespace KEDI_v_0._5._0._1
         }
         private void tileCreator(string tileText, string tileID, int Type,int isMasaFull)//Type -- 1=Salon 2=Masa 3=Menu 4=Urun 5=SubProd
         {
-    
+            urunTABLE.Visible = true;
             //     _tile.UseTileImage = true;
  
             if (Type == 1)//salon
@@ -267,12 +263,12 @@ namespace KEDI_v_0._5._0._1
                 _tile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
                 _tile.UseSelectable = true;               
                 _tile.Click += _masa_Click;
-                tableLayoutPanel1.Controls.Add(_tile);
+                urunTABLE.Controls.Add(_tile);
                 masalar.Add(_tile);
             }
             else if (Type==3)// Menu
             {
-                tableLayoutPanel1.Controls.Clear();
+                urunTABLE.Controls.Clear();
                 MetroTile _tile = new MetroTile();
                 _tile.Dock = System.Windows.Forms.DockStyle.Left;
                 _tile.Location = new System.Drawing.Point(100, 10);
@@ -301,7 +297,7 @@ namespace KEDI_v_0._5._0._1
                 _tile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Light;
                 _tile.UseSelectable = true;                
                 _tile.Click += _urun_Click;
-                tableLayoutPanel1.Controls.Add(_tile);
+                urunTABLE.Controls.Add(_tile);
             }
             else if (Type==5)
             {
@@ -317,7 +313,7 @@ namespace KEDI_v_0._5._0._1
                 _tile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Light;
                 _tile.UseSelectable = true;
                 _tile.Click += subProdClick;
-                tableLayoutPanel1.Controls.Add(_tile);
+                urunTABLE.Controls.Add(_tile);
 
             }
         }
@@ -495,7 +491,7 @@ namespace KEDI_v_0._5._0._1
                                   select altozellik).DefaultIfEmpty().ToList();
                     if (result.Count>0)
                     {
-                        tableLayoutPanel1.Controls.Clear();
+                        urunTABLE.Controls.Clear();
 
                         MetroTile _tile = new MetroTile();
                         _tile.Dock = System.Windows.Forms.DockStyle.Top;
@@ -509,7 +505,7 @@ namespace KEDI_v_0._5._0._1
                         _tile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
                         _tile.UseSelectable = true;
                         _tile.Click += proceedClicked;
-                        tableLayoutPanel1.Controls.Add(_tile);
+                        urunTABLE.Controls.Add(_tile);
 
                         foreach (var item in result)
                         {
@@ -541,7 +537,7 @@ namespace KEDI_v_0._5._0._1
         }
         private void getProd(int menuID)
         {
-            tableLayoutPanel1.Controls.Clear();
+            urunTABLE.Controls.Clear();
             try
             {
                 using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
@@ -577,23 +573,34 @@ namespace KEDI_v_0._5._0._1
                 {
                     MetroTile table = (MetroTile)sender;
                     selectedTableID = Convert.ToInt32(table.Name.Trim());
-                    selectedTableName = table.Text;
-                    activateMasa(selectedTableID);
-                    bool full = isMasaFull(selectedTableID);
-                    if (full)
-                    {
-                        productLoader();
-                    }
-                    else
-                    {
-                        PersonCount.TableID = selectedTableID;
-                        PersonCount count = new PersonCount();
-                        DialogResult res= count.ShowDialog();                                                
-                        if (res!=DialogResult.Cancel)
+                    if (!printClicked)
+                    {                        
+                        selectedTableName = table.Text;
+                        activateMasa(selectedTableID);
+                        payment.Enabled = true;
+                        bool full = isMasaFull(selectedTableID);
+                        if (full)
                         {
                             productLoader();
                         }
-                    }                    
+                        else
+                        {
+                            PersonCount.TableID = selectedTableID;
+                            PersonCount count = new PersonCount();
+                            DialogResult res = count.ShowDialog();
+                            if (res != DialogResult.Cancel)
+                            {
+                                productLoader();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Cursor.Current = Cursors.WaitCursor;                       
+                        printTable();
+                        printClicked = false;
+                        salonLoader();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -610,21 +617,25 @@ namespace KEDI_v_0._5._0._1
                 using (KEDIDBEntities kEDIDB=new KEDIDBEntities())
                 {
                     var result = (from adisyon in kEDIDB.Siparislers
-                                  where adisyon.MasaID == masaID select adisyon).FirstOrDefault();
+                                  where adisyon.MasaID == masaID select adisyon).DefaultIfEmpty();
                     if (result != null)
                     {
-                        var _result = (from odeme in kEDIDB.Odemes
-                                       where odeme.SiparisID == result.SiparisID select odeme).FirstOrDefault();
-                        if (_result==null)
+                        foreach (var item in result)
                         {
-                            return true;
+                            var _result = (from odeme in kEDIDB.Odemes
+                                           where odeme.SiparisID == item.SiparisID
+                                           select odeme).FirstOrDefault();
+                            if (_result == null)
+                            {
+                                return true;
+                            }
                         }
+                      
                     }
                 }
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.ToString());
             }
             return false;
@@ -671,7 +682,7 @@ namespace KEDI_v_0._5._0._1
             MetroTile clicker = (MetroTile)sender;
             if (salonPanelType==1)
             {
-                tableLayoutPanel1.Controls.Clear();
+                urunTABLE.Controls.Clear();
                 masalar.Clear();
                 selectedSalonID =Convert.ToInt32(clicker.Name.Trim());
                 masaLoader(clicker.Name);
@@ -681,6 +692,7 @@ namespace KEDI_v_0._5._0._1
         {
             try
             {
+                sidePanel.Controls.Clear();
                 using (KEDIDBEntities kediDB = new KEDIDBEntities())
                 {
                     var result = (from salon in kediDB.Salonlars select salon).DefaultIfEmpty().ToList();
@@ -710,7 +722,8 @@ namespace KEDI_v_0._5._0._1
             sidePanel.Visible = true;
             save.Enabled = false;
             cancel.Enabled = false;
-            tableLayoutPanel1.Controls.Clear();
+            urunTABLE.ColumnCount = 10;
+            urunTABLE.Controls.Clear();
             try
             {
                 int _salonID = Convert.ToInt32(salonID.Trim());
@@ -723,8 +736,8 @@ namespace KEDI_v_0._5._0._1
                     {
                         DateTime controlTime = DateTime.Parse("1990-01-01 01:01:01.001");
                         DateTime siparisTime = DateTime.Parse("1990-01-01 01:01:01.001");
-                        tableLayoutPanel1.ColumnCount = 10;
-                        tableLayoutPanel1.RowCount = 9;                        
+                        urunTABLE.ColumnCount = 10;
+                        urunTABLE.RowCount = 9;                        
                         foreach (var _item in result.ToList())
                         {                            
                             var _result = (from siparis in kediDB.Siparislers where siparis.MasaID == _item.MasaID select siparis).DefaultIfEmpty();
@@ -772,7 +785,7 @@ namespace KEDI_v_0._5._0._1
             cancel.Enabled = true;
             _countPrice = 0.0;
             MenuTable.Controls.Clear();
-            tableLayoutPanel1.Controls.Clear();
+            urunTABLE.Controls.Clear();
             NumbersPanel.Controls.Clear();
             AdisyonName.Text = String.Empty;
             _productToShow.Clear();
@@ -868,7 +881,7 @@ namespace KEDI_v_0._5._0._1
                                   where siparis.MasaID == selectedTableID select siparis).DefaultIfEmpty();
                     if (result!=null)
                     {
-                        foreach (var item in result)
+                        foreach (var item in result.ToList())
                         {
                             if (item != null)
                             {
@@ -889,27 +902,26 @@ namespace KEDI_v_0._5._0._1
                                     {
                                         _countPrice += ((double)__result.Fiyat) * item.UrunSayi;
                                         List<string> prod = new List<string>();
-                                        if (__result.AltOzellik==true)
+                                        if (__result.AltOzellik == true)
                                         {
-                                            prod.Add("***"+__result.UrunAdi);
+                                            prod.Add("***" + __result.UrunAdi);
                                         }
                                         else
                                             prod.Add(__result.UrunAdi);
                                         prod.Add(item.UrunSayi.ToString());
                                         prod.Add((((double)__result.Fiyat) * item.UrunSayi).ToString());
-                                        _productToShow.Add(prod);                                       
+                                        _productToShow.Add(prod);
                                     }
+                                    AdisyonName.Text = item.SiparisAdi;
+                                    stringParser(item.SiparisAdi);
                                 }
-                                AdisyonName.Text = result.ToList()[0].SiparisAdi;
-                                stringParser(result.ToList()[0].SiparisAdi);
                             }                            
                         }                        
                     }
                 }
             }
             catch (Exception ex)
-            {
-
+            { 
                 MessageBox.Show(ex.ToString());
             }
         }
@@ -918,8 +930,11 @@ namespace KEDI_v_0._5._0._1
             char[] arr = text.ToCharArray();
             Array.Reverse(arr);
             string PersonCount = new string(arr);            
-            PersonCount=PersonCount.Substring(0, PersonCount.IndexOf('p'));            
-            persCount = Convert.ToInt32(PersonCount.Trim());
+            PersonCount=PersonCount.Substring(0, PersonCount.IndexOf('p'));
+            char[] revArr = PersonCount.ToCharArray();
+            Array.Reverse(revArr);
+            string _persC = new string(revArr);
+            persCount = Convert.ToInt32(_persC.Trim());
         }
         private void getMenu()
         {
@@ -994,6 +1009,565 @@ namespace KEDI_v_0._5._0._1
         private void OrderPrinter_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
 
+        }
+
+        private void print_Click(object sender, EventArgs e)
+        {
+            getAllTables();
+        }
+        private void getAllTables()
+        {
+            try
+            {
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from masalar in kEDIDB.Masalars select masalar).DefaultIfEmpty();
+                    if (result != null)
+                    {
+                        foreach (var item in result.ToList())
+                        {
+                            if (isMasaFull(item.MasaID))
+                            {
+                                urunTABLE.Controls.Clear();
+                                tileCreator(item.MasaAdi, item.MasaID.ToString(), 2, 1);
+                            }
+                        }
+                        tablePanelType = 1;
+                        printClicked = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private void printTable()
+        {
+            try
+            {
+                
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from siparis in kEDIDB.Siparislers
+                                  where siparis.MasaID == selectedTableID select siparis).DefaultIfEmpty();
+                    if (result != null)
+                    {
+                        foreach (var item in result.ToList())
+                        {
+                            var _result = (from odemeler in kEDIDB.Odemes
+                                           where odemeler.SiparisID == item.SiparisID
+                                           select odemeler).FirstOrDefault();                          
+                            if (_result == null)
+                            {
+                                var __result = (from adisyon in kEDIDB.Siparislers
+                                                where adisyon.SiparisAdi.Equals(item.SiparisAdi)
+                                                select adisyon).DefaultIfEmpty();
+                                if (__result != null)
+                                {
+                                    toPrint = __result.ToList();
+                                    finalPrinter();
+                                    break;
+                                }                              
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private void finalPrinter()
+        {
+            try
+            {                
+                PrintDocument print = new PrintDocument();             
+                print.DocumentName = "Hesap Yazdirma";
+                print.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(prepareFinalDocument);
+                print.PrintController = new StandardPrintController();                
+
+                PrinterSettings ps = new PrinterSettings();
+                ps.PrinterName = "Microsoft Print To PDF";                
+                print.PrinterSettings = ps;
+                
+                print.Print();
+                Cursor.Current = Cursors.Default;                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void prepareFinalDocument(object sender, PrintPageEventArgs e)
+        {
+            try
+            {
+                Graphics graphics = e.Graphics;
+                Font font = new Font("Arial", 12);
+                Font bold = new Font("Arial", 12, FontStyle.Bold);
+                Font italic = new Font("Arial", 12, FontStyle.Italic);
+                float fontHeight = font.Height;
+                int startX = 10;
+                int startY = 10;
+                int offset = 30;
+                graphics.DrawString("NANA Cafe & Restaurant", new Font("Arial", 20, FontStyle.Bold), new SolidBrush(Color.Green), startX, startY);
+
+                string _top = "Masa:" + pickTable();
+                graphics.DrawString(_top, font, new SolidBrush(Color.Black), startX, startY + offset);
+
+                offset += 5 + (int)fontHeight;
+                string __top = "Garson:" + pickUser(toPrint[0].KullaniciID);
+                graphics.DrawString(__top, font, new SolidBrush(Color.Black), startX, startY + offset);
+
+                offset += 5 + (int)fontHeight;
+                string _____top = "Tarih:" + DateTime.Now;
+                graphics.DrawString(_____top, font, new SolidBrush(Color.Black), startX, startY + offset);
+
+                offset += 10 + (int)fontHeight;
+                string top = "Ürün Adı".PadRight(20) + "Adet".PadRight(20) + "Fiyat";
+                graphics.DrawString(top, bold, new SolidBrush(Color.Black), startX, startY + offset);
+
+                offset += (int)fontHeight;
+                graphics.DrawString("----------------------------------------------------------", font, new SolidBrush(Color.Black), startX, startY + offset);
+                offset += 5 + (int)fontHeight;
+
+                StringFormat drawFormatCenter = new StringFormat();
+                drawFormatCenter.Alignment = StringAlignment.Center;
+                StringFormat drawFormatLeft = new StringFormat();
+                drawFormatLeft.Alignment = StringAlignment.Near;
+                StringFormat drawFormatRight = new StringFormat();
+                drawFormatRight.Alignment = StringAlignment.Far;
+
+                string _line;
+                double fullPrice = 0;
+                foreach (var item in toPrint)
+                {                 
+                    string[] vs = getProdNameAndPrice(item.UrunID);
+                    if (vs[2].Equals(false.ToString()))
+                    {
+                        _line = vs[0];
+                        graphics.DrawString(_line, font, new SolidBrush(Color.Black), new RectangleF(startX, startY + offset, 200, 0), drawFormatLeft);
+                    }
+                    else
+                    {
+                        _line = "***"+vs[0];
+                        graphics.DrawString(_line, font, new SolidBrush(Color.Black), new RectangleF(startX, startY + offset, 200, 0), drawFormatLeft);
+                    }
+                    _line = item.UrunSayi.ToString();
+                    graphics.DrawString(_line, font, new SolidBrush(Color.Black), new RectangleF(startX, startY + offset, 200, 0), drawFormatRight);
+                    fullPrice += (Convert.ToDouble(vs[1]) * item.UrunSayi);
+                    _line = (Convert.ToDouble(vs[1]) * item.UrunSayi).ToString();
+                    graphics.DrawString(_line, bold, new SolidBrush(Color.Black), new RectangleF(startX, startY + offset, 270, 0), drawFormatRight);
+
+                    offset += 5 + (int)fontHeight; 
+                    
+                }
+                offset += 10 + (int)fontHeight;
+                string price = "Yekün Toplam:".PadRight(40) + fullPrice.ToString()+"₺";
+                graphics.DrawString(price, bold, new SolidBrush(Color.Black), startX, startY + offset);
+
+                offset += 10 + (int)fontHeight;
+                string thx = "Bizi Tercih Ettiğiniz İçin Teşekkür Ederiz! \nAfiyet Olsun!";
+                graphics.DrawString(thx, italic, new SolidBrush(Color.Black), startX, startY + offset);
+                
+            }catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private string[] getProdNameAndPrice(int prodID)
+        {
+            try
+            {
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from urun in kEDIDB.Urunlers
+                                  where urun.UrunID == prodID
+
+                                  select new
+                                  {
+                                      urun.UrunAdi,
+                                      urun.AltOzellik,
+                                      urun.Fiyat
+                                  }).FirstOrDefault();
+                    if (result != null)
+                    {
+                        string[] vs = new string[] { result.UrunAdi, ((double)result.Fiyat).ToString(), result.AltOzellik.ToString()};
+                        return vs;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            return null;
+        }
+        private string pickUser(int userID)
+        {
+            try
+            {
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from users in kEDIDB.Personels
+                                  where users.KullaniciID == userID select users.KullaniciAdi).FirstOrDefault();
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            return string.Empty;
+        }
+
+        private void payment_Click(object sender, EventArgs e) 
+            // 0 - ALL CASH 1 - ALL CREDIT 2 - SELECTED CASH 3 - SELECTED CREDIT 4 - CANCEL ALL 5 - CANCEL SELECTED
+        {
+            MenuTable.Controls.Clear();
+            urunTABLE.Controls.Clear();
+            //processPanel.Visible = false;
+
+            MetroTile _cash = new MetroTile();
+            _cash.Dock = System.Windows.Forms.DockStyle.Top;
+            _cash.Location = new System.Drawing.Point(100, 10);
+            _cash.Name = "0";
+            _cash.Size = new System.Drawing.Size(100, 60);
+            _cash.Style = MetroFramework.MetroColorStyle.Green;
+            _cash.Text = "Nakit";
+            _cash.TextAlign = ContentAlignment.MiddleLeft;
+            _cash.TileTextFontSize = MetroTileTextSize.Tall;
+            _cash.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            _cash.UseSelectable = true;
+            _cash.Click += PaymentTypeSelected;
+            MenuTable.Controls.Add(_cash);
+
+            MetroTile _card = new MetroTile();
+            _card.Dock = System.Windows.Forms.DockStyle.Top;
+            _card.Location = new System.Drawing.Point(100, 10);
+            _card.Name = "1";
+            _card.Size = new System.Drawing.Size(100, 60);
+            _card.Style = MetroFramework.MetroColorStyle.Blue;
+            _card.Text = "Kart";
+            _card.TextAlign = ContentAlignment.MiddleLeft;
+            _card.TileTextFontSize = MetroTileTextSize.Tall;
+            _card.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            _card.UseSelectable = true;
+            _card.Click += PaymentTypeSelected;
+            MenuTable.Controls.Add(_card);
+
+            MetroTile _cashSelected = new MetroTile();
+            _cashSelected.Dock = System.Windows.Forms.DockStyle.Top;
+            _cashSelected.Location = new System.Drawing.Point(100, 10);
+            _cashSelected.Name = "2";
+            _cashSelected.Size = new System.Drawing.Size(100, 60);
+            _cashSelected.Style = MetroFramework.MetroColorStyle.Green;
+            _cashSelected.Text = "Nakit-Seçili Ürün";
+            _cashSelected.TextAlign = ContentAlignment.MiddleLeft;
+            _cashSelected.TileTextFontSize = MetroTileTextSize.Small;
+            _cashSelected.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            _cashSelected.UseSelectable = true;
+            _cashSelected.Click += PaymentTypeSelected;
+            MenuTable.Controls.Add(_cashSelected);
+
+            MetroTile _cardSelected = new MetroTile();
+            _cardSelected.Dock = System.Windows.Forms.DockStyle.Top;
+            _cardSelected.Location = new System.Drawing.Point(100, 10);
+            _cardSelected.Name = "3";
+            _cardSelected.Size = new System.Drawing.Size(100, 60);
+            _cardSelected.Style = MetroFramework.MetroColorStyle.Blue;
+            _cardSelected.Text = "Kart-Seçili Ürün";
+            _cardSelected.TextAlign = ContentAlignment.MiddleLeft;
+            _cardSelected.TileTextFontSize = MetroTileTextSize.Small;
+            _cardSelected.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            _cardSelected.UseSelectable = true;
+            _cardSelected.Click += PaymentTypeSelected;
+            MenuTable.Controls.Add(_cardSelected);
+
+            MetroTile _cancel = new MetroTile();
+            _cancel.Dock = System.Windows.Forms.DockStyle.Top;
+            _cancel.Location = new System.Drawing.Point(100, 10);
+            _cancel.Name = "4";
+            _cancel.Size = new System.Drawing.Size(100, 60);
+            _cancel.Style = MetroFramework.MetroColorStyle.Red;
+            _cancel.Text = "Hesap İptal";
+            _cancel.TextAlign = ContentAlignment.MiddleLeft;
+            _cancel.TileTextFontSize = MetroTileTextSize.Medium;
+            _cancel.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            _cancel.UseSelectable = true;
+            _cancel.Click += PaymentTypeSelected;
+            MenuTable.Controls.Add(_cancel);
+
+            MetroTile _cancelSelected = new MetroTile();
+            _cancelSelected.Dock = System.Windows.Forms.DockStyle.Top;
+            _cancelSelected.Location = new System.Drawing.Point(100, 10);
+            _cancelSelected.Name = "5";
+            _cancelSelected.Size = new System.Drawing.Size(100, 60);
+            _cancelSelected.Style = MetroFramework.MetroColorStyle.Red;
+            _cancelSelected.Text = "Ürün İptal";
+            _cancelSelected.TextAlign = ContentAlignment.MiddleLeft;
+            _cancelSelected.TileTextFontSize = MetroTileTextSize.Medium;
+            _cancelSelected.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            _cancelSelected.UseSelectable = true;
+            _cancelSelected.Click += PaymentTypeSelected;
+            MenuTable.Controls.Add(_cancelSelected);
+           
+        }
+
+        private void PaymentTypeSelected(object sender, EventArgs e)
+        {
+            MetroTile tile = (MetroTile)sender;
+            int selectedMethod = Convert.ToInt32(tile.Name.Trim());
+            switch (selectedMethod)
+            {
+                case 0: // All Cash
+                    {
+                        selectedPaymentMethod = 1;
+                        payForAll();
+                        confirm.Visible = false;
+                        selectedPaymentMethod = 0;
+                        cancel_Click(sender, e);
+                        break;
+                    }
+                case 1: // All Card
+                    {
+                        selectedPaymentMethod = 2;
+                        payForAll();
+                        confirm.Visible = false;
+                        selectedPaymentMethod = 0;
+                        cancel_Click(sender, e);
+                        break;
+                    }
+                case 2: // Selected Cash
+                    {
+                        selectedPaymentMethod = 1;
+                        getOrderToPayment();
+                        //MessageBox.Show("Lütfen Aşağıdan Ürün Seçiniz");
+                        break;
+                    }
+                case 3: // Selected Card
+                    {
+                        selectedPaymentMethod = 2;
+                        getOrderToPayment();
+                        break;
+                    }
+                case 4: // Cancel All
+                    {
+                        payForAll();
+                        selectedPaymentMethod = 3;
+                        break;
+                    }
+                case 5: // Cancel Selected
+                    {
+                        selectedPaymentMethod = 3;
+                        break;
+                    }
+                default:
+                    break;
+            }
+           // selectedPaymentMethod = 0;
+        }
+        private void payForAll()
+        {
+            try
+            {
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from adisyon in kEDIDB.Siparislers
+                                  where adisyon.SiparisAdi.Equals(AdisyonName.Text) select adisyon).DefaultIfEmpty();
+                    if (result!=null)
+                    {
+                        foreach (var item in result.ToList())
+                        {
+                            var Result = (from odeme in kEDIDB.Odemes
+                                          where odeme.SiparisID == item.SiparisID select odeme).FirstOrDefault();
+                            if (Result==null)
+                            {
+                                Odeme yeniOdeme = new Odeme() {
+                                    SiparisID=item.SiparisID,
+                                    OdemeYontemi=selectedPaymentMethod,
+                                    Tarih = DateTime.Now
+                                };
+                                kEDIDB.Odemes.Add(yeniOdeme);
+                            }
+                        }
+                        kEDIDB.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private void getOrderToPayment()
+        {
+            urunler.Clear();
+            try
+            {              
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from orders in kEDIDB.Siparislers
+                                  where orders.SiparisAdi.Equals(AdisyonName.Text)
+                                  select orders).DefaultIfEmpty();
+                    List<Siparisler> siparislers = result.ToList();
+                    if (result!=null)
+                    {
+                        
+                        foreach (var item in siparislers)
+                        {
+                            var _result = (from odeme in kEDIDB.Odemes
+                                           where odeme.SiparisID == item.SiparisID
+                                           select odeme).FirstOrDefault();
+                            if (_result==null)
+                            {
+                                var __result = (from urun in kEDIDB.Urunlers
+                                                where urun.UrunID == item.UrunID
+                                                select urun).FirstOrDefault();
+                                if (__result!=null)
+                                {
+                                    urunler.Add(__result);
+                                }
+                            }
+                        }
+                        //foreach (var item in urunler)
+                        //{
+                        //    if (((bool)item.AltOzellik)==false)
+                        //    {
+                        //        foreach (var _item in urunler)
+                        //        {
+                        //            if (_item.UstUrunID==item.UrunID)
+                        //            {
+                        //                item.Fiyat += _item.Fiyat;
+                        //                break;
+                        //            }
+                        //        }
+                        //    }
+                        //}
+                        foreach (var item in siparislers)
+                        {                            
+                            foreach (var _item in urunler)
+                            {
+                                if (item.UrunID==_item.UrunID&&_item.AltOzellik!=true)
+                                {
+                                    for (int i = 0; i < item.UrunSayi; i++)
+                                    {
+                                        MetroTile _urun = new MetroTile();
+                                        _urun.Dock = System.Windows.Forms.DockStyle.Top;
+                                        _urun.Location = new System.Drawing.Point(100, 10);
+                                        _urun.Name = item.SiparisID.ToString();
+                                        _urun.Size = new System.Drawing.Size(900, 60);
+                                        _urun.Style = MetroFramework.MetroColorStyle.Purple;
+                                        _urun.Text = _item.UrunAdi.PadRight(100) +_item.Fiyat.ToString();
+                                        _urun.TextAlign = ContentAlignment.MiddleLeft;
+                                        _urun.TileTextFontSize = MetroTileTextSize.Tall;
+                                        _urun.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+                                        _urun.UseSelectable = true;
+                                        _urun.Click += prodSelectedToPay;
+                                        urunTABLE.ColumnCount = 1;
+                                        urunTABLE.Controls.Add(_urun);    
+                                        
+                                    }
+                                    break;
+                                }                                
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }       
+        private void prodSelectedToPay(object sender, EventArgs e)
+        {
+            MetroTile selected = (MetroTile)sender;
+            if (selected.Style == MetroColorStyle.Pink)
+            {
+                selected.Style = MetroColorStyle.Purple;
+                selectedProdIDs.Remove(Convert.ToInt32(selected.Name));
+                foreach (var item in urunler)
+                {
+                    if (item.UrunID == Convert.ToInt32(selected.Name))
+                    {
+                        double onc = Convert.ToDouble(odenecek.Text);
+                        onc -= (double)item.Fiyat;
+                        odenecek.Text = onc.ToString();
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                selected.Style = MetroColorStyle.Pink;
+                selectedProdIDs.Add(Convert.ToInt32(selected.Name));
+                odenecekPanel.Visible = true;
+                foreach (var item in urunler)
+                {
+                    if (item.UrunID== Convert.ToInt32(selected.Name))
+                    {
+                        double onc = Convert.ToDouble(odenecek.Text);
+                        onc += (double)item.Fiyat;
+                        odenecek.Text = onc.ToString();
+                        break;
+                    }
+                }
+                confirm.Visible = true;
+            }            
+        }
+        private void confirm_Click(object sender, EventArgs e)
+        {
+            if (selectedProdIDs.Count>0)
+            {
+                try
+                {
+                    using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                    {
+                        var result = (from adisyon in kEDIDB.Siparislers
+                                      where adisyon.SiparisAdi.Equals(AdisyonName.Text)
+                                      select adisyon).DefaultIfEmpty();
+                        if (result!=null)
+                        {
+                            foreach (var item in result)
+                            {
+                                var res = (from odeme in kEDIDB.Odemes
+                                           where odeme.SiparisID == item.SiparisID
+                                           select odeme).FirstOrDefault();
+                                if (res==null)
+                                {
+                                    foreach (int _item in selectedProdIDs)
+                                    {
+                                        if (_item==item.SiparisID)
+                                        {
+                                            Odeme yeniOdeme = new Odeme()
+                                            {
+                                                OdemeYontemi=selectedPaymentMethod,
+                                                SiparisID=item.SiparisID,
+                                                Tarih=DateTime.Now,                                                
+                                            };
+                                            kEDIDB.Odemes.Add(yeniOdeme);
+                                            break;                                          
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                        kEDIDB.SaveChanges();
+                        payment_Click(sender,e);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
         }
     }
 }

@@ -65,6 +65,13 @@
           <Property Name="Notlar" Type="nvarchar(max)" />
           <Property Name="Tarih" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="OdemeYontemi">
+          <Key>
+            <PropertyRef Name="YontemID" />
+          </Key>
+          <Property Name="YontemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YontemAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Personels">
           <Key>
             <PropertyRef Name="KullaniciID" />
@@ -79,6 +86,20 @@
           <Property Name="Enabled" Type="bit" Nullable="false" />
           <Property Name="DisableTarih" Type="datetime" />
         </EntityType>
+        <EntityType Name="Printers">
+          <Key>
+            <PropertyRef Name="PrinterID" />
+          </Key>
+          <Property Name="PrinterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PrinterName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PrinterIP" Type="nvarchar" MaxLength="15" />
+          <Property Name="Online" Type="bit" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="CancelProd" Type="bit" Nullable="false" />
+          <Property Name="Report" Type="bit" Nullable="false" />
+          <Property Name="Product" Type="bit" Nullable="false" />
+          <Property Name="AccountPrint" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Salonlars">
           <Key>
             <PropertyRef Name="SalonID" />
@@ -88,7 +109,7 @@
           <Property Name="Tarih" Type="datetime" Nullable="false" />
           <Property Name="BoyutX" Type="float" />
           <Property Name="BoyutY" Type="float" />
-          <Property Name="Duvarlar" Type="nvarchar" MaxLength="50" />
+          <Property Name="Duvarlar" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Siparislers">
           <Key>
@@ -124,6 +145,7 @@
           <Property Name="Tarih" Type="datetime" />
           <Property Name="Notlar" Type="nvarchar(max)" />
           <Property Name="AltOzellik" Type="bit" />
+          <Property Name="PrintID" Type="int" />
         </EntityType>
         <EntityType Name="Yetkilers">
           <Key>
@@ -164,18 +186,6 @@
             </Principal>
             <Dependent Role="Indirimlers">
               <PropertyRef Name="UrunID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Masalar_Salonlar">
-          <End Role="Salonlars" Type="Self.Salonlars" Multiplicity="1" />
-          <End Role="Masalars" Type="Self.Masalars" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Salonlars">
-              <PropertyRef Name="SalonID" />
-            </Principal>
-            <Dependent Role="Masalars">
-              <PropertyRef Name="SalonID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -258,7 +268,9 @@
           <EntitySet Name="Loglars" EntityType="Self.Loglars" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Masalars" EntityType="Self.Masalars" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Odemes" EntityType="Self.Odemes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OdemeYontemi" EntityType="Self.OdemeYontemi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Personels" EntityType="Self.Personels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Printers" EntityType="Self.Printers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Salonlars" EntityType="Self.Salonlars" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Siparislers" EntityType="Self.Siparislers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -271,10 +283,6 @@
           <AssociationSet Name="FK_Indirimler_Urunler" Association="Self.FK_Indirimler_Urunler">
             <End Role="Urunlers" EntitySet="Urunlers" />
             <End Role="Indirimlers" EntitySet="Indirimlers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Masalar_Salonlar" Association="Self.FK_Masalar_Salonlar">
-            <End Role="Salonlars" EntitySet="Salonlars" />
-            <End Role="Masalars" EntitySet="Masalars" />
           </AssociationSet>
           <AssociationSet Name="FK_Odeme_Indirimler" Association="Self.FK_Odeme_Indirimler">
             <End Role="Indirimlers" EntitySet="Indirimlers" />
@@ -356,7 +364,7 @@
           <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Indirimler" Relationship="Self.FK_Odeme_Indirimler" FromRole="Odeme" ToRole="Indirimler" />
           <NavigationProperty Name="Siparisler" Relationship="Self.FK_Odeme_Siparisler" FromRole="Odeme" ToRole="Siparisler" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="Personel">
           <Key>
             <PropertyRef Name="KullaniciID" />
@@ -384,7 +392,7 @@
           <NavigationProperty Name="Masalars" Relationship="Self.FK_Masalar_Salonlar" FromRole="Salonlar" ToRole="Masalar" />
           <Property Name="BoyutX" Type="Double" />
           <Property Name="BoyutY" Type="Double" />
-          <Property Name="Duvarlar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Duvarlar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Siparisler">
           <Key>
@@ -426,6 +434,7 @@
           <Property Name="AltOzellik" Type="Boolean" />
           <NavigationProperty Name="Siparislers" Relationship="Self.FK_Siparisler_Urunler" FromRole="Urunler" ToRole="Siparisler" />
           <NavigationProperty Name="Indirimlers" Relationship="ModelKediDB.FK_Indirimler_Urunler" FromRole="Urunler" ToRole="Indirimler" />
+          <Property Name="PrintID" Type="Int32" />
         </EntityType>
         <EntityType Name="Yetkiler">
           <Key>
@@ -607,6 +616,8 @@
             <End Role="Urunler" EntitySet="Urunlers" />
             <End Role="Indirimler" EntitySet="Indirimlers" />
           </AssociationSet>
+          <EntitySet Name="OdemeYontemis" EntityType="ModelKediDB.OdemeYontemi" />
+          <EntitySet Name="Printers" EntityType="ModelKediDB.Printer" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -658,6 +669,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="OdemeYontemi">
+          <Key>
+            <PropertyRef Name="YontemID" />
+          </Key>
+          <Property Name="YontemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YontemAdi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Printer">
+          <Key>
+            <PropertyRef Name="PrinterID" />
+          </Key>
+          <Property Name="PrinterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrinterName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PrinterIP" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Online" Type="Boolean" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CancelProd" Type="Boolean" Nullable="false" />
+          <Property Name="Report" Type="Boolean" Nullable="false" />
+          <Property Name="Product" Type="Boolean" Nullable="false" />
+          <Property Name="AccountPrint" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -769,7 +801,8 @@
     <EntitySetMapping Name="Urunlers">
       <EntityTypeMapping TypeName="IsTypeOf(ModelKediDB.Urunler)">
         <MappingFragment StoreEntitySet="Urunlers">
-          <ScalarProperty Name="UrunID" ColumnName="UrunID" />
+          <ScalarProperty Name="PrintID" ColumnName="PrintID" />
+                <ScalarProperty Name="UrunID" ColumnName="UrunID" />
           <ScalarProperty Name="UrunAdi" ColumnName="UrunAdi" />
           <ScalarProperty Name="UstUrunID" ColumnName="UstUrunID" />
           <ScalarProperty Name="Fiyat" ColumnName="Fiyat" />
@@ -809,6 +842,29 @@
             <EntityTypeMapping TypeName="ModelKediDB.deneme_Tablosu">
               <MappingFragment StoreEntitySet="deneme_Tablosu">
                 <ScalarProperty Name="deneme" ColumnName="deneme" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OdemeYontemis">
+            <EntityTypeMapping TypeName="ModelKediDB.OdemeYontemi">
+              <MappingFragment StoreEntitySet="OdemeYontemi">
+                <ScalarProperty Name="YontemAdi" ColumnName="YontemAdi" />
+                <ScalarProperty Name="YontemID" ColumnName="YontemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Printers">
+            <EntityTypeMapping TypeName="ModelKediDB.Printer">
+              <MappingFragment StoreEntitySet="Printers">
+                <ScalarProperty Name="AccountPrint" ColumnName="AccountPrint" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="Report" ColumnName="Report" />
+                <ScalarProperty Name="CancelProd" ColumnName="CancelProd" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="Online" ColumnName="Online" />
+                <ScalarProperty Name="PrinterIP" ColumnName="PrinterIP" />
+                <ScalarProperty Name="PrinterName" ColumnName="PrinterName" />
+                <ScalarProperty Name="PrinterID" ColumnName="PrinterID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

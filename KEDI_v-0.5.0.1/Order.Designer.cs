@@ -30,7 +30,8 @@
         {
             this.sidePanel = new MetroFramework.Controls.MetroPanel();
             this.mainPanel = new MetroFramework.Controls.MetroPanel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.UrunPanel = new MetroFramework.Controls.MetroPanel();
+            this.urunTABLE = new System.Windows.Forms.TableLayoutPanel();
             this.MenuPanel = new MetroFramework.Controls.MetroPanel();
             this.MenuTable = new System.Windows.Forms.TableLayoutPanel();
             this.processPanel = new MetroFramework.Controls.MetroPanel();
@@ -48,6 +49,9 @@
             this.AdisyonName = new MetroFramework.Controls.MetroLabel();
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel11 = new MetroFramework.Controls.MetroPanel();
+            this.odenecekPanel = new MetroFramework.Controls.MetroPanel();
+            this.metroLabel8 = new MetroFramework.Controls.MetroLabel();
+            this.odenecek = new MetroFramework.Controls.MetroLabel();
             this.countPrice = new MetroFramework.Controls.MetroLabel();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel9 = new MetroFramework.Controls.MetroPanel();
@@ -59,8 +63,11 @@
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.username = new MetroFramework.Controls.MetroTile();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+            this.confirm = new MetroFramework.Controls.MetroTile();
+            this.metroPanel15 = new MetroFramework.Controls.MetroPanel();
             this.divide = new MetroFramework.Controls.MetroTile();
             this.metroPanel6 = new MetroFramework.Controls.MetroPanel();
+            this.metroPanel14 = new MetroFramework.Controls.MetroPanel();
             this.combine = new MetroFramework.Controls.MetroTile();
             this.metroPanel5 = new MetroFramework.Controls.MetroPanel();
             this.move = new MetroFramework.Controls.MetroTile();
@@ -75,15 +82,18 @@
             this.buttonsPanel = new MetroFramework.Controls.MetroPanel();
             this.OrderPrinter = new System.Drawing.Printing.PrintDocument();
             this.mainPanel.SuspendLayout();
+            this.UrunPanel.SuspendLayout();
             this.MenuPanel.SuspendLayout();
             this.processPanel.SuspendLayout();
             this.metroPanel10.SuspendLayout();
             this.metroPanel12.SuspendLayout();
             this.metroPanel13.SuspendLayout();
             this.metroPanel11.SuspendLayout();
+            this.odenecekPanel.SuspendLayout();
             this.metroPanel9.SuspendLayout();
             this.metroPanel8.SuspendLayout();
             this.metroPanel1.SuspendLayout();
+            this.metroPanel6.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -104,7 +114,7 @@
             // mainPanel
             // 
             this.mainPanel.BackColor = System.Drawing.Color.Silver;
-            this.mainPanel.Controls.Add(this.tableLayoutPanel1);
+            this.mainPanel.Controls.Add(this.UrunPanel);
             this.mainPanel.Controls.Add(this.MenuPanel);
             this.mainPanel.Controls.Add(this.processPanel);
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -120,37 +130,55 @@
             this.mainPanel.VerticalScrollbarHighlightOnWheel = false;
             this.mainPanel.VerticalScrollbarSize = 10;
             // 
-            // tableLayoutPanel1
+            // UrunPanel
             // 
-            this.tableLayoutPanel1.AutoScroll = true;
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tableLayoutPanel1.ColumnCount = 10;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 195);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 10;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(361, 150);
-            this.tableLayoutPanel1.TabIndex = 4;
+            this.UrunPanel.AutoScroll = true;
+            this.UrunPanel.Controls.Add(this.urunTABLE);
+            this.UrunPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UrunPanel.HorizontalScrollbar = true;
+            this.UrunPanel.HorizontalScrollbarBarColor = true;
+            this.UrunPanel.HorizontalScrollbarHighlightOnWheel = false;
+            this.UrunPanel.HorizontalScrollbarSize = 10;
+            this.UrunPanel.Location = new System.Drawing.Point(0, 195);
+            this.UrunPanel.Name = "UrunPanel";
+            this.UrunPanel.Size = new System.Drawing.Size(361, 150);
+            this.UrunPanel.TabIndex = 4;
+            this.UrunPanel.VerticalScrollbar = true;
+            this.UrunPanel.VerticalScrollbarBarColor = true;
+            this.UrunPanel.VerticalScrollbarHighlightOnWheel = false;
+            this.UrunPanel.VerticalScrollbarSize = 10;
+            // 
+            // urunTABLE
+            // 
+            this.urunTABLE.AutoScroll = true;
+            this.urunTABLE.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.urunTABLE.ColumnCount = 10;
+            this.urunTABLE.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.urunTABLE.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.urunTABLE.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.urunTABLE.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.urunTABLE.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.urunTABLE.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.urunTABLE.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.urunTABLE.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.urunTABLE.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.urunTABLE.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.urunTABLE.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.urunTABLE.Location = new System.Drawing.Point(0, 0);
+            this.urunTABLE.Name = "urunTABLE";
+            this.urunTABLE.RowCount = 10;
+            this.urunTABLE.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.urunTABLE.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.urunTABLE.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.urunTABLE.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.urunTABLE.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.urunTABLE.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.urunTABLE.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.urunTABLE.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.urunTABLE.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.urunTABLE.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.urunTABLE.Size = new System.Drawing.Size(361, 150);
+            this.urunTABLE.TabIndex = 6;
             // 
             // MenuPanel
             // 
@@ -363,6 +391,7 @@
             // 
             // metroPanel11
             // 
+            this.metroPanel11.Controls.Add(this.odenecekPanel);
             this.metroPanel11.Controls.Add(this.countPrice);
             this.metroPanel11.Controls.Add(this.metroLabel3);
             this.metroPanel11.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -377,6 +406,45 @@
             this.metroPanel11.VerticalScrollbarBarColor = true;
             this.metroPanel11.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel11.VerticalScrollbarSize = 10;
+            // 
+            // odenecekPanel
+            // 
+            this.odenecekPanel.Controls.Add(this.metroLabel8);
+            this.odenecekPanel.Controls.Add(this.odenecek);
+            this.odenecekPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.odenecekPanel.HorizontalScrollbarBarColor = true;
+            this.odenecekPanel.HorizontalScrollbarHighlightOnWheel = false;
+            this.odenecekPanel.HorizontalScrollbarSize = 10;
+            this.odenecekPanel.Location = new System.Drawing.Point(120, 8);
+            this.odenecekPanel.Name = "odenecekPanel";
+            this.odenecekPanel.Size = new System.Drawing.Size(178, 18);
+            this.odenecekPanel.TabIndex = 9;
+            this.odenecekPanel.VerticalScrollbarBarColor = true;
+            this.odenecekPanel.VerticalScrollbarHighlightOnWheel = false;
+            this.odenecekPanel.VerticalScrollbarSize = 10;
+            this.odenecekPanel.Visible = false;
+            // 
+            // metroLabel8
+            // 
+            this.metroLabel8.AutoSize = true;
+            this.metroLabel8.Dock = System.Windows.Forms.DockStyle.Right;
+            this.metroLabel8.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.metroLabel8.Location = new System.Drawing.Point(42, 0);
+            this.metroLabel8.Name = "metroLabel8";
+            this.metroLabel8.Size = new System.Drawing.Size(119, 19);
+            this.metroLabel8.TabIndex = 12;
+            this.metroLabel8.Text = "Ödenecek Tutar:";
+            // 
+            // odenecek
+            // 
+            this.odenecek.AutoSize = true;
+            this.odenecek.Dock = System.Windows.Forms.DockStyle.Right;
+            this.odenecek.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.odenecek.Location = new System.Drawing.Point(161, 0);
+            this.odenecek.Name = "odenecek";
+            this.odenecek.Size = new System.Drawing.Size(17, 19);
+            this.odenecek.TabIndex = 11;
+            this.odenecek.Text = "0";
             // 
             // countPrice
             // 
@@ -510,6 +578,8 @@
             // metroPanel1
             // 
             this.metroPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.metroPanel1.Controls.Add(this.confirm);
+            this.metroPanel1.Controls.Add(this.metroPanel15);
             this.metroPanel1.Controls.Add(this.divide);
             this.metroPanel1.Controls.Add(this.metroPanel6);
             this.metroPanel1.Controls.Add(this.combine);
@@ -535,6 +605,35 @@
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             // 
+            // confirm
+            // 
+            this.confirm.ActiveControl = null;
+            this.confirm.Dock = System.Windows.Forms.DockStyle.Left;
+            this.confirm.Location = new System.Drawing.Point(606, 0);
+            this.confirm.Name = "confirm";
+            this.confirm.Size = new System.Drawing.Size(75, 39);
+            this.confirm.Style = MetroFramework.MetroColorStyle.Green;
+            this.confirm.TabIndex = 31;
+            this.confirm.Text = "Onayla";
+            this.confirm.UseSelectable = true;
+            this.confirm.UseStyleColors = true;
+            this.confirm.Visible = false;
+            this.confirm.Click += new System.EventHandler(this.confirm_Click);
+            // 
+            // metroPanel15
+            // 
+            this.metroPanel15.Dock = System.Windows.Forms.DockStyle.Left;
+            this.metroPanel15.HorizontalScrollbarBarColor = true;
+            this.metroPanel15.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel15.HorizontalScrollbarSize = 10;
+            this.metroPanel15.Location = new System.Drawing.Point(596, 0);
+            this.metroPanel15.Name = "metroPanel15";
+            this.metroPanel15.Size = new System.Drawing.Size(10, 39);
+            this.metroPanel15.TabIndex = 30;
+            this.metroPanel15.VerticalScrollbarBarColor = true;
+            this.metroPanel15.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel15.VerticalScrollbarSize = 10;
+            // 
             // divide
             // 
             this.divide.ActiveControl = null;
@@ -549,11 +648,13 @@
             this.divide.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.divide.UseSelectable = true;
             this.divide.UseStyleColors = true;
+            this.divide.Visible = false;
             // 
             // metroPanel6
             // 
             this.metroPanel6.AutoScroll = true;
             this.metroPanel6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.metroPanel6.Controls.Add(this.metroPanel14);
             this.metroPanel6.Dock = System.Windows.Forms.DockStyle.Left;
             this.metroPanel6.HorizontalScrollbar = true;
             this.metroPanel6.HorizontalScrollbarBarColor = true;
@@ -567,6 +668,24 @@
             this.metroPanel6.VerticalScrollbarBarColor = false;
             this.metroPanel6.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel6.VerticalScrollbarSize = 10;
+            // 
+            // metroPanel14
+            // 
+            this.metroPanel14.AutoScroll = true;
+            this.metroPanel14.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.metroPanel14.Dock = System.Windows.Forms.DockStyle.Right;
+            this.metroPanel14.HorizontalScrollbar = true;
+            this.metroPanel14.HorizontalScrollbarBarColor = true;
+            this.metroPanel14.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel14.HorizontalScrollbarSize = 10;
+            this.metroPanel14.Location = new System.Drawing.Point(0, 0);
+            this.metroPanel14.Name = "metroPanel14";
+            this.metroPanel14.Size = new System.Drawing.Size(10, 39);
+            this.metroPanel14.TabIndex = 29;
+            this.metroPanel14.VerticalScrollbar = true;
+            this.metroPanel14.VerticalScrollbarBarColor = false;
+            this.metroPanel14.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel14.VerticalScrollbarSize = 10;
             // 
             // combine
             // 
@@ -641,6 +760,7 @@
             this.payment.ActiveControl = null;
             this.payment.AutoSize = true;
             this.payment.Dock = System.Windows.Forms.DockStyle.Left;
+            this.payment.Enabled = false;
             this.payment.Location = new System.Drawing.Point(266, 0);
             this.payment.Name = "payment";
             this.payment.Size = new System.Drawing.Size(75, 39);
@@ -649,6 +769,7 @@
             this.payment.Text = "Hesap Al";
             this.payment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.payment.UseSelectable = true;
+            this.payment.Click += new System.EventHandler(this.payment_Click);
             // 
             // metroPanel3
             // 
@@ -682,6 +803,7 @@
             this.print.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.print.UseSelectable = true;
             this.print.UseStyleColors = true;
+            this.print.Click += new System.EventHandler(this.print_Click);
             // 
             // metroPanel2
             // 
@@ -801,6 +923,7 @@
             this.Text = "Kedi POS - Sipariş";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.mainPanel.ResumeLayout(false);
+            this.UrunPanel.ResumeLayout(false);
             this.MenuPanel.ResumeLayout(false);
             this.processPanel.ResumeLayout(false);
             this.metroPanel10.ResumeLayout(false);
@@ -810,11 +933,14 @@
             this.metroPanel13.PerformLayout();
             this.metroPanel11.ResumeLayout(false);
             this.metroPanel11.PerformLayout();
+            this.odenecekPanel.ResumeLayout(false);
+            this.odenecekPanel.PerformLayout();
             this.metroPanel9.ResumeLayout(false);
             this.metroPanel8.ResumeLayout(false);
             this.metroPanel8.PerformLayout();
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel1.PerformLayout();
+            this.metroPanel6.ResumeLayout(false);
             this.buttonsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -849,7 +975,6 @@
         private MetroFramework.Controls.MetroPanel metroPanel8;
         private MetroFramework.Controls.MetroLabel urunMiktari;
         private MetroFramework.Controls.MetroLabel metroLabel2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private MetroFramework.Controls.MetroPanel MenuPanel;
         private System.Windows.Forms.TableLayoutPanel MenuTable;
         private MetroFramework.Controls.MetroPanel metroPanel11;
@@ -868,5 +993,13 @@
         private MetroFramework.Controls.MetroLabel AdisyonName;
         private MetroFramework.Controls.MetroLabel metroLabel4;
         private System.Drawing.Printing.PrintDocument OrderPrinter;
+        private MetroFramework.Controls.MetroPanel UrunPanel;
+        private System.Windows.Forms.TableLayoutPanel urunTABLE;
+        private MetroFramework.Controls.MetroTile confirm;
+        private MetroFramework.Controls.MetroPanel metroPanel15;
+        private MetroFramework.Controls.MetroPanel metroPanel14;
+        private MetroFramework.Controls.MetroPanel odenecekPanel;
+        private MetroFramework.Controls.MetroLabel metroLabel8;
+        private MetroFramework.Controls.MetroLabel odenecek;
     }
 }

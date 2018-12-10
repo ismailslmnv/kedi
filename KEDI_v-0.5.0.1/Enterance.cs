@@ -73,8 +73,15 @@ namespace KEDI_v_0._5._0._1
                 urun.Enabled = true;
             else urun.Enabled = false;
             if (yetkiler.Raporlama)
+            {
                 rapor.Enabled = true;
-            else rapor.Enabled = false;         
+                genelAyar.Enabled = true;
+            }
+            else
+            {
+                rapor.Enabled = false;
+                genelAyar.Enabled = false;
+            }
         }
         private void userEnabler(string yetkiAdi)
         {
@@ -173,6 +180,11 @@ namespace KEDI_v_0._5._0._1
         {
             Products products = new Products();
             products.Show();
+        }
+
+        private void genelAyar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

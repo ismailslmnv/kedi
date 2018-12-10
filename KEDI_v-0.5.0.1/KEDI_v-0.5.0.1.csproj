@@ -66,6 +66,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -79,6 +80,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="addPrinter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addPrinter.Designer.cs">
+      <DependentUpon>addPrinter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Discount.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +142,12 @@
     </Compile>
     <Compile Include="EditDiscount.Designer.cs">
       <DependentUpon>EditDiscount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditPrinter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditPrinter.Designer.cs">
+      <DependentUpon>EditPrinter.cs</DependentUpon>
     </Compile>
     <Compile Include="EditSubProduct.cs">
       <SubType>Form</SubType>
@@ -214,6 +227,9 @@
     <Compile Include="Odeme.cs">
       <DependentUpon>ModelKedi.tt</DependentUpon>
     </Compile>
+    <Compile Include="OdemeYontemi.cs">
+      <DependentUpon>ModelKedi.tt</DependentUpon>
+    </Compile>
     <Compile Include="Order.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -227,6 +243,9 @@
       <DependentUpon>PersonCount.cs</DependentUpon>
     </Compile>
     <Compile Include="Personel.cs">
+      <DependentUpon>ModelKedi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Printer.cs">
       <DependentUpon>ModelKedi.tt</DependentUpon>
     </Compile>
     <Compile Include="Products.cs">
@@ -264,6 +283,12 @@
     <Compile Include="selectSalon.Designer.cs">
       <DependentUpon>selectSalon.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings.Designer.cs">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </Compile>
     <Compile Include="ShowSubProducts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -294,6 +319,9 @@
     <Compile Include="Yetkiler.cs">
       <DependentUpon>ModelKedi.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="addPrinter.resx">
+      <DependentUpon>addPrinter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Discount.resx">
       <DependentUpon>Discount.cs</DependentUpon>
     </EmbeddedResource>
@@ -320,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditDiscount.resx">
       <DependentUpon>EditDiscount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditPrinter.resx">
+      <DependentUpon>EditPrinter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditSubProduct.resx">
       <DependentUpon>EditSubProduct.cs</DependentUpon>
@@ -375,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="selectSalon.resx">
       <DependentUpon>selectSalon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.resx">
+      <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ShowSubProducts.resx">
       <DependentUpon>ShowSubProducts.cs</DependentUpon>
