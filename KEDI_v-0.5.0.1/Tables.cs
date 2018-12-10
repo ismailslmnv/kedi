@@ -20,6 +20,7 @@ namespace KEDI_v_0._5._0._1
         private Point[,] squares;
         private int salonBoyutx, salonBoyuty;
         private string walls;//   i-j i-j i-j formatinda
+        private bool IsSuperPozition = false;
 
         public Tables()
         {
@@ -96,24 +97,61 @@ namespace KEDI_v_0._5._0._1
 
         private void tableDraggingPanel_MouseDown(object sender, MouseEventArgs e)
         {
-            Control c = sender as Control;
-            c.DoDragDrop(c, DragDropEffects.Move);
+            if (!IsSuperPozition)
+            {
+                Control c = sender as Control;
+                c.DoDragDrop(c, DragDropEffects.Move);
+            }
         }
 
         private void tableDraggingPanel_DragDrop(object sender, DragEventArgs e)
         {
             Control c = e.Data.GetData(e.Data.GetFormats()[0]) as Control;
-            if (c != null)
+            if (c != null && !IsSuperPozition)
             {
                 c.Location = this.tableDraggingPanel.PointToClient(new Point(e.X, e.Y));
                 this.tableDraggingPanel.Controls.Add(c);
             }
-            //++++++++ Daha sonradan cizilecek duvar yerine masanin gelmesi yasak olacak
+        }
+        private void TableObstacle(Control c)
+        {
+            foreach (Control table in tableDraggingPanel.Controls)
+            {
+                if (//Dört köşenin de girişinin kontrolü için yapılmıştır 
+                    c.Location.X > table.Location.X && c.Location.X < table.Location.X + table.Size.Width && c.Location.Y > table.Location.Y && c.Location.Y < table.Location.Y + table.Size.Height ||
+                    c.Location.X + c.Size.Width > table.Location.X && c.Location.X + c.Size.Width < table.Location.X + table.Size.Width && c.Location.Y > table.Location.Y && c.Location.Y < table.Location.Y + table.Size.Height ||
+                    c.Location.X + c.Size.Width > table.Location.X && c.Location.X + c.Size.Width < table.Location.X + table.Size.Width && c.Location.Y + c.Size.Height > table.Location.Y && c.Location.Y + c.Size.Height < table.Location.Y + table.Size.Height ||
+                    c.Location.X > table.Location.X && c.Location.X < table.Location.X + table.Size.Width && c.Location.Y + c.Size.Height > table.Location.Y && c.Location.Y + c.Size.Height < table.Location.Y + table.Size.Height
+                    )
+                {
+                    //MessageBox.Show(AddSalon.ActiveForm, "Bu Alanda başka bir masa bulunduğundan Yerleştirme işlemi gerçekleştirilemiyor.", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    IsSuperPozition = true;
+                }
+            }
+        }
+        private bool WallObstacle(Control c)
+        {
+            //Dokunulmadı
+            for (int i = 0; i < squares.GetLength(0); i++)
+            {
+                for (int j = 0; j < squares.GetLength(1); j++)
+                {
+                    if (squares[i, j].X + salonBoyutx + 1 > c.Location.X && squares[i, j].X < c.Location.X && squares[i, j].Y + salonBoyuty > c.Location.Y && squares[i, j].Y < c.Location.Y)
+                    {
+                        //MessageBox.Show(AddSalon.ActiveForm, "Duvar Bölgesine Masa Koyamazsınız", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private void tableDraggingPanel_DragOver(object sender, DragEventArgs e)
         {
-            e.Effect = DragDropEffects.Move;
+            if (!IsSuperPozition)
+            {
+                e.Effect = DragDropEffects.Move;
+            }
         }
 
         //Kaydet Butonuna Basıldıktan Sonra Tüm masalar Kaydolur
@@ -151,6 +189,7 @@ namespace KEDI_v_0._5._0._1
             tableDraggingPanel.Visible = false;
             MasaAltMenu.Visible = false;
             masaDuzenle.Visible = false;
+
             getSalonFromDB();
             this.salonPanel.Controls.Clear();//Onceki olusanlari Yok Etmek Icin
 
@@ -182,6 +221,7 @@ namespace KEDI_v_0._5._0._1
                 MessageBox.Show(AddSalon.ActiveForm, "Bir Hata Meydana Geldi Tekrar Deneyiniz", "HATA", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void CreateSalonTile(Salonlar salonlar)
         {
             MetroTile salon = new MetroTile();
@@ -198,6 +238,7 @@ namespace KEDI_v_0._5._0._1
             salon.UseSelectable = true;
             salon.Click += new EventHandler(Salon_Click);
         }
+
         private void Salon_Click(object sender, EventArgs e)
         {
             selectSalon select = new selectSalon();
@@ -206,10 +247,12 @@ namespace KEDI_v_0._5._0._1
             select.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SelectSalon_Closing);
             select.Show();
         }
+
         private void SelectSalon_Closing(object sender, EventArgs e)
         {
             getSalonFromDB();
             this.salonPanel.Controls.Clear();
+
             foreach(Salonlar salonlar in this.salonLIST)
                 CreateSalonTile(salonlar);
         }
@@ -261,7 +304,7 @@ namespace KEDI_v_0._5._0._1
                 }
             }
         }
-        // kare kare boluyor ekrani
+        // kare kare bölüyor ekrani
         private void makeSquare()
         {
             int x = tableDraggingPanel.Size.Height / salonBoyuty, y = tableDraggingPanel.Size.Width / salonBoyutx;
@@ -295,8 +338,9 @@ namespace KEDI_v_0._5._0._1
 
             GetWallFromDB();
             CreatePanelMatrix();
-            CreateWalls();
+            CreateWalls();//DB den alınan duvarları ekranda olduğu yere yazıyor
         }
+
         private void MasaCreate(Masalar masalar)
         {
             Button masa = new Button();
@@ -307,21 +351,26 @@ namespace KEDI_v_0._5._0._1
             masa.UseVisualStyleBackColor = true;
             this.tableDraggingPanel.Controls.Add(masa);
         }
+
         private void AddTableDraggingEvent()
         {
             this.tableDraggingPanel.AllowDrop = true;
             foreach (Control c in this.tableDraggingPanel.Controls)
             {
                 c.MouseDown += new MouseEventHandler(tableDraggingPanel_MouseDown);
+                c.MouseMove += new MouseEventHandler(Table_MouseMove);
+                c.DragOver += new DragEventHandler(Table_DragOver);
                 c.Click -= new EventHandler(Masa_Click);
             }
             this.tableDraggingPanel.DragOver += new DragEventHandler(tableDraggingPanel_DragOver);
             this.tableDraggingPanel.DragDrop += new DragEventHandler(tableDraggingPanel_DragDrop);
         }
+
         private void screenGrapher(object sender,MouseEventArgs e)
         {
             makeSquare();
         }
+
         private void RemoveTableDraggingEvent()
         {
             this.tableDraggingPanel.DragOver -= new DragEventHandler(tableDraggingPanel_DragOver);
@@ -332,6 +381,7 @@ namespace KEDI_v_0._5._0._1
                 c.Click += new EventHandler(Masa_Click);
             }
         }
+
         private void exit_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -341,13 +391,19 @@ namespace KEDI_v_0._5._0._1
         {
             AddTableDraggingEvent();
             masaDuzenlemeModu.Text = "Salon Düzenleme Modu Aktif";
-            this.tableDraggingPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tableDraggingPanel_MouseClick);
+            masalarMenu.Enabled = false;
+            salonlarMenu.Enabled = false;
+            foreach (Control c in MasaAltMenu.Controls)
+                c.Enabled = false;
+
             add.Visible = false;
             masaDuzenle.Visible = false;
             masaDuzenlemeModu.Visible = true;
             saveChanges.Visible = true;
             cancelChanges.Visible = true;
             addWalls.Visible = true;
+            //Sadece Tıklama özelliği vererek bizlere masa düzenleme silme işlemleri yapmamızı sağlar
+            this.tableDraggingPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tableDraggingPanel_MouseClick);
         }
         private void Masa_Click(object sender, EventArgs e)
         {
@@ -363,25 +419,42 @@ namespace KEDI_v_0._5._0._1
             this.tableDraggingPanel.Controls.Clear();
             foreach (Masalar mas in this.masaLIST)
                 MasaCreate(mas);
-           AddTableDraggingEvent(); // Bu bir ara silinecekti 
+
+           AddTableDraggingEvent();  
         }
 
         private void saveChanges_Click(object sender, EventArgs e)
         {
             foreach (Button c in this.tableDraggingPanel.Controls)
-            {
                 TableSaveLocation(c);
-            }
+
             SaveWalls();
             RemoveTableDraggingEvent();
             tableDraggingPanel.BackColor = Color.White;
-            this.tableDraggingPanel.MouseClick -= new System.Windows.Forms.MouseEventHandler(this.tableDraggingPanel_MouseClick);
+            GetWallFromDB();
+            CreatePanelMatrix();
+            CreateWalls();
+
             add.Visible = true;
             masaDuzenle.Visible = true;
             masaDuzenlemeModu.Visible = false;
             saveChanges.Visible = false;
             cancelChanges.Visible = false;
             addWalls.Visible = false;
+            salonlarMenu.Enabled = true;
+            masalarMenu.Enabled = true;
+
+            foreach (Control c in MasaAltMenu.Controls)
+                c.Enabled = true;
+
+            foreach (Masalar mas in this.masaLIST)
+                MasaCreate(mas);
+
+            RemoveTableDraggingEvent();
+            foreach (Control c in this.tableDraggingPanel.Controls)
+                c.MouseMove -= new MouseEventHandler(screenGrapher);
+
+            this.tableDraggingPanel.MouseClick -= new System.Windows.Forms.MouseEventHandler(this.tableDraggingPanel_MouseClick);
         }
 
         //
@@ -389,13 +462,21 @@ namespace KEDI_v_0._5._0._1
         {
             tableDraggingPanel.Controls.Clear();
             tableDraggingPanel.Invalidate();
+            RemoveTableDraggingEvent();
+            CreateWalls();
             tableDraggingPanel.BackColor = Color.White;
+
             add.Visible = true;
             masaDuzenle.Visible = true;
             masaDuzenlemeModu.Visible = false;
             saveChanges.Visible = false;
             cancelChanges.Visible = false;
             addWalls.Visible = false;
+            salonlarMenu.Enabled = true;
+            masalarMenu.Enabled = true;
+
+            foreach (Control c in MasaAltMenu.Controls)
+                c.Enabled = true;
 
             foreach (Masalar mas in this.masaLIST)
                 MasaCreate(mas);
@@ -468,7 +549,17 @@ namespace KEDI_v_0._5._0._1
             foreach (Control c in this.tableDraggingPanel.Controls)
                 c.MouseMove += new MouseEventHandler(screenGrapher);
         }
-        
+
+        private void Table_MouseMove(object sender, MouseEventArgs e)
+        {
+            TableObstacle(sender as Control);
+        }
+        private void Table_DragOver(object sender, DragEventArgs e)
+        {
+            Control c = sender as Control;
+            MessageBox.Show(e.X.ToString());
+        }
+
         // Basilan Kareyi Boyuyor
         private void tableDraggingPanel_MouseClick(object sender, MouseEventArgs e)
         {
