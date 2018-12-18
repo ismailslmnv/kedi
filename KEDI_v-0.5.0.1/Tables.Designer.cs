@@ -39,7 +39,6 @@
             this.salonPanel = new MetroFramework.Controls.MetroPanel();
             this.tableDraggingPanel = new MetroFramework.Controls.MetroPanel();
             this.metroPanel5 = new MetroFramework.Controls.MetroPanel();
-            this.addWalls = new MetroFramework.Controls.MetroTile();
             this.cancelChanges = new MetroFramework.Controls.MetroTile();
             this.saveChanges = new MetroFramework.Controls.MetroTile();
             this.masaDuzenlemeModu = new MetroFramework.Drawing.Html.HtmlLabel();
@@ -221,7 +220,6 @@
             // metroPanel5
             // 
             this.metroPanel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.metroPanel5.Controls.Add(this.addWalls);
             this.metroPanel5.Controls.Add(this.cancelChanges);
             this.metroPanel5.Controls.Add(this.saveChanges);
             this.metroPanel5.Controls.Add(this.masaDuzenlemeModu);
@@ -240,26 +238,6 @@
             this.metroPanel5.VerticalScrollbarBarColor = true;
             this.metroPanel5.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel5.VerticalScrollbarSize = 10;
-            // 
-            // addWalls
-            // 
-            this.addWalls.ActiveControl = null;
-            this.addWalls.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addWalls.ForeColor = System.Drawing.SystemColors.Control;
-            this.addWalls.Location = new System.Drawing.Point(628, 14);
-            this.addWalls.Name = "addWalls";
-            this.addWalls.Size = new System.Drawing.Size(184, 47);
-            this.addWalls.TabIndex = 7;
-            this.addWalls.Text = "Duvar Ekle";
-            this.addWalls.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addWalls.TileImage = ((System.Drawing.Image)(resources.GetObject("addWalls.TileImage")));
-            this.addWalls.TileImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addWalls.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
-            this.addWalls.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
-            this.addWalls.UseSelectable = true;
-            this.addWalls.UseTileImage = true;
-            this.addWalls.Visible = false;
-            this.addWalls.Click += new System.EventHandler(this.addWalls_Click);
             // 
             // cancelChanges
             // 
@@ -286,7 +264,7 @@
             this.saveChanges.ActiveControl = null;
             this.saveChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.saveChanges.ForeColor = System.Drawing.SystemColors.Control;
-            this.saveChanges.Location = new System.Drawing.Point(818, 75);
+            this.saveChanges.Location = new System.Drawing.Point(818, 81);
             this.saveChanges.Name = "saveChanges";
             this.saveChanges.Size = new System.Drawing.Size(184, 47);
             this.saveChanges.TabIndex = 5;
@@ -320,9 +298,9 @@
             this.masaDuzenle.ActiveControl = null;
             this.masaDuzenle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.masaDuzenle.ForeColor = System.Drawing.SystemColors.Control;
-            this.masaDuzenle.Location = new System.Drawing.Point(818, 21);
+            this.masaDuzenle.Location = new System.Drawing.Point(818, 14);
             this.masaDuzenle.Name = "masaDuzenle";
-            this.masaDuzenle.Size = new System.Drawing.Size(184, 43);
+            this.masaDuzenle.Size = new System.Drawing.Size(184, 47);
             this.masaDuzenle.TabIndex = 3;
             this.masaDuzenle.Text = "Salon Düzenle";
             this.masaDuzenle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -474,6 +452,5 @@
         private MetroFramework.Drawing.Html.HtmlLabel masaDuzenlemeModu;
         private MetroFramework.Controls.MetroTile saveChanges;
         private MetroFramework.Controls.MetroTile cancelChanges;
-        private MetroFramework.Controls.MetroTile addWalls;
     }
 }

@@ -28,7 +28,7 @@ namespace KEDI_v_0._5._0._1
 
         private void salonEdit_Click(object sender, EventArgs e)
         {
-            this.Size = new Size(450, 388);
+            this.Size = new Size(450, 250);
             this.salonEdit.Visible = false;
             this.salonSil.Visible = false;
             metroPanel3.Visible = true;
@@ -74,11 +74,9 @@ namespace KEDI_v_0._5._0._1
                 using (KEDIDBEntities db = new KEDIDBEntities())
                 {
                     var result = (from salon in db.Salonlars where salon.SalonID.Equals(selectedSalonTile.TabIndex) select salon).First();
-                    if (!String.IsNullOrEmpty(salonAdi.Text) && !String.IsNullOrEmpty(boyutX.Text) && !String.IsNullOrEmpty(boyutY.Text))
+                    if (!String.IsNullOrEmpty(salonAdi.Text))
                     {
                         result.SalonAdi = salonAdi.Text;
-                        result.BoyutX = float.Parse(this.boyutX.Text);
-                        result.BoyutY = float.Parse(this.boyutY.Text);
                         db.SaveChanges();
                         this.Close();
                     }

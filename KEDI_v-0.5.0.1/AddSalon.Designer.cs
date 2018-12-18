@@ -36,11 +36,6 @@
             this.OK = new MetroFramework.Controls.MetroTile();
             this.Delete = new MetroFramework.Controls.MetroTile();
             this.Cancel = new MetroFramework.Controls.MetroTile();
-            this.boyutX = new MetroFramework.Controls.MetroTextBox();
-            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.boyutY = new MetroFramework.Controls.MetroTextBox();
-            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel1.SuspendLayout();
             this.metroPanel3.SuspendLayout();
             this.metroPanel2.SuspendLayout();
@@ -57,7 +52,7 @@
             this.metroPanel1.HorizontalScrollbarSize = 10;
             this.metroPanel1.Location = new System.Drawing.Point(20, 60);
             this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Size = new System.Drawing.Size(421, 292);
+            this.metroPanel1.Size = new System.Drawing.Size(421, 235);
             this.metroPanel1.TabIndex = 1;
             this.metroPanel1.UseCustomBackColor = true;
             this.metroPanel1.VerticalScrollbarBarColor = true;
@@ -66,11 +61,6 @@
             // 
             // metroPanel3
             // 
-            this.metroPanel3.Controls.Add(this.metroLabel4);
-            this.metroPanel3.Controls.Add(this.metroLabel3);
-            this.metroPanel3.Controls.Add(this.boyutY);
-            this.metroPanel3.Controls.Add(this.boyutX);
-            this.metroPanel3.Controls.Add(this.metroLabel2);
             this.metroPanel3.Controls.Add(this.salonAdi);
             this.metroPanel3.Controls.Add(this.metroLabel1);
             this.metroPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -79,7 +69,7 @@
             this.metroPanel3.HorizontalScrollbarSize = 10;
             this.metroPanel3.Location = new System.Drawing.Point(0, 0);
             this.metroPanel3.Name = "metroPanel3";
-            this.metroPanel3.Size = new System.Drawing.Size(421, 230);
+            this.metroPanel3.Size = new System.Drawing.Size(421, 173);
             this.metroPanel3.TabIndex = 3;
             this.metroPanel3.VerticalScrollbarBarColor = true;
             this.metroPanel3.VerticalScrollbarHighlightOnWheel = false;
@@ -136,7 +126,7 @@
             this.metroPanel2.HorizontalScrollbarBarColor = true;
             this.metroPanel2.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel2.HorizontalScrollbarSize = 10;
-            this.metroPanel2.Location = new System.Drawing.Point(0, 230);
+            this.metroPanel2.Location = new System.Drawing.Point(0, 173);
             this.metroPanel2.Name = "metroPanel2";
             this.metroPanel2.Size = new System.Drawing.Size(421, 62);
             this.metroPanel2.TabIndex = 2;
@@ -192,100 +182,11 @@
             this.Cancel.UseStyleColors = true;
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
-            // boyutX
-            // 
-            // 
-            // 
-            // 
-            this.boyutX.CustomButton.Image = null;
-            this.boyutX.CustomButton.Location = new System.Drawing.Point(104, 2);
-            this.boyutX.CustomButton.Name = "";
-            this.boyutX.CustomButton.Size = new System.Drawing.Size(25, 25);
-            this.boyutX.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.boyutX.CustomButton.TabIndex = 1;
-            this.boyutX.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.boyutX.CustomButton.UseSelectable = true;
-            this.boyutX.CustomButton.Visible = false;
-            this.boyutX.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.boyutX.Lines = new string[0];
-            this.boyutX.Location = new System.Drawing.Point(60, 142);
-            this.boyutX.MaxLength = 32767;
-            this.boyutX.Name = "boyutX";
-            this.boyutX.PasswordChar = '\0';
-            this.boyutX.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.boyutX.SelectedText = "";
-            this.boyutX.SelectionLength = 0;
-            this.boyutX.SelectionStart = 0;
-            this.boyutX.ShortcutsEnabled = true;
-            this.boyutX.Size = new System.Drawing.Size(132, 30);
-            this.boyutX.TabIndex = 5;
-            this.boyutX.UseSelectable = true;
-            this.boyutX.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.boyutX.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // metroLabel2
-            // 
-            this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(60, 120);
-            this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(59, 19);
-            this.metroLabel2.TabIndex = 4;
-            this.metroLabel2.Text = "Salon En";
-            // 
-            // boyutY
-            // 
-            // 
-            // 
-            // 
-            this.boyutY.CustomButton.Image = null;
-            this.boyutY.CustomButton.Location = new System.Drawing.Point(104, 2);
-            this.boyutY.CustomButton.Name = "";
-            this.boyutY.CustomButton.Size = new System.Drawing.Size(25, 25);
-            this.boyutY.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.boyutY.CustomButton.TabIndex = 1;
-            this.boyutY.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.boyutY.CustomButton.UseSelectable = true;
-            this.boyutY.CustomButton.Visible = false;
-            this.boyutY.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.boyutY.Lines = new string[0];
-            this.boyutY.Location = new System.Drawing.Point(224, 142);
-            this.boyutY.MaxLength = 32767;
-            this.boyutY.Name = "boyutY";
-            this.boyutY.PasswordChar = '\0';
-            this.boyutY.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.boyutY.SelectedText = "";
-            this.boyutY.SelectionLength = 0;
-            this.boyutY.SelectionStart = 0;
-            this.boyutY.ShortcutsEnabled = true;
-            this.boyutY.Size = new System.Drawing.Size(132, 30);
-            this.boyutY.TabIndex = 6;
-            this.boyutY.UseSelectable = true;
-            this.boyutY.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.boyutY.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // metroLabel3
-            // 
-            this.metroLabel3.AutoSize = true;
-            this.metroLabel3.Location = new System.Drawing.Point(224, 120);
-            this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Size = new System.Drawing.Size(67, 19);
-            this.metroLabel3.TabIndex = 7;
-            this.metroLabel3.Text = "Salon Boy";
-            // 
-            // metroLabel4
-            // 
-            this.metroLabel4.AutoSize = true;
-            this.metroLabel4.Location = new System.Drawing.Point(198, 153);
-            this.metroLabel4.Name = "metroLabel4";
-            this.metroLabel4.Size = new System.Drawing.Size(17, 19);
-            this.metroLabel4.TabIndex = 8;
-            this.metroLabel4.Text = "X";
-            // 
             // AddSalon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(461, 372);
+            this.ClientSize = new System.Drawing.Size(461, 315);
             this.Controls.Add(this.metroPanel1);
             this.Name = "AddSalon";
             this.Resizable = false;
@@ -311,10 +212,5 @@
         private MetroFramework.Controls.MetroTile OK;
         private MetroFramework.Controls.MetroTile Delete;
         private MetroFramework.Controls.MetroTile Cancel;
-        private MetroFramework.Controls.MetroLabel metroLabel4;
-        private MetroFramework.Controls.MetroLabel metroLabel3;
-        private MetroFramework.Controls.MetroTextBox boyutY;
-        private MetroFramework.Controls.MetroTextBox boyutX;
-        private MetroFramework.Controls.MetroLabel metroLabel2;
     }
 }
