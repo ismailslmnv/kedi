@@ -74,6 +74,7 @@ namespace KEDI_v_0._5._0._1
                         result.MasaAdi = masaAdi.Text;
                         db.SaveChanges();
                         MessageBox.Show(selectSalon.ActiveForm, "Başarıyla Kayıt Edildi", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
                     }
                     else
                     {

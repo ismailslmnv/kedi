@@ -32,12 +32,12 @@
             this.masaSil = new MetroFramework.Controls.MetroTile();
             this.masaEdit = new MetroFramework.Controls.MetroTile();
             this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
-            this.masaAdi = new MetroFramework.Controls.MetroTextBox();
-            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
             this.Delete = new MetroFramework.Controls.MetroTile();
             this.OK = new MetroFramework.Controls.MetroTile();
             this.Cancel = new MetroFramework.Controls.MetroTile();
+            this.masaAdi = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.secenekMenuPanel.SuspendLayout();
             this.metroPanel3.SuspendLayout();
             this.metroPanel2.SuspendLayout();
@@ -108,46 +108,6 @@
             this.metroPanel3.VerticalScrollbarSize = 10;
             this.metroPanel3.Visible = false;
             // 
-            // masaAdi
-            // 
-            // 
-            // 
-            // 
-            this.masaAdi.CustomButton.Image = null;
-            this.masaAdi.CustomButton.Location = new System.Drawing.Point(383, 2);
-            this.masaAdi.CustomButton.Name = "";
-            this.masaAdi.CustomButton.Size = new System.Drawing.Size(25, 25);
-            this.masaAdi.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.masaAdi.CustomButton.TabIndex = 1;
-            this.masaAdi.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.masaAdi.CustomButton.UseSelectable = true;
-            this.masaAdi.CustomButton.Visible = false;
-            this.masaAdi.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.masaAdi.Lines = new string[0];
-            this.masaAdi.Location = new System.Drawing.Point(3, 50);
-            this.masaAdi.MaxLength = 32767;
-            this.masaAdi.Name = "masaAdi";
-            this.masaAdi.PasswordChar = '\0';
-            this.masaAdi.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.masaAdi.SelectedText = "";
-            this.masaAdi.SelectionLength = 0;
-            this.masaAdi.SelectionStart = 0;
-            this.masaAdi.ShortcutsEnabled = true;
-            this.masaAdi.Size = new System.Drawing.Size(411, 30);
-            this.masaAdi.TabIndex = 3;
-            this.masaAdi.UseSelectable = true;
-            this.masaAdi.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.masaAdi.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // metroLabel1
-            // 
-            this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(2, 27);
-            this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(67, 19);
-            this.metroLabel1.TabIndex = 2;
-            this.metroLabel1.Text = "Masa Adı:";
-            // 
             // metroPanel2
             // 
             this.metroPanel2.Controls.Add(this.Delete);
@@ -195,6 +155,7 @@
             this.OK.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
             this.OK.UseSelectable = true;
             this.OK.UseStyleColors = true;
+            this.OK.Click += new System.EventHandler(this.OK_Click);
             // 
             // Cancel
             // 
@@ -210,6 +171,46 @@
             this.Cancel.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
             this.Cancel.UseSelectable = true;
             this.Cancel.UseStyleColors = true;
+            // 
+            // masaAdi
+            // 
+            // 
+            // 
+            // 
+            this.masaAdi.CustomButton.Image = null;
+            this.masaAdi.CustomButton.Location = new System.Drawing.Point(383, 2);
+            this.masaAdi.CustomButton.Name = "";
+            this.masaAdi.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.masaAdi.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.masaAdi.CustomButton.TabIndex = 1;
+            this.masaAdi.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.masaAdi.CustomButton.UseSelectable = true;
+            this.masaAdi.CustomButton.Visible = false;
+            this.masaAdi.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.masaAdi.Lines = new string[0];
+            this.masaAdi.Location = new System.Drawing.Point(3, 50);
+            this.masaAdi.MaxLength = 32767;
+            this.masaAdi.Name = "masaAdi";
+            this.masaAdi.PasswordChar = '\0';
+            this.masaAdi.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.masaAdi.SelectedText = "";
+            this.masaAdi.SelectionLength = 0;
+            this.masaAdi.SelectionStart = 0;
+            this.masaAdi.ShortcutsEnabled = true;
+            this.masaAdi.Size = new System.Drawing.Size(411, 30);
+            this.masaAdi.TabIndex = 3;
+            this.masaAdi.UseSelectable = true;
+            this.masaAdi.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.masaAdi.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // metroLabel1
+            // 
+            this.metroLabel1.AutoSize = true;
+            this.metroLabel1.Location = new System.Drawing.Point(2, 27);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(67, 19);
+            this.metroLabel1.TabIndex = 2;
+            this.metroLabel1.Text = "Masa Adı:";
             // 
             // selectMasa
             // 
