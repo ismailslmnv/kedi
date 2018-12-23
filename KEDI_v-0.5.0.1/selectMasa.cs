@@ -15,6 +15,7 @@ namespace KEDI_v_0._5._0._1
     {
         public static System.Windows.Forms.Button selectedMasaButton;
         public static IEnumerable<Masalar> masalar;
+        private IEnumerable<Salonlar> salonlar;
         public selectMasa()
         {
             InitializeComponent();
@@ -50,17 +51,17 @@ namespace KEDI_v_0._5._0._1
 
         private void masaEdit_Click(object sender, EventArgs e)
         {
-            this.Size = new Size(447, 380);
+            this.Size = new Size(447, 300);
             masaEdit.Visible = false;
-            metroLabel2.Visible = true;
-            metroLabel3.Visible = true;
+            masaSil.Visible = false;
+            metroPanel3.Visible = true;
+            metroPanel2.Visible = true;
         }
 
         private void selectMasa_Deactivate(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void OK_Click(object sender, EventArgs e)
         {
             try
@@ -68,10 +69,11 @@ namespace KEDI_v_0._5._0._1
                 using (KEDIDBEntities db = new KEDIDBEntities())
                 {
                     var result = (from masa in db.Masalars where masa.MasaID.Equals(selectedMasaButton.TabIndex) select masa).First();
-                    if (!String.IsNullOrEmpty(masaAdi.Text) && !String.IsNullOrEmpty(boyutX.Text) && !String.IsNullOrEmpty(boyutY.Text))
+                    if (!String.IsNullOrEmpty(masaAdi.Text))
                     {
                         result.MasaAdi = masaAdi.Text;
                         db.SaveChanges();
+                        MessageBox.Show(selectSalon.ActiveForm, "Başarıyla Kayıt Edildi", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
                     else

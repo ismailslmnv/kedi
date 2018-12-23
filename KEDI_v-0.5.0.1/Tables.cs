@@ -16,11 +16,13 @@ namespace KEDI_v_0._5._0._1
     {
         private List<Salonlar> salonLIST = new List<Salonlar>();
         private List<Masalar> masaLIST = new List<Masalar>();
-        private bool IsEditModeActive = false;
-        private Point[,] squares;
-        private int salonBoyutx, salonBoyuty;
-        private string walls;//   i-j i-j i-j formatinda
+        //^^^^^^^^^^^^Boyut Ayarlamalari icin
+        //private bool IsEditModeActive = false;
+        //private Point[,] squares;
+        //private int salonBoyutx, salonBoyuty;
+        //private string walls;//   i-j i-j i-j formatinda
         private bool IsSuperPozition = false;
+        private Control cDrag;
 
         public Tables()
         {
@@ -99,8 +101,8 @@ namespace KEDI_v_0._5._0._1
         {
             if (!IsSuperPozition)
             {
-                Control c = sender as Control;
-                c.DoDragDrop(c, DragDropEffects.Move);
+                cDrag = sender as Control;
+                cDrag.DoDragDrop(cDrag, DragDropEffects.Move);
             }
         }
 
@@ -113,38 +115,45 @@ namespace KEDI_v_0._5._0._1
                 this.tableDraggingPanel.Controls.Add(c);
             }
         }
-        private void TableObstacle(Control c)
-        {
-            foreach (Control table in tableDraggingPanel.Controls)
-            {
-                if (//Dört köşenin de girişinin kontrolü için yapılmıştır 
-                    c.Location.X > table.Location.X && c.Location.X < table.Location.X + table.Size.Width && c.Location.Y > table.Location.Y && c.Location.Y < table.Location.Y + table.Size.Height ||
-                    c.Location.X + c.Size.Width > table.Location.X && c.Location.X + c.Size.Width < table.Location.X + table.Size.Width && c.Location.Y > table.Location.Y && c.Location.Y < table.Location.Y + table.Size.Height ||
-                    c.Location.X + c.Size.Width > table.Location.X && c.Location.X + c.Size.Width < table.Location.X + table.Size.Width && c.Location.Y + c.Size.Height > table.Location.Y && c.Location.Y + c.Size.Height < table.Location.Y + table.Size.Height ||
-                    c.Location.X > table.Location.X && c.Location.X < table.Location.X + table.Size.Width && c.Location.Y + c.Size.Height > table.Location.Y && c.Location.Y + c.Size.Height < table.Location.Y + table.Size.Height
-                    )
-                {
-                    //MessageBox.Show(AddSalon.ActiveForm, "Bu Alanda başka bir masa bulunduğundan Yerleştirme işlemi gerçekleştirilemiyor.", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    IsSuperPozition = true;
-                }
-            }
-        }
-        private bool WallObstacle(Control c)
-        {
-            //Dokunulmadı
-            for (int i = 0; i < squares.GetLength(0); i++)
-            {
-                for (int j = 0; j < squares.GetLength(1); j++)
-                {
-                    if (squares[i, j].X + salonBoyutx + 1 > c.Location.X && squares[i, j].X < c.Location.X && squares[i, j].Y + salonBoyuty > c.Location.Y && squares[i, j].Y < c.Location.Y)
-                    {
-                        //MessageBox.Show(AddSalon.ActiveForm, "Duvar Bölgesine Masa Koyamazsınız", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
+
+
+        //^^^^^^^^^^^^Masların üst üste gelmesinin engellenmesinin kontrolu yaptırılıyordu buada
+
+        //private void TableObstacle(Control c)
+        //{
+        //    foreach (Control table in tableDraggingPanel.Controls)
+        //    {
+        //        if (//Dört köşenin de girişinin kontrolü için yapılmıştır 
+        //            c.Location.X > table.Location.X && c.Location.X < table.Location.X + table.Size.Width && c.Location.Y > table.Location.Y && c.Location.Y < table.Location.Y + table.Size.Height ||
+        //            c.Location.X + c.Size.Width > table.Location.X && c.Location.X + c.Size.Width < table.Location.X + table.Size.Width && c.Location.Y > table.Location.Y && c.Location.Y < table.Location.Y + table.Size.Height ||
+        //            c.Location.X + c.Size.Width > table.Location.X && c.Location.X + c.Size.Width < table.Location.X + table.Size.Width && c.Location.Y + c.Size.Height > table.Location.Y && c.Location.Y + c.Size.Height < table.Location.Y + table.Size.Height ||
+        //            c.Location.X > table.Location.X && c.Location.X < table.Location.X + table.Size.Width && c.Location.Y + c.Size.Height > table.Location.Y && c.Location.Y + c.Size.Height < table.Location.Y + table.Size.Height
+        //            )
+        //        {
+        //            //MessageBox.Show(AddSalon.ActiveForm, "Bu Alanda başka bir masa bulunduğundan Yerleştirme işlemi gerçekleştirilemiyor.", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //            IsSuperPozition = true;
+        //        }
+        //    }
+        //}
+
+        //^^^^^^^^^^^^Duvara Masa Denkgelmesinin engellenmesi için yapılmış bir fonksiyon
+
+        //private bool WallObstacle(Control c)
+        //{
+        //    //Dokunulmadı
+        //    for (int i = 0; i < squares.GetLength(0); i++)
+        //    {
+        //        for (int j = 0; j < squares.GetLength(1); j++)
+        //        {
+        //            if (squares[i, j].X + salonBoyutx + 1 > c.Location.X && squares[i, j].X < c.Location.X && squares[i, j].Y + salonBoyuty > c.Location.Y && squares[i, j].Y < c.Location.Y)
+        //            {
+        //                //MessageBox.Show(AddSalon.ActiveForm, "Duvar Bölgesine Masa Koyamazsınız", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //                return true;
+        //            }
+        //        }
+        //    }
+        //    return false;
+        //}
 
         private void tableDraggingPanel_DragOver(object sender, DragEventArgs e)
         {
@@ -291,30 +300,30 @@ namespace KEDI_v_0._5._0._1
             metroTile.UseSelectable = true;
             metroTile.MouseClick += new System.Windows.Forms.MouseEventHandler(MasaAltMenu_MouseClick);
         }
-        //Paneli Parcaliyor matris e atiyor
-        private void CreatePanelMatrix()
-        {
-            int satir = tableDraggingPanel.Size.Height / salonBoyuty, stun = tableDraggingPanel.Size.Width / salonBoyutx;
-            squares = new Point[satir, stun];
-            for (int i = 0; i < satir; i++)
-            {
-                for (int j = 0; j < stun; j++)
-                {
-                    squares[i,j] = new Point(j * (salonBoyutx), i * (salonBoyuty));
-                }
-            }
-        }
-        // kare kare bölüyor ekrani
-        private void makeSquare()
-        {
-            int x = tableDraggingPanel.Size.Height / salonBoyuty, y = tableDraggingPanel.Size.Width / salonBoyutx;
-            Graphics g = tableDraggingPanel.CreateGraphics();
-            Pen p = new Pen(Color.Black);
-            for (int i = 1; i <= x; i++)
-                g.DrawLine(p,0,i*(salonBoyuty),tableDraggingPanel.Size.Width, i *(salonBoyuty));
-            for (int i = 1; i <=  y; i++)
-                g.DrawLine(p, i * (salonBoyutx), 0, i * (salonBoyutx), tableDraggingPanel.Size.Height);
-        }
+        //^^^^^^^^^^^^Paneli Parcaliyor matris e atiyor
+        //private void CreatePanelMatrix()
+        //{
+        //    int satir = tableDraggingPanel.Size.Height / salonBoyuty, stun = tableDraggingPanel.Size.Width / salonBoyutx;
+        //    squares = new Point[satir, stun];
+        //    for (int i = 0; i < satir; i++)
+        //    {
+        //        for (int j = 0; j < stun; j++)
+        //        {
+        //            squares[i,j] = new Point(j * (salonBoyutx), i * (salonBoyuty));
+        //        }
+        //    }
+        //}
+        //^^^^^^^^^^^^kare kare bölüyor ekrani
+        //private void makeSquare()
+        //{
+        //    int x = tableDraggingPanel.Size.Height / salonBoyuty, y = tableDraggingPanel.Size.Width / salonBoyutx;
+        //    Graphics g = tableDraggingPanel.CreateGraphics();
+        //    Pen p = new Pen(Color.Black);
+        //    for (int i = 1; i <= x; i++)
+        //        g.DrawLine(p,0,i*(salonBoyuty),tableDraggingPanel.Size.Width, i *(salonBoyuty));
+        //    for (int i = 1; i <=  y; i++)
+        //        g.DrawLine(p, i * (salonBoyutx), 0, i * (salonBoyutx), tableDraggingPanel.Size.Height);
+        //}
 
         private void MasaAltMenu_MouseClick(object sender, MouseEventArgs e)
         {
@@ -328,24 +337,20 @@ namespace KEDI_v_0._5._0._1
 
             RemoveTableDraggingEvent();
             masaDuzenle.Visible = true;
-
-            foreach(Salonlar sal in this.salonLIST)
-            {
-                salonBoyutx = (sal.SalonID == tile.TabIndex) ? Convert.ToInt32(sal.BoyutX) : 0;
-                salonBoyuty = (sal.SalonID == tile.TabIndex) ? Convert.ToInt32(sal.BoyutY) : 0;
-                if (salonBoyutx != 0 && salonBoyuty != 0) break;
-            }
-
-            GetWallFromDB();
-            CreatePanelMatrix();
-            CreateWalls();//DB den alınan duvarları ekranda olduğu yere yazıyor
+            //^^^^^^^^^^^^her salonun ayrı olarak boyut bilgileri çekiliyor
+            //foreach(Salonlar sal in this.salonLIST)
+            //{
+            //    salonBoyutx = (sal.SalonID == tile.TabIndex) ? Convert.ToInt32(sal.BoyutX) : 0;
+            //    salonBoyuty = (sal.SalonID == tile.TabIndex) ? Convert.ToInt32(sal.BoyutY) : 0;
+            //    if (salonBoyutx != 0 && salonBoyuty != 0) break;
+            //}
         }
 
         private void MasaCreate(Masalar masalar)
         {
             Button masa = new Button();
             masa.Location = new System.Drawing.Point(Convert.ToInt32(masalar.KonumX), Convert.ToInt32(masalar.KonumY));
-            masa.Size = new System.Drawing.Size(Convert.ToInt32(masalar.BoyutX) + 10 , Convert.ToInt32(masalar.BoyutY) + 10);
+            masa.Size = new System.Drawing.Size(30 , 30);
             masa.TabIndex = masalar.MasaID;
             masa.Text = masalar.MasaAdi;
             masa.UseVisualStyleBackColor = true;
@@ -358,17 +363,10 @@ namespace KEDI_v_0._5._0._1
             foreach (Control c in this.tableDraggingPanel.Controls)
             {
                 c.MouseDown += new MouseEventHandler(tableDraggingPanel_MouseDown);
-                c.MouseMove += new MouseEventHandler(Table_MouseMove);
-                c.DragOver += new DragEventHandler(Table_DragOver);
                 c.Click -= new EventHandler(Masa_Click);
             }
             this.tableDraggingPanel.DragOver += new DragEventHandler(tableDraggingPanel_DragOver);
             this.tableDraggingPanel.DragDrop += new DragEventHandler(tableDraggingPanel_DragDrop);
-        }
-
-        private void screenGrapher(object sender,MouseEventArgs e)
-        {
-            makeSquare();
         }
 
         private void RemoveTableDraggingEvent()
@@ -401,9 +399,6 @@ namespace KEDI_v_0._5._0._1
             masaDuzenlemeModu.Visible = true;
             saveChanges.Visible = true;
             cancelChanges.Visible = true;
-            addWalls.Visible = true;
-            //Sadece Tıklama özelliği vererek bizlere masa düzenleme silme işlemleri yapmamızı sağlar
-            this.tableDraggingPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tableDraggingPanel_MouseClick);
         }
         private void Masa_Click(object sender, EventArgs e)
         {
@@ -417,10 +412,11 @@ namespace KEDI_v_0._5._0._1
         {
             getMasaFromDB(this.masaLIST.First().SalonID);
             this.tableDraggingPanel.Controls.Clear();
+
             foreach (Masalar mas in this.masaLIST)
                 MasaCreate(mas);
 
-           AddTableDraggingEvent();  
+           RemoveTableDraggingEvent();  
         }
 
         private void saveChanges_Click(object sender, EventArgs e)
@@ -428,19 +424,13 @@ namespace KEDI_v_0._5._0._1
             foreach (Button c in this.tableDraggingPanel.Controls)
                 TableSaveLocation(c);
 
-            SaveWalls();
             RemoveTableDraggingEvent();
-            tableDraggingPanel.BackColor = Color.White;
-            GetWallFromDB();
-            CreatePanelMatrix();
-            CreateWalls();
 
             add.Visible = true;
             masaDuzenle.Visible = true;
             masaDuzenlemeModu.Visible = false;
             saveChanges.Visible = false;
             cancelChanges.Visible = false;
-            addWalls.Visible = false;
             salonlarMenu.Enabled = true;
             masalarMenu.Enabled = true;
 
@@ -451,10 +441,6 @@ namespace KEDI_v_0._5._0._1
                 MasaCreate(mas);
 
             RemoveTableDraggingEvent();
-            foreach (Control c in this.tableDraggingPanel.Controls)
-                c.MouseMove -= new MouseEventHandler(screenGrapher);
-
-            this.tableDraggingPanel.MouseClick -= new System.Windows.Forms.MouseEventHandler(this.tableDraggingPanel_MouseClick);
         }
 
         //
@@ -463,7 +449,6 @@ namespace KEDI_v_0._5._0._1
             tableDraggingPanel.Controls.Clear();
             tableDraggingPanel.Invalidate();
             RemoveTableDraggingEvent();
-            CreateWalls();
             tableDraggingPanel.BackColor = Color.White;
 
             add.Visible = true;
@@ -471,7 +456,6 @@ namespace KEDI_v_0._5._0._1
             masaDuzenlemeModu.Visible = false;
             saveChanges.Visible = false;
             cancelChanges.Visible = false;
-            addWalls.Visible = false;
             salonlarMenu.Enabled = true;
             masalarMenu.Enabled = true;
 
@@ -482,99 +466,87 @@ namespace KEDI_v_0._5._0._1
                 MasaCreate(mas);
 
             RemoveTableDraggingEvent();
-            foreach (Control c in this.tableDraggingPanel.Controls)
-                c.MouseMove -= new MouseEventHandler(screenGrapher);
 
         }
 
-        //DB den çekılen strıng walls a aktarıldıktan sonra burada okunur ve boyanır
-        private void CreateWalls()
-        {
-            string tmp = "";
-            Graphics g = tableDraggingPanel.CreateGraphics();
-            for (int i = 0; i < walls.Length; i++)
-            {
-                if (walls[i] == ' ')
-                {
-                    g.FillRectangle(Brushes.Aqua, squares[Convert.ToInt32(tmp.Split('-')[0]), Convert.ToInt32(tmp.Split('-')[1])].X, squares[Convert.ToInt32(tmp.Split('-')[0]), Convert.ToInt32(tmp.Split('-')[1])].Y, salonBoyutx, salonBoyuty);
-                    tmp = "";
-                }
-                tmp += walls[i];
-            }
-        }
+        //^^^^^^^^^^^^DB den çekılen strıng walls a aktarıldıktan sonra burada okunur ve boyanır
+        //private void CreateWalls()
+        //{
+        //    string tmp = "";
+        //    Graphics g = tableDraggingPanel.CreateGraphics();
+        //    for (int i = 0; i < walls.Length; i++)
+        //    {
+        //        if (walls[i] == ' ')
+        //        {
+        //            g.FillRectangle(Brushes.Aqua, squares[Convert.ToInt32(tmp.Split('-')[0]), Convert.ToInt32(tmp.Split('-')[1])].X, squares[Convert.ToInt32(tmp.Split('-')[0]), Convert.ToInt32(tmp.Split('-')[1])].Y, salonBoyutx, salonBoyuty);
+        //            tmp = "";
+        //        }
+        //        tmp += walls[i];
+        //    }
+        //}
 
-        //Seçilen Duvarları walls değişkenini kaydeder
-        private void SaveWalls()
-        {
-            try
-            {
-                using (KEDIDBEntities context = new KEDIDBEntities())
-                {
-                    var result = (from salon in context.Salonlars where salon.SalonID.Equals(tableDraggingPanel.TabIndex) select salon).First();
-                    if (result != null)
-                    {
-                        result.Duvarlar = walls;
-                        context.SaveChanges();
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(AddSalon.ActiveForm, "Bir Hata Meydana Geldi Tekrar Deneyiniz", "HATA", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        //^^^^^^^^^^^^Seçilen Duvarları walls değişkenini kaydeder
+        //private void SaveWalls()
+        //{
+        //    try
+        //    {
+        //        using (KEDIDBEntities context = new KEDIDBEntities())
+        //        {
+        //            var result = (from salon in context.Salonlars where salon.SalonID.Equals(tableDraggingPanel.TabIndex) select salon).First();
+        //            if (result != null)
+        //            {
+        //                result.Duvarlar = walls;
+        //                context.SaveChanges();
+        //            }
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        MessageBox.Show(AddSalon.ActiveForm, "Bir Hata Meydana Geldi Tekrar Deneyiniz", "HATA", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
 
-        //Veri Tabanından İşaretlenmiş Duvarları Çeker
-        private void GetWallFromDB()
-        {
-            try
-            {
-                using (KEDIDBEntities context = new KEDIDBEntities())
-                {
-                    string result = context.Salonlars.Where(x => x.SalonID.Equals(tableDraggingPanel.TabIndex)).Select(x => x.Duvarlar).First();
-                    this.walls = result;
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(AddSalon.ActiveForm, "Bir Hata Meydana Geldi Tekrar Deneyiniz", "HATA", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        //^^^^^^^^^^^^Veri Tabanından İşaretlenmiş Duvarları Çeker
+        //private void GetWallFromDB()
+        //{
+        //    try
+        //    {
+        //        using (KEDIDBEntities context = new KEDIDBEntities())
+        //        {
+        //            string result = context.Salonlars.Where(x => x.SalonID.Equals(tableDraggingPanel.TabIndex)).Select(x => x.Duvarlar).First();
+        //            this.walls = result;
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        MessageBox.Show(AddSalon.ActiveForm, "Bir Hata Meydana Geldi Tekrar Deneyiniz", "HATA", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
 
-        //Duvar Ekle Butonu Tıklanırsa Ekranı parçalıyor
-        private void addWalls_Click(object sender, EventArgs e)
-        {
-            makeSquare();
+        //^^^^^^^^^^^^Duvar Ekle Butonu Tıklanırsa Ekranı parçalıyor
+        //private void addWalls_Click(object sender, EventArgs e)
+        //{
+        //    makeSquare();
 
-            foreach (Control c in this.tableDraggingPanel.Controls)
-                c.MouseMove += new MouseEventHandler(screenGrapher);
-        }
+        //    foreach (Control c in this.tableDraggingPanel.Controls)
+        //        c.MouseMove += new MouseEventHandler(screenGrapher);
+        //}
 
-        private void Table_MouseMove(object sender, MouseEventArgs e)
-        {
-            TableObstacle(sender as Control);
-        }
-        private void Table_DragOver(object sender, DragEventArgs e)
-        {
-            Control c = sender as Control;
-            MessageBox.Show(e.X.ToString());
-        }
-
-        // Basilan Kareyi Boyuyor
-        private void tableDraggingPanel_MouseClick(object sender, MouseEventArgs e)
-        {
-            Graphics g = tableDraggingPanel.CreateGraphics();
-            for (int i = 0; i < squares.GetLength(0); i++)
-            {
-                for (int j = 0; j < squares.GetLength(1); j++)
-                {
-                    if (squares[i, j].X + salonBoyutx + 1 > e.Location.X && squares[i, j].X < e.Location.X && squares[i, j].Y + salonBoyuty > e.Location.Y && squares[i, j].Y < e.Location.Y)
-                    {
-                        g.FillRectangle(Brushes.Aqua, squares[i, j].X, squares[i, j].Y, salonBoyutx, salonBoyuty);
-                        walls += i.ToString() + "-" + j.ToString() + " ";
-                    }
-                }
-            }
-        }
+        //// Basilan Kareyi Boyuyor
+        //private void tableDraggingPanel_MouseClick(object sender, MouseEventArgs e)
+        //{
+        //    Graphics g = tableDraggingPanel.CreateGraphics();
+        //    for (int i = 0; i < squares.GetLength(0); i++)
+        //    {
+        //        for (int j = 0; j < squares.GetLength(1); j++)
+        //        {
+        //            if (squares[i, j].X + salonBoyutx + 1 > e.Location.X && squares[i, j].X < e.Location.X && squares[i, j].Y + salonBoyuty > e.Location.Y && squares[i, j].Y < e.Location.Y)
+        //            {
+        //                g.FillRectangle(Brushes.Aqua, squares[i, j].X, squares[i, j].Y, salonBoyutx, salonBoyuty);
+        //                walls += i.ToString() + "-" + j.ToString() + " ";
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
