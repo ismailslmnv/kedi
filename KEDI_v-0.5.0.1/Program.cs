@@ -16,11 +16,7 @@ namespace KEDI_v_0._5._0._1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-<<<<<<< HEAD
-            Application.Run(new Order());
-=======
-            Application.Run(new Tables());
->>>>>>> 2a0c0cb3c47300740c9ba57612dba09ed5eced7c
+            Application.Run(new Login());            
         }
     }
 }

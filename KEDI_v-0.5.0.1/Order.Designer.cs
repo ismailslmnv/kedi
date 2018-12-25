@@ -63,6 +63,10 @@
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.username = new MetroFramework.Controls.MetroTile();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
+            this.confirm = new MetroFramework.Controls.MetroTile();
+            this.metroPanel15 = new MetroFramework.Controls.MetroPanel();
+            this.payment = new MetroFramework.Controls.MetroTile();
+            this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
             this.divide = new MetroFramework.Controls.MetroTile();
             this.metroPanel6 = new MetroFramework.Controls.MetroPanel();
             this.metroPanel14 = new MetroFramework.Controls.MetroPanel();
@@ -77,10 +81,7 @@
             this.save = new MetroFramework.Controls.MetroTile();
             this.buttonsPanel = new MetroFramework.Controls.MetroPanel();
             this.OrderPrinter = new System.Drawing.Printing.PrintDocument();
-            this.payment = new MetroFramework.Controls.MetroTile();
-            this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
-            this.confirm = new MetroFramework.Controls.MetroTile();
-            this.metroPanel15 = new MetroFramework.Controls.MetroPanel();
+            this.fullback = new MetroFramework.Controls.MetroTile();
             this.mainPanel.SuspendLayout();
             this.UrunPanel.SuspendLayout();
             this.MenuPanel.SuspendLayout();
@@ -574,7 +575,6 @@
             this.username.TabIndex = 2;
             this.username.Text = "Kullanıcı Adı";
             this.username.UseSelectable = true;
-            this.username.Visible = false;
             // 
             // metroPanel1
             // 
@@ -605,6 +605,69 @@
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
+            // 
+            // confirm
+            // 
+            this.confirm.ActiveControl = null;
+            this.confirm.Dock = System.Windows.Forms.DockStyle.Right;
+            this.confirm.Location = new System.Drawing.Point(575, 0);
+            this.confirm.Name = "confirm";
+            this.confirm.Size = new System.Drawing.Size(75, 39);
+            this.confirm.Style = MetroFramework.MetroColorStyle.Green;
+            this.confirm.TabIndex = 35;
+            this.confirm.Text = "Onayla";
+            this.confirm.UseSelectable = true;
+            this.confirm.UseStyleColors = true;
+            this.confirm.Visible = false;
+            this.confirm.Click += new System.EventHandler(this.confirm_Click);
+            // 
+            // metroPanel15
+            // 
+            this.metroPanel15.Dock = System.Windows.Forms.DockStyle.Right;
+            this.metroPanel15.HorizontalScrollbarBarColor = true;
+            this.metroPanel15.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel15.HorizontalScrollbarSize = 10;
+            this.metroPanel15.Location = new System.Drawing.Point(650, 0);
+            this.metroPanel15.Name = "metroPanel15";
+            this.metroPanel15.Size = new System.Drawing.Size(10, 39);
+            this.metroPanel15.TabIndex = 34;
+            this.metroPanel15.VerticalScrollbarBarColor = true;
+            this.metroPanel15.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel15.VerticalScrollbarSize = 10;
+            // 
+            // payment
+            // 
+            this.payment.ActiveControl = null;
+            this.payment.AutoSize = true;
+            this.payment.Dock = System.Windows.Forms.DockStyle.Left;
+            this.payment.Enabled = false;
+            this.payment.Location = new System.Drawing.Point(521, 0);
+            this.payment.Name = "payment";
+            this.payment.Size = new System.Drawing.Size(75, 39);
+            this.payment.Style = MetroFramework.MetroColorStyle.Orange;
+            this.payment.TabIndex = 33;
+            this.payment.Text = "Hesap Al";
+            this.payment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.payment.UseSelectable = true;
+            this.payment.Click += new System.EventHandler(this.payment_Click);
+            // 
+            // metroPanel3
+            // 
+            this.metroPanel3.AutoScroll = true;
+            this.metroPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.metroPanel3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.metroPanel3.HorizontalScrollbar = true;
+            this.metroPanel3.HorizontalScrollbarBarColor = true;
+            this.metroPanel3.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel3.HorizontalScrollbarSize = 10;
+            this.metroPanel3.Location = new System.Drawing.Point(511, 0);
+            this.metroPanel3.Name = "metroPanel3";
+            this.metroPanel3.Size = new System.Drawing.Size(10, 39);
+            this.metroPanel3.TabIndex = 32;
+            this.metroPanel3.VerticalScrollbar = true;
+            this.metroPanel3.VerticalScrollbarBarColor = false;
+            this.metroPanel3.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel3.VerticalScrollbarSize = 10;
             // 
             // divide
             // 
@@ -675,6 +738,7 @@
             this.combine.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
             this.combine.UseSelectable = true;
             this.combine.UseStyleColors = true;
+            this.combine.Click += new System.EventHandler(this.combine_Click);
             // 
             // metroPanel5
             // 
@@ -708,6 +772,7 @@
             this.move.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.move.UseSelectable = true;
             this.move.UseStyleColors = true;
+            this.move.Click += new System.EventHandler(this.move_Click);
             // 
             // metroPanel4
             // 
@@ -840,68 +905,20 @@
             this.OrderPrinter.OriginAtMargins = true;
             this.OrderPrinter.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.OrderPrinter_PrintPage);
             // 
-            // payment
+            // fullback
             // 
-            this.payment.ActiveControl = null;
-            this.payment.AutoSize = true;
-            this.payment.Dock = System.Windows.Forms.DockStyle.Left;
-            this.payment.Enabled = false;
-            this.payment.Location = new System.Drawing.Point(521, 0);
-            this.payment.Name = "payment";
-            this.payment.Size = new System.Drawing.Size(75, 39);
-            this.payment.Style = MetroFramework.MetroColorStyle.Orange;
-            this.payment.TabIndex = 33;
-            this.payment.Text = "Hesap Al";
-            this.payment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.payment.UseSelectable = true;
-            this.payment.Click += new System.EventHandler(this.payment_Click);
-            // 
-            // metroPanel3
-            // 
-            this.metroPanel3.AutoScroll = true;
-            this.metroPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.metroPanel3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.metroPanel3.HorizontalScrollbar = true;
-            this.metroPanel3.HorizontalScrollbarBarColor = true;
-            this.metroPanel3.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel3.HorizontalScrollbarSize = 10;
-            this.metroPanel3.Location = new System.Drawing.Point(511, 0);
-            this.metroPanel3.Name = "metroPanel3";
-            this.metroPanel3.Size = new System.Drawing.Size(10, 39);
-            this.metroPanel3.TabIndex = 32;
-            this.metroPanel3.VerticalScrollbar = true;
-            this.metroPanel3.VerticalScrollbarBarColor = false;
-            this.metroPanel3.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel3.VerticalScrollbarSize = 10;
-            // 
-            // confirm
-            // 
-            this.confirm.ActiveControl = null;
-            this.confirm.Dock = System.Windows.Forms.DockStyle.Right;
-            this.confirm.Location = new System.Drawing.Point(575, 0);
-            this.confirm.Name = "confirm";
-            this.confirm.Size = new System.Drawing.Size(75, 39);
-            this.confirm.Style = MetroFramework.MetroColorStyle.Green;
-            this.confirm.TabIndex = 35;
-            this.confirm.Text = "Onayla";
-            this.confirm.UseSelectable = true;
-            this.confirm.UseStyleColors = true;
-            this.confirm.Visible = false;
-            this.confirm.Click += new System.EventHandler(this.confirm_Click);
-            // 
-            // metroPanel15
-            // 
-            this.metroPanel15.Dock = System.Windows.Forms.DockStyle.Right;
-            this.metroPanel15.HorizontalScrollbarBarColor = true;
-            this.metroPanel15.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel15.HorizontalScrollbarSize = 10;
-            this.metroPanel15.Location = new System.Drawing.Point(650, 0);
-            this.metroPanel15.Name = "metroPanel15";
-            this.metroPanel15.Size = new System.Drawing.Size(10, 39);
-            this.metroPanel15.TabIndex = 34;
-            this.metroPanel15.VerticalScrollbarBarColor = true;
-            this.metroPanel15.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel15.VerticalScrollbarSize = 10;
+            this.fullback.ActiveControl = null;
+            this.fullback.Location = new System.Drawing.Point(-1, -11);
+            this.fullback.Name = "fullback";
+            this.fullback.Size = new System.Drawing.Size(54, 37);
+            this.fullback.Style = MetroFramework.MetroColorStyle.Magenta;
+            this.fullback.TabIndex = 4;
+            this.fullback.Text = "Kapat";
+            this.fullback.TileImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.fullback.TileTextFontSize = MetroFramework.MetroTileTextSize.Small;
+            this.fullback.UseSelectable = true;
+            this.fullback.UseStyleColors = true;
+            this.fullback.Click += new System.EventHandler(this.fullback_Click);
             // 
             // Order
             // 
@@ -910,6 +927,7 @@
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
+            this.Controls.Add(this.fullback);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.metroToggle1);
             this.Controls.Add(this.mainPanel);
@@ -1002,5 +1020,6 @@
         private MetroFramework.Controls.MetroPanel metroPanel15;
         private MetroFramework.Controls.MetroTile payment;
         private MetroFramework.Controls.MetroPanel metroPanel3;
+        private MetroFramework.Controls.MetroTile fullback;
     }
 }
