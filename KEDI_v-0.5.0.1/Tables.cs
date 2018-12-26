@@ -21,8 +21,6 @@ namespace KEDI_v_0._5._0._1
         //private Point[,] squares;
         //private int salonBoyutx, salonBoyuty;
         //private string walls;//   i-j i-j i-j formatinda
-        private bool IsSuperPozition = false;
-        private Control cDrag;
 
         public Tables()
         {
@@ -34,8 +32,7 @@ namespace KEDI_v_0._5._0._1
             getSalonFromDB();
             
             salonPanel.Visible = true;
-            tableDraggingPanel.Visible = false;
-            masaDuzenle.Visible = false;
+            urunTABLE.Visible = false;
         }
         
 
@@ -69,12 +66,12 @@ namespace KEDI_v_0._5._0._1
         //Masa veya Salon Ekleme butonu işlemleri
         private void add_Click(object sender, EventArgs e)
         {
-            if (tableDraggingPanel.Visible == false)
+            if (urunTABLE.Visible == false)
             {
                 AddSalon addsalon = new AddSalon();
                 addsalon.ShowDialog();
             }
-            if (tableDraggingPanel.Visible == true)
+            if (urunTABLE.Visible == true)
             {
                 AddTable addtable = new AddTable();
                 addtable.ShowDialog();
@@ -96,25 +93,25 @@ namespace KEDI_v_0._5._0._1
             _thisClose();
         }
 
+        // Surukleme islemleri icin
+        //private void tableDraggingPanel_MouseDown(object sender, MouseEventArgs e)
+        //{
+        //    if (!IsSuperPozition)
+        //    {
+        //        cDrag = sender as Control;
+        //        cDrag.DoDragDrop(cDrag, DragDropEffects.Move);
+        //    }
+        //}
 
-        private void tableDraggingPanel_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (!IsSuperPozition)
-            {
-                cDrag = sender as Control;
-                cDrag.DoDragDrop(cDrag, DragDropEffects.Move);
-            }
-        }
-
-        private void tableDraggingPanel_DragDrop(object sender, DragEventArgs e)
-        {
-            Control c = e.Data.GetData(e.Data.GetFormats()[0]) as Control;
-            if (c != null && !IsSuperPozition)
-            {
-                c.Location = this.tableDraggingPanel.PointToClient(new Point(e.X, e.Y));
-                this.tableDraggingPanel.Controls.Add(c);
-            }
-        }
+        //private void tableDraggingPanel_DragDrop(object sender, DragEventArgs e)
+        //{
+        //    Control c = e.Data.GetData(e.Data.GetFormats()[0]) as Control;
+        //    if (c != null && !IsSuperPozition)
+        //    {
+        //        c.Location = this.tableDraggingPanel.PointToClient(new Point(e.X, e.Y));
+        //        this.tableDraggingPanel.Controls.Add(c);
+        //    }
+        //}
 
 
         //^^^^^^^^^^^^Masların üst üste gelmesinin engellenmesinin kontrolu yaptırılıyordu buada
@@ -155,13 +152,13 @@ namespace KEDI_v_0._5._0._1
         //    return false;
         //}
 
-        private void tableDraggingPanel_DragOver(object sender, DragEventArgs e)
-        {
-            if (!IsSuperPozition)
-            {
-                e.Effect = DragDropEffects.Move;
-            }
-        }
+        //private void tableDraggingPanel_DragOver(object sender, DragEventArgs e)
+        //{
+        //    if (!IsSuperPozition)
+        //    {
+        //        e.Effect = DragDropEffects.Move;
+        //    }
+        //}
 
         //Kaydet Butonuna Basıldıktan Sonra Tüm masalar Kaydolur
         private void TableSaveLocation(Control sender)
@@ -195,9 +192,8 @@ namespace KEDI_v_0._5._0._1
         {
             add.Text = "Salon Ekle";
             salonPanel.Visible = true;
-            tableDraggingPanel.Visible = false;
+            urunTABLE.Visible = false;
             MasaAltMenu.Visible = false;
-            masaDuzenle.Visible = false;
 
             getSalonFromDB();
             this.salonPanel.Controls.Clear();//Onceki olusanlari Yok Etmek Icin
@@ -269,7 +265,7 @@ namespace KEDI_v_0._5._0._1
         private void masalarMenu_Click(object sender, EventArgs e)
         {
             add.Text = "Masa Ekle";
-            tableDraggingPanel.Visible = true;
+            urunTABLE.Visible = true;
             salonPanel.Visible = false;
             MasaAltMenu.Visible = true;
             MasaAltMenuOlustur();
@@ -325,18 +321,18 @@ namespace KEDI_v_0._5._0._1
         //        g.DrawLine(p, i * (salonBoyutx), 0, i * (salonBoyutx), tableDraggingPanel.Size.Height);
         //}
 
+
+
         private void MasaAltMenu_MouseClick(object sender, MouseEventArgs e)
         {
-            tableDraggingPanel.Controls.Clear();
+            urunTABLE.Controls.Clear();
             MetroTile tile = sender as MetroTile;
-            tableDraggingPanel.TabIndex = tile.TabIndex;//Hangi Salon Aktif Ise onun Indexsini tutmasi gerekiyor
+            urunTABLE.TabIndex = tile.TabIndex;//Hangi Salon Aktif Ise onun Indexsini tutmasi gerekiyor
             getMasaFromDB(tile.TabIndex);
 
-            foreach (Masalar mas in this.masaLIST)
-                MasaCreate(mas);
-
-            RemoveTableDraggingEvent();
-            masaDuzenle.Visible = true;
+            foreach (Masalar masa in masaLIST)
+                tileCreator(masa);
+            
             //^^^^^^^^^^^^her salonun ayrı olarak boyut bilgileri çekiliyor
             //foreach(Salonlar sal in this.salonLIST)
             //{
@@ -346,39 +342,39 @@ namespace KEDI_v_0._5._0._1
             //}
         }
 
-        private void MasaCreate(Masalar masalar)
-        {
-            Button masa = new Button();
-            masa.Location = new System.Drawing.Point(Convert.ToInt32(masalar.KonumX), Convert.ToInt32(masalar.KonumY));
-            masa.Size = new System.Drawing.Size(30 , 30);
-            masa.TabIndex = masalar.MasaID;
-            masa.Text = masalar.MasaAdi;
-            masa.UseVisualStyleBackColor = true;
-            this.tableDraggingPanel.Controls.Add(masa);
-        }
+        //private void MasaCreate(Masalar masalar)
+        //{
+        //    Button masa = new Button();
+        //    masa.Location = new System.Drawing.Point(Convert.ToInt32(masalar.KonumX), Convert.ToInt32(masalar.KonumY));
+        //    masa.Size = new System.Drawing.Size(30 , 30);
+        //    masa.TabIndex = masalar.MasaID;
+        //    masa.Text = masalar.MasaAdi;
+        //    masa.UseVisualStyleBackColor = true;
+        //    this.tableDraggingPanel.Controls.Add(masa);
+        //}
+        //Surukleme ekleme cikarma islemleri
+        //private void AddTableDraggingEvent()
+        //{
+        //    this.tableDraggingPanel.AllowDrop = true;
+        //    foreach (Control c in this.tableDraggingPanel.Controls)
+        //    {
+        //        c.MouseDown += new MouseEventHandler(tableDraggingPanel_MouseDown);
+        //        c.Click -= new EventHandler(Masa_Click);
+        //    }
+        //    this.tableDraggingPanel.DragOver += new DragEventHandler(tableDraggingPanel_DragOver);
+        //    this.tableDraggingPanel.DragDrop += new DragEventHandler(tableDraggingPanel_DragDrop);
+        //}
 
-        private void AddTableDraggingEvent()
-        {
-            this.tableDraggingPanel.AllowDrop = true;
-            foreach (Control c in this.tableDraggingPanel.Controls)
-            {
-                c.MouseDown += new MouseEventHandler(tableDraggingPanel_MouseDown);
-                c.Click -= new EventHandler(Masa_Click);
-            }
-            this.tableDraggingPanel.DragOver += new DragEventHandler(tableDraggingPanel_DragOver);
-            this.tableDraggingPanel.DragDrop += new DragEventHandler(tableDraggingPanel_DragDrop);
-        }
-
-        private void RemoveTableDraggingEvent()
-        {
-            this.tableDraggingPanel.DragOver -= new DragEventHandler(tableDraggingPanel_DragOver);
-            this.tableDraggingPanel.DragDrop -= new DragEventHandler(tableDraggingPanel_DragDrop);
-            foreach (Control c in this.tableDraggingPanel.Controls)
-            {
-                c.MouseDown -= new MouseEventHandler(tableDraggingPanel_MouseDown);
-                c.Click += new EventHandler(Masa_Click);
-            }
-        }
+        //private void RemoveTableDraggingEvent()
+        //{
+        //    this.tableDraggingPanel.DragOver -= new DragEventHandler(tableDraggingPanel_DragOver);
+        //    this.tableDraggingPanel.DragDrop -= new DragEventHandler(tableDraggingPanel_DragDrop);
+        //    foreach (Control c in this.tableDraggingPanel.Controls)
+        //    {
+        //        c.MouseDown -= new MouseEventHandler(tableDraggingPanel_MouseDown);
+        //        c.Click += new EventHandler(Masa_Click);
+        //    }
+        //}
 
         private void exit_Click(object sender, EventArgs e)
         {
@@ -387,18 +383,12 @@ namespace KEDI_v_0._5._0._1
 
         private void masaDuzenle_Click(object sender, EventArgs e)
         {
-            AddTableDraggingEvent();
-            masaDuzenlemeModu.Text = "Salon Düzenleme Modu Aktif";
             masalarMenu.Enabled = false;
             salonlarMenu.Enabled = false;
             foreach (Control c in MasaAltMenu.Controls)
                 c.Enabled = false;
 
             add.Visible = false;
-            masaDuzenle.Visible = false;
-            masaDuzenlemeModu.Visible = true;
-            saveChanges.Visible = true;
-            cancelChanges.Visible = true;
         }
         private void Masa_Click(object sender, EventArgs e)
         {
@@ -411,26 +401,20 @@ namespace KEDI_v_0._5._0._1
         private void SelectMasa_Closing(object sender, EventArgs e)
         {
             getMasaFromDB(this.masaLIST.First().SalonID);
-            this.tableDraggingPanel.Controls.Clear();
+            this.urunTABLE.Controls.Clear();
 
             foreach (Masalar mas in this.masaLIST)
-                MasaCreate(mas);
-
-           RemoveTableDraggingEvent();  
+                tileCreator(mas);
+            
         }
 
         private void saveChanges_Click(object sender, EventArgs e)
         {
-            foreach (Button c in this.tableDraggingPanel.Controls)
+            foreach (Button c in this.urunTABLE.Controls)
                 TableSaveLocation(c);
-
-            RemoveTableDraggingEvent();
+            
 
             add.Visible = true;
-            masaDuzenle.Visible = true;
-            masaDuzenlemeModu.Visible = false;
-            saveChanges.Visible = false;
-            cancelChanges.Visible = false;
             salonlarMenu.Enabled = true;
             masalarMenu.Enabled = true;
 
@@ -438,24 +422,35 @@ namespace KEDI_v_0._5._0._1
                 c.Enabled = true;
 
             foreach (Masalar mas in this.masaLIST)
-                MasaCreate(mas);
-
-            RemoveTableDraggingEvent();
+                tileCreator(mas);
+            
         }
 
-        //
+        
+        private void tileCreator(Masalar masa)//Type -- 1=Salon 2=Masa 3=Menu 4=Urun 5=SubProd
+        {
+            MetroTile _tile = new MetroTile();
+            _tile.Dock = System.Windows.Forms.DockStyle.Left;
+            _tile.Location = new System.Drawing.Point(100, 10);
+            _tile.Name = masa.MasaID.ToString();
+            _tile.Size = new System.Drawing.Size(100, 60);
+            _tile.Style = MetroFramework.MetroColorStyle.Teal;
+            _tile.Text = masa.MasaAdi;
+            _tile.TabIndex = masa.MasaID;
+            _tile.TextAlign = ContentAlignment.MiddleCenter;
+            _tile.TileTextFontSize = MetroTileTextSize.Small;
+            _tile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
+            _tile.UseSelectable = true;
+            _tile.Click += Masa_Click;
+            urunTABLE.Controls.Add(_tile);
+        }
         private void cancelChanges_Click(object sender, EventArgs e)
         {
-            tableDraggingPanel.Controls.Clear();
-            tableDraggingPanel.Invalidate();
-            RemoveTableDraggingEvent();
-            tableDraggingPanel.BackColor = Color.White;
+            urunTABLE.Controls.Clear();
+            urunTABLE.Invalidate();
+            urunTABLE.BackColor = Color.White;
 
             add.Visible = true;
-            masaDuzenle.Visible = true;
-            masaDuzenlemeModu.Visible = false;
-            saveChanges.Visible = false;
-            cancelChanges.Visible = false;
             salonlarMenu.Enabled = true;
             masalarMenu.Enabled = true;
 
@@ -463,9 +458,8 @@ namespace KEDI_v_0._5._0._1
                 c.Enabled = true;
 
             foreach (Masalar mas in this.masaLIST)
-                MasaCreate(mas);
-
-            RemoveTableDraggingEvent();
+                tileCreator(mas);
+            
 
         }
 
