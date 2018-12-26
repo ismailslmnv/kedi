@@ -28,6 +28,7 @@
         <AssociationConnector Association="ModelKediDB.FK_Indirimler_Urunler" />
         <EntityTypeShape EntityType="ModelKediDB.OdemeYontemi" Width="1.5" PointX="7.375" PointY="0.875" />
         <EntityTypeShape EntityType="ModelKediDB.Printer" Width="1.5" PointX="7.375" PointY="3.75" />
+        <AssociationConnector Association="ModelKediDB.FK_Odemes_OdemeYontemi" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

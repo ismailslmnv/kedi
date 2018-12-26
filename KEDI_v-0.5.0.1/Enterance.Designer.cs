@@ -192,6 +192,7 @@
             this.rapor.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
             this.rapor.UseSelectable = true;
             this.rapor.UseTileImage = true;
+            this.rapor.Click += new System.EventHandler(this.rapor_Click);
             // 
             // personel
             // 

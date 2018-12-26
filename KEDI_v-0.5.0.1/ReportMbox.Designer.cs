@@ -30,8 +30,8 @@
         {
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.YES = new MetroFramework.Controls.MetroTile();
             this.NO = new MetroFramework.Controls.MetroTile();
+            this.YES = new MetroFramework.Controls.MetroTile();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,20 +56,6 @@
             this.panel1.Size = new System.Drawing.Size(460, 84);
             this.panel1.TabIndex = 1;
             // 
-            // YES
-            // 
-            this.YES.ActiveControl = null;
-            this.YES.Dock = System.Windows.Forms.DockStyle.Left;
-            this.YES.Location = new System.Drawing.Point(0, 10);
-            this.YES.Name = "YES";
-            this.YES.Size = new System.Drawing.Size(227, 74);
-            this.YES.Style = MetroFramework.MetroColorStyle.Green;
-            this.YES.TabIndex = 0;
-            this.YES.Text = "Basit";
-            this.YES.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.YES.UseSelectable = true;
-            this.YES.UseStyleColors = true;
-            // 
             // NO
             // 
             this.NO.ActiveControl = null;
@@ -83,6 +69,22 @@
             this.NO.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.NO.UseSelectable = true;
             this.NO.UseStyleColors = true;
+            this.NO.Click += new System.EventHandler(this.NO_Click);
+            // 
+            // YES
+            // 
+            this.YES.ActiveControl = null;
+            this.YES.Dock = System.Windows.Forms.DockStyle.Left;
+            this.YES.Location = new System.Drawing.Point(0, 10);
+            this.YES.Name = "YES";
+            this.YES.Size = new System.Drawing.Size(227, 74);
+            this.YES.Style = MetroFramework.MetroColorStyle.Green;
+            this.YES.TabIndex = 0;
+            this.YES.Text = "Basit";
+            this.YES.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.YES.UseSelectable = true;
+            this.YES.UseStyleColors = true;
+            this.YES.Click += new System.EventHandler(this.YES_Click);
             // 
             // ReportMbox
             // 
@@ -93,7 +95,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.metroLabel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ReportMbox";

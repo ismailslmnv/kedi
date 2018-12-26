@@ -187,5 +187,11 @@ namespace KEDI_v_0._5._0._1
         {
 
         }
+
+        private void rapor_Click(object sender, EventArgs e)
+        {
+            Report report = new Report();
+            report.Show();
+        }
     }
 }

@@ -95,7 +95,7 @@ namespace KEDI_v_0._5._0._1
                 int urunID = getUrunID(urunList.Items[i].Text);
                 if (urunID!=-1)
                 {
-                    DbSaver(urunID, Convert.ToInt32(urunList.Items[i].SubItems[1].Text));                                        
+                    DbSaver(urunID, Convert.ToDecimal(urunList.Items[i].SubItems[1].Text));                                        
                 }                
             }
             if (oldProds!=urunList.Items.Count)
@@ -214,7 +214,7 @@ namespace KEDI_v_0._5._0._1
             }
             return string.Empty;
         }
-        private void DbSaver(int urunID, int count)
+        private void DbSaver(int urunID, decimal count)
         {
             try
             {
@@ -980,7 +980,7 @@ namespace KEDI_v_0._5._0._1
                                                     }).FirstOrDefault();
                                     if (__result != null)
                                     {
-                                        _countPrice += ((double)__result.Fiyat) * item.UrunSayi;
+                                        _countPrice += ((double)__result.Fiyat) *(double) item.UrunSayi;
                                         List<string> prod = new List<string>();
                                         if (__result.AltOzellik == true)
                                         {
@@ -989,7 +989,7 @@ namespace KEDI_v_0._5._0._1
                                         else
                                             prod.Add(__result.UrunAdi);
                                         prod.Add(item.UrunSayi.ToString());
-                                        prod.Add((((double)__result.Fiyat) * item.UrunSayi).ToString());
+                                        prod.Add((((double)__result.Fiyat) * (double)item.UrunSayi).ToString());
                                         _productToShow.Add(prod);
                                     }
                                     AdisyonName.Text = item.SiparisAdi;
@@ -1252,8 +1252,8 @@ namespace KEDI_v_0._5._0._1
                     }
                     _line = item.UrunSayi.ToString();
                     graphics.DrawString(_line, font, new SolidBrush(Color.Black), new RectangleF(startX, startY + offset, 200, 0), drawFormatRight);
-                    fullPrice += (Convert.ToDouble(vs[1]) * item.UrunSayi);
-                    _line = (Convert.ToDouble(vs[1]) * item.UrunSayi).ToString();
+                    fullPrice += (Convert.ToDouble(vs[1]) * (double)item.UrunSayi);
+                    _line = (Convert.ToDouble(vs[1]) * (double)item.UrunSayi).ToString();
                     graphics.DrawString(_line, bold, new SolidBrush(Color.Black), new RectangleF(startX, startY + offset, 270, 0), drawFormatRight);
 
                     offset += 5 + (int)fontHeight; 
