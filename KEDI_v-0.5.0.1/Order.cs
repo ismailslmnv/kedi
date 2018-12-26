@@ -16,7 +16,7 @@ namespace KEDI_v_0._5._0._1
 {
     public partial class Order : MetroForm
     {
-        public static int PersonalID=3;
+        public static int PersonalID;
         public static int persCount;
         private double _countPrice=0.0;
         List<Salonlar> _salon = new List<Salonlar>();
@@ -33,13 +33,61 @@ namespace KEDI_v_0._5._0._1
         int selectedMenuID = 0;
         int selectedPaymentMethod = 0;
         bool printClicked = false;
+        bool moveClicked = false;
+        bool sourceSelected = false;
+        bool destinationSelected = false;
+        int sourceTable = 0;
+        bool combineClicked = false;
         string selectedTableName = String.Empty;
         public Order()
         {
             InitializeComponent();
+            move.Enabled = false;
+            combine.Enabled = false;
+            UserActivater();
             salonLoader();                        
         }
-
+        private void UserActivater()
+        {
+            try
+            {
+                using (KEDIDBEntities context = new KEDIDBEntities())
+                {
+                    var result = (from user in context.Personels
+                                  where user.KullaniciID == PersonalID
+                                  select user).FirstOrDefault();
+                    if (result != null)
+                    {
+                        var yetkiAdi = (from yetki in context.Yetkilers
+                                        where yetki.YetkiID == result.YetkiID
+                                        select yetki).FirstOrDefault();
+                        if (yetkiAdi!=null)
+                        {
+                            username.Text = result.KullaniciAdi + " - " + yetkiAdi.YetkiAdi;
+                            PermissionController(yetkiAdi);
+                        }
+                        else
+                        {                            
+                            throw new Exception();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Veritabanında Kullanıcı Bilgilerine Ulaşılamadı - Enterance 102");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private void PermissionController(Yetkiler yetki)
+        {
+            move.Visible = yetki.MasaTasima;
+            combine.Visible = yetki.MasaBirlestirme;
+            payment.Visible = yetki.HesapAlma & yetki.HesapIptal;
+        }
         private void save_Click(object sender, EventArgs e)
         {
             for (int i = oldProds; i < urunList.Items.Count; i++)
@@ -47,7 +95,7 @@ namespace KEDI_v_0._5._0._1
                 int urunID = getUrunID(urunList.Items[i].Text);
                 if (urunID!=-1)
                 {
-                    DbSaver(urunID, Convert.ToInt32(urunList.Items[i].SubItems[1].Text));                                        
+                    DbSaver(urunID, Convert.ToDecimal(urunList.Items[i].SubItems[1].Text));                                        
                 }                
             }
             if (oldProds!=urunList.Items.Count)
@@ -67,7 +115,7 @@ namespace KEDI_v_0._5._0._1
            // DialogResult res = dialog.ShowDialog();
 
             PrinterSettings ps = new PrinterSettings();
-            ps.PrinterName = "Microsoft Print To PDF";
+            ps.PrinterName = "KediPosYazici1";
             //ps.PrintToFile = true;
             print.PrinterSettings = ps;
 
@@ -80,12 +128,12 @@ namespace KEDI_v_0._5._0._1
         private void newOrderDocument(object sender, PrintPageEventArgs e)
         {
             Graphics graphics = e.Graphics;
-            Font font = new Font("Arial", 12);
+            Font font = new Font("Arial", 10);
             float fontHeight = font.Height;
             int startX = 10;
             int startY = 10;
             int offset = 30;
-            graphics.DrawString("NANA Cafe & Restaurant", new Font("Arial", 20), new SolidBrush(Color.Green), startX, startY);
+            graphics.DrawString("NANA Cafe & Restaurant", new Font("Arial", 15), new SolidBrush(Color.Green), startX, startY);
 
             string _top = "Masa:" + pickTable();
             graphics.DrawString(_top, font, new SolidBrush(Color.Black), startX, startY + offset);
@@ -166,7 +214,7 @@ namespace KEDI_v_0._5._0._1
             }
             return string.Empty;
         }
-        private void DbSaver(int urunID, int count)
+        private void DbSaver(int urunID, decimal count)
         {
             try
             {
@@ -567,19 +615,40 @@ namespace KEDI_v_0._5._0._1
         }
         private void _masa_Click(object sender, EventArgs e)
         {
+
+            MetroTile table = (MetroTile)sender;
+            selectedTableID = Convert.ToInt32(table.Name.Trim());
             if (tablePanelType == 1)
             {
                 try
                 {
-                    MetroTile table = (MetroTile)sender;
-                    selectedTableID = Convert.ToInt32(table.Name.Trim());
-                    if (!printClicked)
-                    {                        
+                    if (printClicked)
+                    {
+                        Cursor.Current = Cursors.WaitCursor;
+                        printTable();                        
+                    }
+                    else if (moveClicked)
+                    {
+                        sourceSelected = true;
+                        moveClicked = false;
+                        Cursor.Current = Cursors.WaitCursor;
+                        sourceTable = selectedTableID;
+                        moveTable(true);                        
+                    }
+                    else if (combineClicked)
+                    {
+                        sourceSelected = true;
+                        combineClicked = false;
+                        Cursor.Current = Cursors.WaitCursor;
+                        sourceTable = selectedTableID;
+                        moveTable(false);                        
+                    }
+                    else
+                    {
                         selectedTableName = table.Text;
                         activateMasa(selectedTableID);
                         payment.Enabled = true;
-                        bool full = isMasaFull(selectedTableID);
-                        if (full)
+                        if (isMasaFull(selectedTableID))
                         {
                             productLoader();
                         }
@@ -594,20 +663,19 @@ namespace KEDI_v_0._5._0._1
                             }
                         }
                     }
-                    else
-                    {
-                        Cursor.Current = Cursors.WaitCursor;                       
-                        printTable();
-                        printClicked = false;
-                        salonLoader();
-                    }
+                    tablePanelType = 0;
                 }
                 catch (Exception ex)
                 {
 
                     MessageBox.Show(ex.ToString());
                 }
-                
+            }
+            else if (sourceSelected)
+            {
+                sourceSelected = false;                
+                completeMoving();
+                masaLoader(selectedSalonID.ToString());
             }
         }
         private bool isMasaFull(int masaID)
@@ -622,12 +690,15 @@ namespace KEDI_v_0._5._0._1
                     {
                         foreach (var item in result)
                         {
-                            var _result = (from odeme in kEDIDB.Odemes
-                                           where odeme.SiparisID == item.SiparisID
-                                           select odeme).FirstOrDefault();
-                            if (_result == null)
+                            if (item != null)
                             {
-                                return true;
+                                var _result = (from odeme in kEDIDB.Odemes
+                                               where odeme.SiparisID == item.SiparisID
+                                               select odeme).FirstOrDefault();
+                                if (_result == null)
+                                {
+                                    return true;
+                                }
                             }
                         }
                       
@@ -686,6 +757,7 @@ namespace KEDI_v_0._5._0._1
                 masalar.Clear();
                 selectedSalonID =Convert.ToInt32(clicker.Name.Trim());
                 masaLoader(clicker.Name);
+                //clicker.Style = MetroColorStyle.Orange;
             }            
         }
         private void salonLoader()
@@ -722,6 +794,14 @@ namespace KEDI_v_0._5._0._1
             sidePanel.Visible = true;
             save.Enabled = false;
             cancel.Enabled = false;
+            printClicked = false;
+            confirm.Visible = false;
+            payment.Enabled = false;            
+            //combineClicked = false;
+            move.Enabled = true;
+            combine.Enabled = true;
+            sourceTable = 0;
+            destinationSelected = false;
             urunTABLE.ColumnCount = 10;
             urunTABLE.Controls.Clear();
             try
@@ -900,7 +980,7 @@ namespace KEDI_v_0._5._0._1
                                                     }).FirstOrDefault();
                                     if (__result != null)
                                     {
-                                        _countPrice += ((double)__result.Fiyat) * item.UrunSayi;
+                                        _countPrice += ((double)__result.Fiyat) *(double) item.UrunSayi;
                                         List<string> prod = new List<string>();
                                         if (__result.AltOzellik == true)
                                         {
@@ -909,7 +989,7 @@ namespace KEDI_v_0._5._0._1
                                         else
                                             prod.Add(__result.UrunAdi);
                                         prod.Add(item.UrunSayi.ToString());
-                                        prod.Add((((double)__result.Fiyat) * item.UrunSayi).ToString());
+                                        prod.Add((((double)__result.Fiyat) * (double)item.UrunSayi).ToString());
                                         _productToShow.Add(prod);
                                     }
                                     AdisyonName.Text = item.SiparisAdi;
@@ -1019,23 +1099,33 @@ namespace KEDI_v_0._5._0._1
         {
             try
             {
-                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                if (tablePanelType==1)
                 {
-                    var result = (from masalar in kEDIDB.Masalars select masalar).DefaultIfEmpty();
-                    if (result != null)
+                    using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
                     {
-                        foreach (var item in result.ToList())
+                        var result = (from masalar in kEDIDB.Masalars select masalar).DefaultIfEmpty();
+                        if (result != null)
                         {
-                            if (isMasaFull(item.MasaID))
+                            urunTABLE.Controls.Clear();
+                            foreach (var item in result.ToList())
                             {
-                                urunTABLE.Controls.Clear();
-                                tileCreator(item.MasaAdi, item.MasaID.ToString(), 2, 1);
+                                if (item != null)
+                                {                                   
+                                    if (isMasaFull(item.MasaID))
+                                    {
+                                        tileCreator(item.MasaAdi, item.MasaID.ToString(), 2, 1);
+                                    }
+                                }
                             }
                         }
-                        tablePanelType = 1;
-                        printClicked = true;
                     }
                 }
+                else
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    printTable();                  
+                }
+                printClicked = true;
             }
             catch (Exception ex)
             {
@@ -1068,6 +1158,8 @@ namespace KEDI_v_0._5._0._1
                                 {
                                     toPrint = __result.ToList();
                                     finalPrinter();
+                                    printClicked = false;
+                                    masaLoader(selectedSalonID.ToString());
                                     break;
                                 }                              
                             }
@@ -1091,7 +1183,7 @@ namespace KEDI_v_0._5._0._1
                 print.PrintController = new StandardPrintController();                
 
                 PrinterSettings ps = new PrinterSettings();
-                ps.PrinterName = "Microsoft Print To PDF";                
+                ps.PrinterName = "KediPosYazici1";                
                 print.PrinterSettings = ps;
                 
                 print.Print();
@@ -1108,14 +1200,14 @@ namespace KEDI_v_0._5._0._1
             try
             {
                 Graphics graphics = e.Graphics;
-                Font font = new Font("Arial", 12);
-                Font bold = new Font("Arial", 12, FontStyle.Bold);
-                Font italic = new Font("Arial", 12, FontStyle.Italic);
+                Font font = new Font("Arial", 10);
+                Font bold = new Font("Arial", 10, FontStyle.Bold);
+                Font italic = new Font("Arial", 10, FontStyle.Italic);
                 float fontHeight = font.Height;
                 int startX = 10;
                 int startY = 10;
                 int offset = 30;
-                graphics.DrawString("NANA Cafe & Restaurant", new Font("Arial", 20, FontStyle.Bold), new SolidBrush(Color.Green), startX, startY);
+                graphics.DrawString("NANA Cafe & Restaurant", new Font("Arial", 15, FontStyle.Bold), new SolidBrush(Color.Green), startX, startY);
 
                 string _top = "Masa:" + pickTable();
                 graphics.DrawString(_top, font, new SolidBrush(Color.Black), startX, startY + offset);
@@ -1160,8 +1252,8 @@ namespace KEDI_v_0._5._0._1
                     }
                     _line = item.UrunSayi.ToString();
                     graphics.DrawString(_line, font, new SolidBrush(Color.Black), new RectangleF(startX, startY + offset, 200, 0), drawFormatRight);
-                    fullPrice += (Convert.ToDouble(vs[1]) * item.UrunSayi);
-                    _line = (Convert.ToDouble(vs[1]) * item.UrunSayi).ToString();
+                    fullPrice += (Convert.ToDouble(vs[1]) * (double)item.UrunSayi);
+                    _line = (Convert.ToDouble(vs[1]) * (double)item.UrunSayi).ToString();
                     graphics.DrawString(_line, bold, new SolidBrush(Color.Black), new RectangleF(startX, startY + offset, 270, 0), drawFormatRight);
 
                     offset += 5 + (int)fontHeight; 
@@ -1174,8 +1266,13 @@ namespace KEDI_v_0._5._0._1
                 offset += 10 + (int)fontHeight;
                 string thx = "Bizi Tercih Ettiğiniz İçin Teşekkür Ederiz! \nAfiyet Olsun!";
                 graphics.DrawString(thx, italic, new SolidBrush(Color.Black), startX, startY + offset);
-                
-            }catch (Exception ex)
+
+                offset += 22 + (int)fontHeight;
+                string vers = "KediPos_v0.5.0.1";
+                graphics.DrawString(vers, new Font("Arial",6,FontStyle.Bold), new SolidBrush(Color.Black), startX, startY + offset);
+
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
@@ -1329,6 +1426,7 @@ namespace KEDI_v_0._5._0._1
                     {
                         selectedPaymentMethod = 1;
                         payForAll();
+
                         confirm.Visible = false;
                         selectedPaymentMethod = 0;
                         cancel_Click(sender, e);
@@ -1338,6 +1436,7 @@ namespace KEDI_v_0._5._0._1
                     {
                         selectedPaymentMethod = 2;
                         payForAll();
+
                         confirm.Visible = false;
                         selectedPaymentMethod = 0;
                         cancel_Click(sender, e);
@@ -1346,8 +1445,7 @@ namespace KEDI_v_0._5._0._1
                 case 2: // Selected Cash
                     {
                         selectedPaymentMethod = 1;
-                        getOrderToPayment();
-                        //MessageBox.Show("Lütfen Aşağıdan Ürün Seçiniz");
+                        getOrderToPayment();                        
                         break;
                     }
                 case 3: // Selected Card
@@ -1358,19 +1456,23 @@ namespace KEDI_v_0._5._0._1
                     }
                 case 4: // Cancel All
                     {
-                        payForAll();
                         selectedPaymentMethod = 3;
+                        payForAll();                        
                         break;
                     }
                 case 5: // Cancel Selected
                     {
                         selectedPaymentMethod = 3;
+                        getOrderToPayment();                        
                         break;
                     }
                 default:
                     break;
-            }
-           // selectedPaymentMethod = 0;
+            }            
+            odenecek.Text = "0";
+            odenecekPanel.Visible = false;
+            
+            // selectedPaymentMethod = 0;
         }
         private void payForAll()
         {
@@ -1387,7 +1489,7 @@ namespace KEDI_v_0._5._0._1
                             var Result = (from odeme in kEDIDB.Odemes
                                           where odeme.SiparisID == item.SiparisID select odeme).FirstOrDefault();
                             if (Result==null)
-                            {
+                            {                                
                                 Odeme yeniOdeme = new Odeme() {
                                     SiparisID=item.SiparisID,
                                     OdemeYontemi=selectedPaymentMethod,
@@ -1408,6 +1510,7 @@ namespace KEDI_v_0._5._0._1
         private void getOrderToPayment()
         {
             urunler.Clear();
+            urunTABLE.Controls.Clear();
             try
             {              
                 using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
@@ -1435,25 +1538,25 @@ namespace KEDI_v_0._5._0._1
                                 }
                             }
                         }
-                        //foreach (var item in urunler)
-                        //{
-                        //    if (((bool)item.AltOzellik)==false)
-                        //    {
-                        //        foreach (var _item in urunler)
-                        //        {
-                        //            if (_item.UstUrunID==item.UrunID)
-                        //            {
-                        //                item.Fiyat += _item.Fiyat;
-                        //                break;
-                        //            }
-                        //        }
-                        //    }
-                        //}
+                        foreach (var item in urunler)
+                        {
+                            if (((bool)item.AltOzellik) == false)
+                            {
+                                foreach (var _item in urunler)
+                                {
+                                    if (_item.UstUrunID == item.UrunID)
+                                    {
+                                        item.Fiyat += _item.Fiyat;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                         foreach (var item in siparislers)
                         {                            
                             foreach (var _item in urunler)
                             {
-                                if (item.UrunID==_item.UrunID&&_item.AltOzellik!=true)
+                                if (item.UrunID==_item.UrunID)//&&_item.AltOzellik!=true) /// Burasi Duzenlenebilir Ama Sonra!!!!!!!!!!
                                 {
                                     for (int i = 0; i < item.UrunSayi; i++)
                                     {
@@ -1540,7 +1643,21 @@ namespace KEDI_v_0._5._0._1
                                            where odeme.SiparisID == item.SiparisID
                                            select odeme).FirstOrDefault();
                                 if (res==null)
-                                {
+                                {                                    
+                                    if (getSubProdToPay(item.UrunID)!=null)
+                                    {
+                                        List<int> subProds = new List<int>();
+                                        subProds = getSubProdToPay(item.UrunID);
+                                        foreach  (int __item in subProds)
+                                        {
+                                            Odeme yeniOdeme = new Odeme()
+                                            {
+                                                OdemeYontemi=selectedPaymentMethod,
+                                                SiparisID=__item,
+                                                Tarih=DateTime.Now
+                                            };
+                                        }
+                                    }
                                     foreach (int _item in selectedProdIDs)
                                     {
                                         if (_item==item.SiparisID)
@@ -1556,8 +1673,7 @@ namespace KEDI_v_0._5._0._1
                                         }
                                     }
                                 }
-                            }
-                            
+                            }                            
                         }
                         kEDIDB.SaveChanges();
                         payment_Click(sender,e);
@@ -1568,6 +1684,162 @@ namespace KEDI_v_0._5._0._1
                     MessageBox.Show(ex.ToString());
                 }
             }
+        }
+        private List<int> getSubProdToPay(int prodID)
+        {
+            try
+            {
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from urun in kEDIDB.Urunlers where urun.UstUrunID == prodID select urun).DefaultIfEmpty();
+                    if (result!=null)
+                    {
+                        List<int> siparisID = new List<int>();
+                        foreach (var item in result.ToList())
+                        {
+                            if (item != null)
+                            {
+                                var res = (from siparis in kEDIDB.Siparislers where siparis.UrunID == item.UrunID select siparis).FirstOrDefault();
+                                if (res != null)
+                                {
+                                    siparisID.Add(res.SiparisID);
+                                }
+                            }
+                        }
+                        return siparisID;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            return null;
+        }
+
+        private void fullback_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void move_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (tablePanelType == 1)
+                {
+                    using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                    {
+                        var result = (from masalar in kEDIDB.Masalars select masalar).DefaultIfEmpty();
+                        if (result != null)
+                        {
+                            urunTABLE.Controls.Clear();
+                            foreach (var item in result.ToList())
+                            {
+                                if (item != null)
+                                {
+                                    if (isMasaFull(item.MasaID))
+                                    {
+                                        tileCreator(item.MasaAdi, item.MasaID.ToString(), 2, 1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }               
+                moveClicked = true;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private void moveTable(bool status) // 0-combine 1-move 
+        {
+            try
+            {
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from masalar in kEDIDB.Masalars select masalar).DefaultIfEmpty();
+                    if (result != null)
+                    {
+                        urunTABLE.Controls.Clear();
+                        foreach (var item in result.ToList())
+                        {
+                            if (item != null)
+                            {
+                                if (status)
+                                {
+                                    if (!isMasaFull(item.MasaID))
+                                    {
+                                        tileCreator(item.MasaAdi, item.MasaID.ToString(), 2, 0);
+                                    }
+                                }
+                                else if (item.MasaID!=sourceTable)
+                                {
+                                    if(isMasaFull(item.MasaID))
+                                        tileCreator(item.MasaAdi, item.MasaID.ToString(), 2, 0);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private void completeMoving()
+        {
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                using (KEDIDBEntities kEDIDB = new KEDIDBEntities())
+                {
+                    var result = (from siparisler in kEDIDB.Siparislers
+                                  where siparisler.MasaID == sourceTable
+                                  select siparisler).DefaultIfEmpty();
+                    if (result!=null)
+                    {
+                        foreach (var item in result.ToList())
+                        {
+                            if (item!=null)
+                            {
+                                //Odeme odeme = item.Odemes.FirstOrDefault();
+                                var _result = (from odeme in kEDIDB.Odemes
+                                               where odeme.SiparisID == item.SiparisID
+                                               select odeme).FirstOrDefault();
+                                if (_result==null)
+                                {
+                                    // changeTableComplete(item.SiparisID);
+                                    var res = (from sip in kEDIDB.Siparislers
+                                               where sip.SiparisID == item.SiparisID
+                                               select sip).FirstOrDefault();
+                                    if (res != null)
+                                    {
+                                        res.MasaID = selectedTableID;
+                                    }
+                                }
+                            }                            
+                        }
+                        kEDIDB.SaveChanges();
+                    }                    
+                    Cursor.Current = Cursors.Default;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void combine_Click(object sender, EventArgs e)
+        {
+            move_Click(sender, e);
+            moveClicked = false;
+            combineClicked = true;
         }
     }
 }

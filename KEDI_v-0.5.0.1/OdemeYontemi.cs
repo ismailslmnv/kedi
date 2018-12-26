@@ -14,7 +14,16 @@ namespace KEDI_v_0._5._0._1
     
     public partial class OdemeYontemi
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public OdemeYontemi()
+        {
+            this.Odemes = new HashSet<Odeme>();
+        }
+    
         public int YontemID { get; set; }
         public string YontemAdi { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Odeme> Odemes { get; set; }
     }
 }

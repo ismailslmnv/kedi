@@ -24,7 +24,7 @@ namespace KEDI_v_0._5._0._1
         public string SiparisAdi { get; set; }
         public int MasaID { get; set; }
         public int UrunID { get; set; }
-        public int UrunSayi { get; set; }
+        public decimal UrunSayi { get; set; }
         public System.DateTime Tarih { get; set; }
         public int KullaniciID { get; set; }
         public string Notlar { get; set; }

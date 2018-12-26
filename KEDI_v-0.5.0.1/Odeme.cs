@@ -23,5 +23,6 @@ namespace KEDI_v_0._5._0._1
     
         public virtual Indirimler Indirimler { get; set; }
         public virtual Siparisler Siparisler { get; set; }
+        public virtual OdemeYontemi OdemeYontemi1 { get; set; }
     }
 }

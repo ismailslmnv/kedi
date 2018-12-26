@@ -99,7 +99,7 @@ namespace KEDI_v_0._5._0._1
                     }
                     else
                     {
-                        MessageBox.Show("Problem");                        
+                        MessageBox.Show("Veritabanında Kullanıcı Bilgilerine Ulaşılamadı - Enterance 102");                        
                     }
                 }
             }
@@ -110,6 +110,7 @@ namespace KEDI_v_0._5._0._1
         }
         private void siparis_Click(object sender, EventArgs e)
         {
+            Order.PersonalID = userID;
             Order order = new Order();
             order.Show();
         }
@@ -185,6 +186,12 @@ namespace KEDI_v_0._5._0._1
         private void genelAyar_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void rapor_Click(object sender, EventArgs e)
+        {
+            Report report = new Report();
+            report.Show();
         }
     }
 }
