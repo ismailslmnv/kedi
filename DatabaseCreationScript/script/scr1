@@ -1,0 +1,424 @@
+USE [KEDI]
+GO
+/****** Object:  User [KEDIuser]    Script Date: 30.12.2018 23:53:40 ******/
+CREATE USER [KEDIuser] FOR LOGIN [KEDI_USER] WITH DEFAULT_SCHEMA=[db_backupoperator]
+GO
+/****** Object:  User [USER]    Script Date: 30.12.2018 23:53:41 ******/
+CREATE USER [USER] FOR LOGIN [USER] WITH DEFAULT_SCHEMA=[db_datareader]
+GO
+/****** Object:  User [USER_KEDI_LOCAL_DB]    Script Date: 30.12.2018 23:53:41 ******/
+CREATE USER [USER_KEDI_LOCAL_DB] FOR LOGIN [USER_KEDI_LOCAL_DB] WITH DEFAULT_SCHEMA=[db_backupoperator]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [KEDIuser]
+GO
+ALTER ROLE [db_datareader] ADD MEMBER [KEDIuser]
+GO
+ALTER ROLE [db_datawriter] ADD MEMBER [KEDIuser]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [USER]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [USER_KEDI_LOCAL_DB]
+GO
+ALTER ROLE [db_backupoperator] ADD MEMBER [USER_KEDI_LOCAL_DB]
+GO
+ALTER ROLE [db_datareader] ADD MEMBER [USER_KEDI_LOCAL_DB]
+GO
+ALTER ROLE [db_datawriter] ADD MEMBER [USER_KEDI_LOCAL_DB]
+GO
+/****** Object:  Table [dbo].[deneme_Tablosu]    Script Date: 30.12.2018 23:53:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[deneme_Tablosu](
+	[deneme] [nchar](10) NOT NULL,
+ CONSTRAINT [PK_deneme_Tablosu] PRIMARY KEY CLUSTERED 
+(
+	[deneme] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[denemeTablosu]    Script Date: 30.12.2018 23:53:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[denemeTablosu](
+	[Deneme] [nchar](10) NULL,
+	[deneme1] [nchar](10) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GirisLogs]    Script Date: 30.12.2018 23:53:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GirisLogs](
+	[LogID] [int] IDENTITY(0,1) NOT NULL,
+	[KullaniciID] [int] NOT NULL,
+	[Tarih] [datetime2](7) NOT NULL,
+ CONSTRAINT [PK_GirisLogs] PRIMARY KEY CLUSTERED 
+(
+	[LogID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Indirimlers]    Script Date: 30.12.2018 23:53:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Indirimlers](
+	[IndirimID] [int] IDENTITY(1,1) NOT NULL,
+	[IndirimAdi] [nvarchar](50) NOT NULL,
+	[Oran] [decimal](10, 5) NOT NULL,
+	[Tarih] [datetime] NOT NULL,
+	[UrunID] [int] NOT NULL,
+ CONSTRAINT [PK_Indirimlers] PRIMARY KEY CLUSTERED 
+(
+	[IndirimID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Loglars]    Script Date: 30.12.2018 23:53:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Loglars](
+	[LogID] [int] IDENTITY(1,1) NOT NULL,
+	[TabloAdi] [nvarchar](50) NOT NULL,
+	[Sutun] [nvarchar](50) NOT NULL,
+	[OncekiVeri] [nvarchar](max) NOT NULL,
+	[YeniVeri] [nvarchar](max) NOT NULL,
+	[Tarih] [datetime] NOT NULL,
+ CONSTRAINT [PK_Loglars] PRIMARY KEY CLUSTERED 
+(
+	[LogID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Masalars]    Script Date: 30.12.2018 23:53:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Masalars](
+	[MasaID] [int] IDENTITY(1,1) NOT NULL,
+	[MasaAdi] [nvarchar](50) NOT NULL,
+	[SalonID] [int] NOT NULL,
+	[KonumX] [decimal](10, 0) NOT NULL,
+	[KonumY] [decimal](10, 0) NOT NULL,
+	[Tarih] [datetime] NOT NULL,
+	[Aktif] [bit] NOT NULL,
+	[BoyutX] [float] NULL,
+	[BoyutY] [float] NULL,
+	[Silindi] [bit] NULL,
+ CONSTRAINT [PK_Masalars] PRIMARY KEY CLUSTERED 
+(
+	[MasaID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Odemes]    Script Date: 30.12.2018 23:53:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Odemes](
+	[OdemeID] [int] IDENTITY(1,1) NOT NULL,
+	[SiparisID] [int] NOT NULL,
+	[OdemeYontemi] [int] NOT NULL,
+	[IndirimID] [int] NULL,
+	[Notlar] [nvarchar](max) NULL,
+	[Tarih] [datetime] NOT NULL,
+ CONSTRAINT [PK_Odemes] PRIMARY KEY CLUSTERED 
+(
+	[OdemeID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[OdemeYontemi]    Script Date: 30.12.2018 23:53:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[OdemeYontemi](
+	[YontemID] [int] IDENTITY(1,1) NOT NULL,
+	[YontemAdi] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_OdemeYontemi] PRIMARY KEY CLUSTERED 
+(
+	[YontemID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Personels]    Script Date: 30.12.2018 23:53:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Personels](
+	[KullaniciID] [int] IDENTITY(1,1) NOT NULL,
+	[KullaniciAdi] [nvarchar](50) NOT NULL,
+	[YetkiID] [int] NOT NULL,
+	[Sifre] [nvarchar](50) NOT NULL,
+	[Tarih] [datetime] NOT NULL,
+	[TelefonNum] [nvarchar](11) NOT NULL,
+	[Aktif] [bit] NOT NULL,
+	[Enabled] [bit] NOT NULL,
+	[DisableTarih] [datetime] NULL,
+ CONSTRAINT [PK_Personels] PRIMARY KEY CLUSTERED 
+(
+	[KullaniciID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Printers]    Script Date: 30.12.2018 23:53:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Printers](
+	[PrinterID] [int] IDENTITY(1,1) NOT NULL,
+	[PrinterName] [nvarchar](50) NOT NULL,
+	[PrinterIP] [nvarchar](15) NULL,
+	[Online] [bit] NULL,
+	[CreationDate] [datetime] NOT NULL,
+	[CancelProd] [bit] NULL,
+	[Report] [bit] NOT NULL,
+	[Product] [bit] NOT NULL,
+	[AccountPrint] [bit] NOT NULL,
+ CONSTRAINT [PK_Printers] PRIMARY KEY CLUSTERED 
+(
+	[PrinterID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Salonlars]    Script Date: 30.12.2018 23:53:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Salonlars](
+	[SalonID] [int] IDENTITY(1,1) NOT NULL,
+	[SalonAdi] [nvarchar](50) NOT NULL,
+	[Tarih] [datetime] NOT NULL,
+	[BoyutX] [float] NULL,
+	[BoyutY] [float] NULL,
+	[Duvarlar] [nvarchar](max) NULL,
+	[Silindi] [bit] NULL,
+ CONSTRAINT [PK_Salonlars] PRIMARY KEY CLUSTERED 
+(
+	[SalonID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Siparislers]    Script Date: 30.12.2018 23:53:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Siparislers](
+	[SiparisID] [int] IDENTITY(1,1) NOT NULL,
+	[SiparisAdi] [nvarchar](50) NOT NULL,
+	[MasaID] [int] NOT NULL,
+	[UrunID] [int] NOT NULL,
+	[UrunSayi] [decimal](18, 3) NOT NULL,
+	[Tarih] [datetime] NOT NULL,
+	[KullaniciID] [int] NOT NULL,
+	[Notlar] [nvarchar](max) NULL,
+	[Printed] [bit] NULL,
+ CONSTRAINT [PK_Siparislers] PRIMARY KEY CLUSTERED 
+(
+	[SiparisID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Urunlers]    Script Date: 30.12.2018 23:53:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Urunlers](
+	[UrunID] [int] IDENTITY(1,1) NOT NULL,
+	[UrunAdi] [nvarchar](50) NOT NULL,
+	[UstUrunID] [int] NULL,
+	[Fiyat] [decimal](10, 5) NOT NULL,
+	[Tarih] [datetime] NULL,
+	[Notlar] [nvarchar](max) NULL,
+	[AltOzellik] [bit] NULL,
+	[PrinterID] [int] NOT NULL,
+ CONSTRAINT [PK_Urunlers] PRIMARY KEY CLUSTERED 
+(
+	[UrunID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Yetkilers]    Script Date: 30.12.2018 23:53:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Yetkilers](
+	[YetkiID] [int] IDENTITY(1,1) NOT NULL,
+	[YetkiAdi] [nvarchar](50) NOT NULL,
+	[MasaAcma] [bit] NOT NULL,
+	[MasaTasima] [bit] NOT NULL,
+	[MasaBirlestirme] [bit] NOT NULL,
+	[HesapAlma] [bit] NOT NULL,
+	[HesapIptal] [bit] NOT NULL,
+	[UrunAyarlari] [bit] NOT NULL,
+	[MasaAyarlari] [bit] NOT NULL,
+	[PersonelAyarlari] [bit] NOT NULL,
+	[Raporlama] [bit] NOT NULL,
+ CONSTRAINT [PK_Yetkilers] PRIMARY KEY CLUSTERED 
+(
+	[YetkiID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Masalars] ADD  CONSTRAINT [DF_Masalars_Aktif]  DEFAULT ((0)) FOR [Aktif]
+GO
+ALTER TABLE [dbo].[Personels] ADD  CONSTRAINT [DF_Personels_Tarih]  DEFAULT (getdate()) FOR [Tarih]
+GO
+ALTER TABLE [dbo].[Personels] ADD  CONSTRAINT [DF_Personels_Aktif]  DEFAULT ((0)) FOR [Aktif]
+GO
+ALTER TABLE [dbo].[Personels] ADD  CONSTRAINT [DF_Personels_Enabled]  DEFAULT ((1)) FOR [Enabled]
+GO
+ALTER TABLE [dbo].[Urunlers] ADD  CONSTRAINT [DF_Urunlers_UstUrunID]  DEFAULT ((0)) FOR [UstUrunID]
+GO
+ALTER TABLE [dbo].[Urunlers] ADD  CONSTRAINT [DF_Urunlers_PrintID]  DEFAULT ((0)) FOR [PrinterID]
+GO
+ALTER TABLE [dbo].[GirisLogs]  WITH CHECK ADD  CONSTRAINT [FK_GirisLog_Personel] FOREIGN KEY([KullaniciID])
+REFERENCES [dbo].[Personels] ([KullaniciID])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[GirisLogs] CHECK CONSTRAINT [FK_GirisLog_Personel]
+GO
+ALTER TABLE [dbo].[Indirimlers]  WITH CHECK ADD  CONSTRAINT [FK_Indirimler_Urunler] FOREIGN KEY([UrunID])
+REFERENCES [dbo].[Urunlers] ([UrunID])
+GO
+ALTER TABLE [dbo].[Indirimlers] CHECK CONSTRAINT [FK_Indirimler_Urunler]
+GO
+ALTER TABLE [dbo].[Odemes]  WITH CHECK ADD  CONSTRAINT [FK_Odeme_Indirimler] FOREIGN KEY([IndirimID])
+REFERENCES [dbo].[Indirimlers] ([IndirimID])
+GO
+ALTER TABLE [dbo].[Odemes] CHECK CONSTRAINT [FK_Odeme_Indirimler]
+GO
+ALTER TABLE [dbo].[Odemes]  WITH CHECK ADD  CONSTRAINT [FK_Odeme_Siparisler] FOREIGN KEY([SiparisID])
+REFERENCES [dbo].[Siparislers] ([SiparisID])
+GO
+ALTER TABLE [dbo].[Odemes] CHECK CONSTRAINT [FK_Odeme_Siparisler]
+GO
+ALTER TABLE [dbo].[Odemes]  WITH CHECK ADD  CONSTRAINT [FK_Odemes_OdemeYontemi] FOREIGN KEY([OdemeYontemi])
+REFERENCES [dbo].[OdemeYontemi] ([YontemID])
+GO
+ALTER TABLE [dbo].[Odemes] CHECK CONSTRAINT [FK_Odemes_OdemeYontemi]
+GO
+ALTER TABLE [dbo].[Personels]  WITH CHECK ADD  CONSTRAINT [FK_Personel_Yetkiler] FOREIGN KEY([YetkiID])
+REFERENCES [dbo].[Yetkilers] ([YetkiID])
+GO
+ALTER TABLE [dbo].[Personels] CHECK CONSTRAINT [FK_Personel_Yetkiler]
+GO
+ALTER TABLE [dbo].[Siparislers]  WITH CHECK ADD  CONSTRAINT [FK_Siparisler_Masalar] FOREIGN KEY([MasaID])
+REFERENCES [dbo].[Masalars] ([MasaID])
+GO
+ALTER TABLE [dbo].[Siparislers] CHECK CONSTRAINT [FK_Siparisler_Masalar]
+GO
+ALTER TABLE [dbo].[Siparislers]  WITH CHECK ADD  CONSTRAINT [FK_Siparisler_Personel] FOREIGN KEY([KullaniciID])
+REFERENCES [dbo].[Personels] ([KullaniciID])
+GO
+ALTER TABLE [dbo].[Siparislers] CHECK CONSTRAINT [FK_Siparisler_Personel]
+GO
+ALTER TABLE [dbo].[Siparislers]  WITH CHECK ADD  CONSTRAINT [FK_Siparisler_Urunler] FOREIGN KEY([UrunID])
+REFERENCES [dbo].[Urunlers] ([UrunID])
+GO
+ALTER TABLE [dbo].[Siparislers] CHECK CONSTRAINT [FK_Siparisler_Urunler]
+GO
+ALTER TABLE [dbo].[Urunlers]  WITH CHECK ADD  CONSTRAINT [FK_Urunlers_Printers] FOREIGN KEY([PrinterID])
+REFERENCES [dbo].[Printers] ([PrinterID])
+GO
+ALTER TABLE [dbo].[Urunlers] CHECK CONSTRAINT [FK_Urunlers_Printers]
+GO
+
+INSERT INTO [dbo].[Printers]
+           ([PrinterName]
+           ,[PrinterIP]
+           ,[Online]
+           ,[CreationDate]
+           ,[CancelProd]
+           ,[Report]
+           ,[Product]
+           ,[AccountPrint])
+     VALUES
+           ('nullValue',
+			'127.0.0.1',
+			0,
+			GETDATE(),
+			1,
+			0,
+			1,
+			0)
+GO
+
+INSERT INTO [dbo].[Yetkilers]
+           ([YetkiAdi]
+           ,[MasaAcma]
+           ,[MasaTasima]
+           ,[MasaBirlestirme]
+           ,[HesapAlma]
+           ,[HesapIptal]
+           ,[UrunAyarlari]
+           ,[MasaAyarlari]
+           ,[PersonelAyarlari]
+           ,[Raporlama])
+     VALUES
+           ('Gelistirici',
+			1,
+			1,
+			1,
+			1,
+			1,
+			1,
+			1,
+			1,
+			1)
+GO
+
+INSERT INTO [dbo].[Personels]
+           ([KullaniciAdi]
+           ,[YetkiID]
+           ,[Sifre]
+           ,[Tarih]
+           ,[TelefonNum]
+           ,[Aktif]
+           ,[Enabled]
+           ,[DisableTarih])
+     VALUES
+           ('Ismail',
+		   1,
+		   '1234',
+		   GETDATE(),
+		   '123',
+		   0,
+		   1,
+		   null)
+GO
+
+INSERT INTO [dbo].[OdemeYontemi]
+           ([YontemAdi])
+     VALUES
+           ('Nakit')
+GO
+
+INSERT INTO [dbo].[OdemeYontemi]
+           ([YontemAdi])
+     VALUES
+           ('Kart')
+GO
+
+INSERT INTO [dbo].[OdemeYontemi]
+           ([YontemAdi])
+     VALUES
+           ('İptal')
+GO
